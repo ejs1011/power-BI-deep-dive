@@ -107,7 +107,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Search by SKUs'"
+                  "Value": "'SKU'"
                 }
               }
             },

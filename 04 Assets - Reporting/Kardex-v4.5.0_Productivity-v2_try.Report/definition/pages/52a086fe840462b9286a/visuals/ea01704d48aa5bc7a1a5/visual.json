@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Select Date Range",
+                    "value": "Date Range",
                     "textStyle": {
                       "fontWeight": "bold"
                     }

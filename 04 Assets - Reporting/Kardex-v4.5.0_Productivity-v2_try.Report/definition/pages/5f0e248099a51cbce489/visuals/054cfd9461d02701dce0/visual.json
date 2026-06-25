@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Search by SKUs",
+                    "value": "SKU",
                     "textStyle": {
                       "fontWeight": "bold"
                     }

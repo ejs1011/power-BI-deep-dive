@@ -85,7 +85,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Select Date Range'"
+                  "Value": "'Date Range'"
                 }
               }
             },
@@ -128,7 +128,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Select Date Range'"
+                  "Value": "'Date Range'"
                 }
               }
             },
