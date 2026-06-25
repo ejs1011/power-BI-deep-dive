@@ -1,0 +1,31 @@
+table MachineWaitTimePerUser
+	lineageTag: 6491bca4-1ff9-4a93-80ae-fea14c3e9e76
+
+	column Users
+		dataType: string
+		lineageTag: 49d7946d-c82a-4a22-aa6c-31561d82f4f3
+		summarizeBy: none
+		sourceColumn: Users
+
+		annotation SummarizationSetBy = Automatic
+
+	column MachineWaitTime
+		dataType: int64
+		formatString: 0
+		lineageTag: f2e18053-625f-477a-92e2-898ea0880f3a
+		summarizeBy: sum
+		sourceColumn: MachineWaitTime
+
+		annotation SummarizationSetBy = Automatic
+
+	partition MachineWaitTimePerUser = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_MachineWaitTimePerUser = Source{[Schema="dbo",Item="MachineWaitTimePerUser"]}[Data]
+				in
+				    dbo_MachineWaitTimePerUser
+
+	annotation PBI_ResultType = Table
+

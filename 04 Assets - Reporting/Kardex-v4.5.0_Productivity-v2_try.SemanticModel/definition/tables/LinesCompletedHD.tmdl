@@ -1,0 +1,41 @@
+table LinesCompletedHD
+	lineageTag: 81a61fe1-8541-4362-90ff-55b06650054f
+
+	column LinesCompleted
+		dataType: int64
+		formatString: 0
+		lineageTag: 65ce3b50-677d-4679-a19b-a1f71422a2ef
+		summarizeBy: sum
+		sourceColumn: LinesCompleted
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 864cf280-ce69-48b6-aca5-ca71c9cd4025
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 8b73865c-fdf7-498f-b69b-c081764d6d06
+			defaultHierarchy: LocalDateTable_dbe631d6-0ace-45b5-917c-0f9d6341f820.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition LinesCompletedHD = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    dbo_LinesCompletedHD = Source{[Schema="dbo",Item="LinesCompletedHD"]}[Data]
+				in
+				    dbo_LinesCompletedHD
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

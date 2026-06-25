@@ -1,0 +1,114 @@
+table Throughput
+	lineageTag: 17c71326-9912-4c10-b65f-982e5638e9d1
+
+	column Date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 4bc8234a-57dc-40ea-af00-079f263250cb
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Hour
+		dataType: string
+		lineageTag: dc63d611-34b2-426e-bf3c-864f0cb239a8
+		summarizeBy: none
+		sourceColumn: Hour
+		sortByColumn: HourSortOrder
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ports
+		dataType: string
+		lineageTag: 30166cd9-ad64-4b2c-bacb-1c099afcb2b3
+		summarizeBy: none
+		sourceColumn: Ports
+		sortByColumn: PortSortOrder
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrdersCompleted
+		dataType: int64
+		formatString: 0
+		lineageTag: 81654f29-cb6e-433d-80e8-5dff12b9cf20
+		summarizeBy: sum
+		sourceColumn: OrdersCompleted
+
+		annotation SummarizationSetBy = Automatic
+
+	column LinesCompleted
+		dataType: int64
+		formatString: 0
+		lineageTag: e91f5951-fb5c-4732-aad8-c1966371ddd8
+		summarizeBy: sum
+		sourceColumn: LinesCompleted
+
+		annotation SummarizationSetBy = Automatic
+
+	column BinPresentationsCompleted
+		dataType: int64
+		formatString: 0
+		lineageTag: 810d22cb-d9b0-4806-8f47-c5d683aedf09
+		summarizeBy: sum
+		sourceColumn: BinPresentationsCompleted
+
+		annotation SummarizationSetBy = Automatic
+
+	column InterimHour
+		dataType: string
+		lineageTag: 0944b318-1f27-4885-af01-a3a49aeead21
+		summarizeBy: none
+		sourceColumn: InterimHour
+
+		annotation SummarizationSetBy = Automatic
+
+	column HourSortOrder = HOUR(Throughput[InterimHour])
+		formatString: 0
+		lineageTag: 18a3b357-9e60-4cd3-a724-0215eed5300b
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column PortSortOrder
+		dataType: int64
+		formatString: 0
+		lineageTag: 1a12a1ac-ec42-4d1c-8167-2c9e39490a12
+		summarizeBy: sum
+		sourceColumn: PortSortOrder
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderCategory
+		dataType: string
+		lineageTag: 139283ba-dba1-455c-8389-603c91fcf774
+		summarizeBy: none
+		sourceColumn: OrderCategory
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Throughput = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_Throughput = Source{[Schema="dbo",Item="Throughput"]}[Data],
+				    #"Duplicated Column" = Table.DuplicateColumn(dbo_Throughput, "Hour", "Hour - Copy"),
+				    #"Renamed Columns" = Table.RenameColumns(#"Duplicated Column",{{"Hour - Copy", "InterimHour"}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Renamed Columns","No Data","P-1",Replacer.ReplaceText,{"Ports"}),
+				    #"Inserted Text Range" = Table.AddColumn(#"Replaced Value", "Text Range", each Text.Middle([Ports], 1, 9999999), type text),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Inserted Text Range",{{"Text Range", Int64.Type}}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Changed Type",{{"Text Range", "PortSortOrder"}})
+				in
+				    #"Renamed Columns1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

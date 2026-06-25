@@ -1,0 +1,31 @@
+table BinPresentationsCompletedPerUser
+	lineageTag: d4e8281d-e9ab-435a-ac1b-5054d3af9f10
+
+	column Users
+		dataType: string
+		lineageTag: 4590e305-3601-4d76-b4c4-d1a8e2660821
+		summarizeBy: none
+		sourceColumn: Users
+
+		annotation SummarizationSetBy = Automatic
+
+	column BinPresentationsCompleted
+		dataType: int64
+		formatString: 0
+		lineageTag: 97b7104f-b463-4201-824e-08cee9a016f6
+		summarizeBy: sum
+		sourceColumn: BinPresentationsCompleted
+
+		annotation SummarizationSetBy = Automatic
+
+	partition BinPresentationsCompletedPerUser = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    dbo_BinPresentationsCompletedPerUser = Source{[Schema="dbo",Item="BinPresentationsCompletedPerUser"]}[Data]
+				in
+				    dbo_BinPresentationsCompletedPerUser
+
+	annotation PBI_ResultType = Table
+

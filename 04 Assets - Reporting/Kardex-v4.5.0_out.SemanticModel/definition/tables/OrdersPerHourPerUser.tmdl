@@ -1,0 +1,32 @@
+table OrdersPerHourPerUser
+	lineageTag: e7e99af6-2d31-42f8-82fc-e12c2cd25f3e
+
+	column Users
+		dataType: string
+		lineageTag: 779cd743-1d5e-433a-b72f-c7b1af6bc508
+		summarizeBy: none
+		sourceColumn: Users
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrdersPerHourPerUser
+		dataType: double
+		lineageTag: 3738d822-3d42-465f-8092-664d3629443e
+		summarizeBy: sum
+		sourceColumn: OrdersPerHourPerUser
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition OrdersPerHourPerUser = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_OrdersPerHourPerUser = Source{[Schema="dbo",Item="OrdersPerHourPerUser"]}[Data]
+				in
+				    dbo_OrdersPerHourPerUser
+
+	annotation PBI_ResultType = Table
+

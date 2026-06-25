@@ -1,0 +1,177 @@
+table Products
+	lineageTag: e987ab0d-b3bb-46ae-9eb6-c2b86b4c5d59
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 849fb2e4-22aa-4d8f-a3a7-bafcbd35a5cd
+		summarizeBy: count
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column PrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 298cc8e4-68a6-4c38-9de8-3889005026b5
+		summarizeBy: count
+		sourceColumn: PrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: 05ac8e66-2cc2-439f-a1a3-844c7dfaa26c
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sku
+		dataType: string
+		lineageTag: ce2524f4-0d51-4019-9d1a-a558e02bad49
+		summarizeBy: none
+		sourceColumn: Sku
+
+		annotation SummarizationSetBy = Automatic
+
+	column PathToImage
+		dataType: string
+		lineageTag: 03f308e9-3891-425a-bfac-5369fdf0f051
+		summarizeBy: none
+		sourceColumn: PathToImage
+
+		annotation SummarizationSetBy = Automatic
+
+	column Characteristics
+		dataType: string
+		lineageTag: b6bf3a4e-1523-45cc-8cb2-c9cdbf550a02
+		summarizeBy: none
+		sourceColumn: Characteristics
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedBy
+		dataType: string
+		lineageTag: e34779c4-3a71-46af-9730-f77cdf1bb853
+		summarizeBy: none
+		sourceColumn: CreatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e644ef24-9a47-4b4b-b9ac-4117a727bbd3
+		summarizeBy: none
+		sourceColumn: CreatedDate
+
+		variation Variation
+			isDefault
+			relationship: 065cc3f3-67f1-4fe7-a8b6-b5f55a534c63
+			defaultHierarchy: LocalDateTable_cec1ecc5-a464-4ff9-8c25-249bb4d41bd2.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedBy
+		dataType: string
+		lineageTag: cdc3a19b-e972-4972-96e1-b60a432583e0
+		summarizeBy: none
+		sourceColumn: LastUpdatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column RequiresValidSerialNumberCheck
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 169039d9-028f-4147-9a8f-8d585eb8fc61
+		summarizeBy: none
+		sourceColumn: RequiresValidSerialNumberCheck
+
+		annotation SummarizationSetBy = Automatic
+
+	column FlaggedForArbitrarySerialNumberValidation
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: f07b6a00-972e-46b6-b470-2c04b6468d82
+		summarizeBy: none
+		sourceColumn: FlaggedForArbitrarySerialNumberValidation
+
+		annotation SummarizationSetBy = Automatic
+
+	column MaxPickQty
+		dataType: int64
+		formatString: 0
+		lineageTag: d6ff2103-06b4-4b39-84c1-af8fa5217988
+		summarizeBy: sum
+		sourceColumn: MaxPickQty
+
+		annotation SummarizationSetBy = Automatic
+
+	column verificationType
+		dataType: int64
+		formatString: 0
+		lineageTag: 1f893e4b-3982-4433-af22-3a7efd87e16e
+		summarizeBy: sum
+		sourceColumn: verificationType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: dca56036-4147-4599-b637-44aa63962365
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedDateInventory
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 939d2d89-abaa-4712-a7c5-83b9c0449507
+		summarizeBy: none
+		sourceColumn: LastUpdatedDateInventory
+
+		variation Variation
+			isDefault
+			relationship: 30dac046-1623-445d-ac47-b4e87353948f
+			defaultHierarchy: LocalDateTable_9066cbc1-4131-436a-a85f-68546f732dba.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 9ce5c69c-a9b5-438c-92ad-18b2c69e7b50
+		summarizeBy: none
+		sourceColumn: LastUpdatedDate
+
+		variation Variation
+			isDefault
+			relationship: 4276a323-d468-4285-96de-4cb9b77bfa84
+			defaultHierarchy: LocalDateTable_4d9f4678-27b1-45d4-adf5-97fe9dd0beec.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Snapshot_Id
+		dataType: int64
+		formatString: 0
+		lineageTag: e3bdf4fc-43c8-4186-8f79-f1ffdd8aa064
+		summarizeBy: count
+		sourceColumn: Snapshot_Id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Products = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_Products = Source{[Schema="dbo",Item="Products"]}[Data]
+				in
+				    dbo_Products
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

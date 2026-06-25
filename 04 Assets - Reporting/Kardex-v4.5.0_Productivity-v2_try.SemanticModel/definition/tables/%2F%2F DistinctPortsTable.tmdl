@@ -1,0 +1,56 @@
+table '// DistinctPortsTable'
+	lineageTag: 020a9447-20a8-4994-8e95-835ec928af75
+
+	column Ports
+		lineageTag: 9f07539d-6437-4f2b-aea6-ee3c85f260c5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Ports]
+		sortByColumn: SortOrder
+
+		annotation SummarizationSetBy = Automatic
+
+	column SortOrder
+		lineageTag: 773bb581-c93d-4ecf-9a57-4da4d545b404
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [SortOrder]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition '// DistinctPortsTable' = calculated
+		mode: import
+		source = ```
+				
+				VAR DistinctPorts =
+				    FILTER(
+				        DISTINCT(
+				            SELECTCOLUMNS(
+				                ProductivityDailyUserPortWorkType_v2,
+				                "Ports", ProductivityDailyUserPortWorkType_v2[Ports]
+				            )
+				        ),
+				        NOT ISBLANK([Ports]) && [Ports] <> "No Data" && [Ports] <> "Unattributed"
+				    )
+				RETURN
+				ADDCOLUMNS(
+				    DistinctPorts,
+				    "SortOrder",
+				    VAR PortText = [Ports]
+				    VAR PortNumberText = SUBSTITUTE(PortText, "P", "")
+				    RETURN
+				        IF(
+				            ISBLANK(PortText) || PortText = "No Data" || PortText = "Unattributed",
+				            999999,
+				            IFERROR(VALUE(PortNumberText), 999999)
+				        )
+				)
+				
+				 
+				
+				
+				```
+
+	annotation PBI_Id = 91444f7f8e9249ec94fac35332fb72f0

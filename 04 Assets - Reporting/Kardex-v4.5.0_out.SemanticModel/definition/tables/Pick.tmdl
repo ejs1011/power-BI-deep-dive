@@ -1,0 +1,203 @@
+table Pick
+	lineageTag: c3e5be27-7f59-4878-9b64-a520caeabefa
+
+	column PrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 24da799c-fb55-422b-bb59-bb4a47b221d7
+		summarizeBy: count
+		sourceColumn: PrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column TimeStamp
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1b86a1da-6345-490b-af9a-3e0a4fb40731
+		summarizeBy: none
+		sourceColumn: TimeStamp
+
+		variation Variation
+			isDefault
+			relationship: 75ff6766-1c71-445c-80ad-d47825939c1f
+			defaultHierarchy: LocalDateTable_d611d978-d773-44ef-8d0c-a1d03f5e4139.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column PickPrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 74aaa926-6418-417f-88ab-40c97adae708
+		summarizeBy: count
+		sourceColumn: PickPrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column TransportOrderPrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: b14f2ebe-d3e5-42e6-af77-d7c215567ff9
+		summarizeBy: count
+		sourceColumn: TransportOrderPrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column LocationBarcode
+		dataType: string
+		lineageTag: 313dffe7-d49e-4dae-9ba0-9305e2fd8926
+		summarizeBy: none
+		sourceColumn: LocationBarcode
+
+		annotation SummarizationSetBy = Automatic
+
+	column ContainerBarcode
+		dataType: string
+		lineageTag: de14699c-aca6-4805-9ca7-f7afb65d6101
+		summarizeBy: none
+		sourceColumn: ContainerBarcode
+
+		annotation SummarizationSetBy = Automatic
+
+	column ContainerSide
+		dataType: int64
+		formatString: 0
+		lineageTag: c3a2c951-c68f-4c5e-8ee8-55133776dd37
+		summarizeBy: sum
+		sourceColumn: ContainerSide
+
+		annotation SummarizationSetBy = Automatic
+
+	column ContainerX
+		dataType: int64
+		formatString: 0
+		lineageTag: 690be794-531f-48fd-9459-fcfd97b60c52
+		summarizeBy: sum
+		sourceColumn: ContainerX
+
+		annotation SummarizationSetBy = Automatic
+
+	column ContainerY
+		dataType: int64
+		formatString: 0
+		lineageTag: 6a1e44bc-08d9-493f-909e-481b4c9cf3cc
+		summarizeBy: sum
+		sourceColumn: ContainerY
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderNumber
+		dataType: string
+		lineageTag: 27861032-703a-4528-9c50-b186777e73a3
+		summarizeBy: none
+		sourceColumn: OrderNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderCategory
+		dataType: string
+		lineageTag: b76d6311-893c-4d41-b3a8-6b1553d50e03
+		summarizeBy: none
+		sourceColumn: OrderCategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column PercentOfOrderLine
+		dataType: double
+		lineageTag: b9cac47f-d0cd-4433-90df-3e690ad6f179
+		summarizeBy: sum
+		sourceColumn: PercentOfOrderLine
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PickCompleteDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: cd42ca29-4aaa-4103-8717-db2e2a472a57
+		summarizeBy: none
+		sourceColumn: PickCompleteDate
+
+		variation Variation
+			isDefault
+			relationship: c25389f9-51f0-4bc0-8775-e4ac12dcb72a
+			defaultHierarchy: LocalDateTable_c2ebc98c-5098-4945-a1a9-155592bc4cc3.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitName
+		dataType: string
+		lineageTag: ed110d2e-0025-4f3c-a1e7-546ce2165c95
+		summarizeBy: none
+		sourceColumn: UnitName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sku
+		dataType: string
+		lineageTag: 621db2b2-db60-4c73-bee3-520d44c62bbd
+		summarizeBy: none
+		sourceColumn: Sku
+
+		annotation SummarizationSetBy = Automatic
+
+	column ActualPickQuantity
+		dataType: int64
+		formatString: 0
+		lineageTag: adc93462-9dc3-4963-b478-29bd15821486
+		summarizeBy: sum
+		sourceColumn: ActualPickQuantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column RequiredPickQuantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 0a2e4891-622a-46c8-bdcf-5d0e26f9a0d5
+		summarizeBy: sum
+		sourceColumn: RequiredPickQuantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column User
+		dataType: string
+		lineageTag: f578a6ec-1394-453a-ae72-2d43a5579a0a
+		summarizeBy: none
+		sourceColumn: User
+
+		annotation SummarizationSetBy = Automatic
+
+	column OutboundContainerBarcode
+		dataType: string
+		lineageTag: 129c93e8-4994-467a-b42f-7237143d0462
+		summarizeBy: none
+		sourceColumn: OutboundContainerBarcode
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 81ed4449-7e0e-4b4a-8935-3f6183c3c357
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition Pick = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_Pick = Source{[Schema="dbo",Item="Pick"]}[Data],
+				    #"Added Custom" = Table.AddColumn(dbo_Pick, "Date", each DateTime.Date([PickCompleteDate])),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Added Custom",{{"Date", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

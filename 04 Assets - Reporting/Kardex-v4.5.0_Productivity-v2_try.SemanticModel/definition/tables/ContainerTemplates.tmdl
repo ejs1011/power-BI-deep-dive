@@ -1,0 +1,240 @@
+table ContainerTemplates
+	lineageTag: d0ee2006-e165-4c3d-a63c-f57938568160
+
+	column PrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 0bab07f5-214c-4c64-a3b3-bec6b7cf58a0
+		summarizeBy: none
+		sourceColumn: PrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column TemplateName
+		dataType: string
+		lineageTag: 238a34e3-03c1-4fcc-9bc2-3775c299ac24
+		summarizeBy: none
+		sourceColumn: TemplateName
+
+		annotation SummarizationSetBy = Automatic
+
+	column TemplateDescription
+		dataType: string
+		lineageTag: 7087812c-7794-4650-aea0-43ed5767fe55
+		summarizeBy: none
+		sourceColumn: TemplateDescription
+
+		annotation SummarizationSetBy = Automatic
+
+	column Height
+		dataType: int64
+		formatString: 0
+		lineageTag: 1a213851-c422-452f-be8d-5d4f356b4595
+		summarizeBy: sum
+		sourceColumn: Height
+
+		annotation SummarizationSetBy = Automatic
+
+	column Length
+		dataType: int64
+		formatString: 0
+		lineageTag: 56837cb2-6495-4e41-90e4-0ff766bcbea4
+		summarizeBy: sum
+		sourceColumn: Length
+
+		annotation SummarizationSetBy = Automatic
+
+	column Width
+		dataType: int64
+		formatString: 0
+		lineageTag: ccc0c8eb-710e-412d-a06c-c002d363ca4e
+		summarizeBy: sum
+		sourceColumn: Width
+
+		annotation SummarizationSetBy = Automatic
+
+	column MaximumWeight
+		dataType: int64
+		formatString: 0
+		lineageTag: 9f6ea319-4d18-42d9-a57c-1c7890724ac5
+		summarizeBy: sum
+		sourceColumn: MaximumWeight
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsGoodsToPerson
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: b0821b85-126e-43d5-abbc-bd142c55dbec
+		summarizeBy: none
+		sourceColumn: IsGoodsToPerson
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 189398f0-b205-4fe9-bdfd-ea588e006bf9
+		summarizeBy: none
+		sourceColumn: CreatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1565bc3d-e0d6-4a32-a290-59357e5f2df9
+		summarizeBy: none
+		sourceColumn: CreatedDate
+
+		variation Variation
+			isDefault
+			relationship: 3cf3317c-07ed-4691-9f14-9fcef6d6eef5
+			defaultHierarchy: LocalDateTable_701fa79f-eb60-4a70-975a-2b71cb44f518.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedBy
+		dataType: string
+		lineageTag: 5fecb867-5490-4682-b8fc-6e223ca74a6b
+		summarizeBy: none
+		sourceColumn: LastUpdatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column ContainerCategory
+		dataType: string
+		lineageTag: 0676d950-c5b9-424b-8129-191de2493266
+		summarizeBy: none
+		sourceColumn: ContainerCategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column XTotalUnits
+		dataType: int64
+		formatString: 0
+		lineageTag: 0d91407f-b06f-4a80-923e-45dbf8bee8d2
+		summarizeBy: sum
+		sourceColumn: XTotalUnits
+
+		annotation SummarizationSetBy = Automatic
+
+	column YTotalUnits
+		dataType: int64
+		formatString: 0
+		lineageTag: 9696a584-4d53-4b45-9caa-c3917d830379
+		summarizeBy: sum
+		sourceColumn: YTotalUnits
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedDateInventory
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 43b54f34-b6b1-4625-93f0-f35fb3a4d19d
+		summarizeBy: none
+		sourceColumn: LastUpdatedDateInventory
+
+		variation Variation
+			isDefault
+			relationship: e2176f53-670e-4200-8581-16503c294c3c
+			defaultHierarchy: LocalDateTable_bf612fdf-8f75-456d-9557-21e771ebc982.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 19820ff4-e7d4-4f40-b503-84a049f604d6
+		summarizeBy: none
+		sourceColumn: LastUpdatedDate
+
+		variation Variation
+			isDefault
+			relationship: ff3c144d-5494-48f9-b30b-a5ee6950ce39
+			defaultHierarchy: LocalDateTable_4202c532-9aba-46dc-a4b1-e7e0b37d8f29.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Snapshot_Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 60c61c64-c6ee-480c-91b5-01c25e287aa7
+		summarizeBy: count
+		sourceColumn: Snapshot_Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column CompartmentName = ```
+			
+			VAR CompartmentSizePrimaryKey =
+			    LOOKUPVALUE(
+			        'ContainerTemplateCompartments'[CompartmentSizePrimaryKey], 
+			        'ContainerTemplateCompartments'[TemplatePrimaryKey], 
+			        'ContainerTemplates'[PrimaryKey]
+			    )
+			VAR CompartmentName = 
+			    LOOKUPVALUE(
+			        'CompartmentSizes'[Name], 
+			        'CompartmentSizes'[PrimaryKey], 
+			        CompartmentSizePrimaryKey
+			    )
+			RETURN
+			    IF(
+			        'ContainerTemplates'[IsGoodsToPerson] = TRUE() && NOT ISBLANK(CompartmentName),
+			        CompartmentName,
+			        BLANK()
+			    )
+			
+			```
+		lineageTag: 231f1d5e-eb3f-4584-80b5-50613d95799e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column CombinedName = ```
+			
+			VAR CompartmentPart = 'ContainerTemplates'[CompartmentName]
+			VAR SpacePosition = SEARCH(" ", 'ContainerTemplates'[TemplateName], 1, LEN('ContainerTemplates'[TemplateName]))
+			VAR TempletPart = IF(
+			    SpacePosition <= LEN('ContainerTemplates'[TemplateName]),
+			    MID('ContainerTemplates'[TemplateName], SpacePosition + 1, LEN('ContainerTemplates'[TemplateName])),
+			    ""
+			)
+			VAR IsValidRow = 
+			    CALCULATE(
+			        COUNTROWS('ContainerTemplates'),
+			        FILTER(
+			
+			            'ContainerTemplates',
+			            // 'Containers'[Status] <> "Outside" &&
+			            'ContainerTemplates'[IsGoodsToPerson] = TRUE()
+			        )
+			    ) > 0
+			RETURN
+			    IF(
+			        IsValidRow,
+			        CompartmentPart & " (" & TempletPart & ")",
+			        BLANK()
+			    )
+			
+			
+			
+			```
+		lineageTag: 0c44d72b-4501-4a6b-b72f-6a221cd43fab
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ContainerTemplates = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    dbo_ContainerTemplates = Source{[Schema="dbo",Item="ContainerTemplates"]}[Data]
+				in
+				    dbo_ContainerTemplates
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

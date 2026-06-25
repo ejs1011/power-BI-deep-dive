@@ -1,0 +1,32 @@
+table BinsPerHourPerPort
+	lineageTag: 16b1c52a-b0ee-49d0-8dde-239917ce6513
+
+	column Ports
+		dataType: string
+		lineageTag: 52a56948-0eb6-4282-9fb6-06cc75c191ad
+		summarizeBy: none
+		sourceColumn: Ports
+
+		annotation SummarizationSetBy = Automatic
+
+	column BinsPerHour
+		dataType: double
+		lineageTag: 863a820b-c23e-47e6-a027-8abbd2bbaa0b
+		summarizeBy: sum
+		sourceColumn: BinsPerHour
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition BinsPerHourPerPort = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_BinsPerHourPerPort = Source{[Schema="dbo",Item="BinsPerHourPerPort"]}[Data]
+				in
+				    dbo_BinsPerHourPerPort
+
+	annotation PBI_ResultType = Table
+

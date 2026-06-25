@@ -1,0 +1,216 @@
+table PutAway
+	lineageTag: d6bc4562-5698-437e-831d-dda918abe9c4
+
+	column PrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 7e875b0d-6394-42d3-86e4-1aff4d4eab47
+		summarizeBy: count
+		sourceColumn: PrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column TimeStamp
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 408d88b0-28b9-458c-93c5-e8fe42f2d049
+		summarizeBy: none
+		sourceColumn: TimeStamp
+
+		variation Variation
+			isDefault
+			relationship: 98872802-a454-4f71-a292-2df92693de54
+			defaultHierarchy: LocalDateTable_0ac29051-0b8e-465e-9d19-0adeac22e1c9.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column PutAwayContainerPrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: fbb87b30-293d-4b80-8c5e-59f7a3007d4a
+		summarizeBy: count
+		sourceColumn: PutAwayContainerPrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column LocationPrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: a1c71a66-2763-43b2-9e63-2f3530abdcf2
+		summarizeBy: count
+		sourceColumn: LocationPrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column TaskKey
+		dataType: string
+		lineageTag: 4928d2e5-7f77-484b-bd04-b254e763d67a
+		summarizeBy: none
+		sourceColumn: TaskKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column InventoryTaskGroupPrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 5d0bbcdf-5134-4e64-b59b-efcba2cba86d
+		summarizeBy: count
+		sourceColumn: InventoryTaskGroupPrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Priority
+		dataType: int64
+		formatString: 0
+		lineageTag: a469a13c-36c8-4f4b-8a2d-8482f85f3a8d
+		summarizeBy: sum
+		sourceColumn: Priority
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 14298388-ad96-42c5-a7b2-e766df4ec963
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column TaskType
+		dataType: string
+		lineageTag: e477d3d1-af59-48af-b5d7-b0d51fb7255d
+		summarizeBy: none
+		sourceColumn: TaskType
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsClosed
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 76118f5a-a48f-45e5-a8bd-a8b770cb0d69
+		summarizeBy: none
+		sourceColumn: IsClosed
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsErrored
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 9e633aa9-9925-425f-9b01-76cd10742c9a
+		summarizeBy: none
+		sourceColumn: IsErrored
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExternalId
+		dataType: int64
+		formatString: 0
+		lineageTag: 96026609-11ae-4605-b678-9d35370eea27
+		summarizeBy: count
+		sourceColumn: ExternalId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReasonCodePrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: b7d31dae-579c-4a85-b5ac-c783a9a46932
+		summarizeBy: count
+		sourceColumn: ReasonCodePrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReasonCodeName
+		dataType: string
+		lineageTag: 398b972f-d049-4407-8eb0-e6cfde7b8d04
+		summarizeBy: none
+		sourceColumn: ReasonCodeName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReasonCode
+		dataType: string
+		lineageTag: d483dc1c-fc85-4a70-8c6d-b72f6bb6462e
+		summarizeBy: none
+		sourceColumn: ReasonCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column Actions
+		dataType: string
+		lineageTag: 8a65a9c2-bb98-42aa-8d73-2f0d36b62cbc
+		summarizeBy: none
+		sourceColumn: Actions
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedBy
+		dataType: string
+		lineageTag: af0b98ce-a71b-4fbf-8470-6cf4ae7b0b4e
+		summarizeBy: none
+		sourceColumn: CreatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 68b2a9c9-78c8-4d8f-b0e0-29f9d1fd031f
+		summarizeBy: none
+		sourceColumn: CreatedDate
+
+		variation Variation
+			isDefault
+			relationship: d9059ed6-4204-4da7-8ca9-413a12112382
+			defaultHierarchy: LocalDateTable_44eab975-9ece-449f-badd-f0325d78e680.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedBy
+		dataType: string
+		lineageTag: 5f3e0e83-e179-4150-b7d4-7948c641f3e0
+		summarizeBy: none
+		sourceColumn: LastUpdatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 21519db5-00b7-4f6a-a582-232bb62fc40d
+		summarizeBy: none
+		sourceColumn: LastUpdatedDate
+
+		variation Variation
+			isDefault
+			relationship: 4ec43278-0e09-416c-b746-cb31737b0bf2
+			defaultHierarchy: LocalDateTable_5d96b2ef-b21b-49ae-bd8e-4758219d2756.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b2cde9a0-9b14-46eb-81a5-86ad60bc3a4c
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition PutAway = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    dbo_PutAway = Source{[Schema="dbo",Item="PutAway"]}[Data],
+				    #"Added Custom" = Table.AddColumn(dbo_PutAway, "Date", each DateTime.Date([LastUpdatedDate])),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Added Custom",{{"Date", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

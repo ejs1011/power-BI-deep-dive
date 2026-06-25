@@ -1,0 +1,68 @@
+table _MeasureGroups
+	lineageTag: 245541b5-746a-46ec-b324-dc9358574f01
+
+	column GroupName
+		lineageTag: d92437ac-feec-4936-9076-efdf33df3406
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [GroupName]
+		sortByColumn: GroupSortOrder
+
+		annotation SummarizationSetBy = Automatic
+
+	column MeasureName
+		lineageTag: 0b58f486-1680-4f79-b579-1a7452d10f80
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [MeasureName]
+		sortByColumn: SortOrder
+
+		annotation SummarizationSetBy = Automatic
+
+	column SortOrder
+		formatString: 0
+		lineageTag: 82256637-e7b0-4fd9-a8a2-b82589528bfc
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [SortOrder]
+
+		annotation SummarizationSetBy = Automatic
+
+	column GroupSortOrder
+		formatString: 0
+		lineageTag: d6cfcb18-4bc1-4152-a0d0-71d4a4a679c5
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [GroupSortOrder]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _MeasureGroups = calculated
+		mode: import
+		source = ```
+				
+				DATATABLE(
+				    "GroupName", STRING,
+				    "MeasureName", STRING,
+				    "SortOrder", INTEGER,
+				    "GroupSortOrder", INTEGER,
+				    {
+				        {"Inventory", "Total Skus On Hand", 1, 1},
+				        {"Inventory", "Total Units On Hand", 2, 1},
+				        {"Inventory", "Total Locations Occupied", 3, 1},
+				        {"Inbound", "Orders Putaway", 4, 2},
+				        {"Inbound", "Units Putaway", 5, 2},
+				        {"Inbound", "Skus Putaway", 6, 2},
+				        {"Inbound", "Presentations Putaway", 7, 2},
+				        {"Inbound", "Distinct bins inventory added", 8, 2},
+				        {"Inbound", "Distinct bin compartments that had inventory", 9, 2},
+				        {"Picking", "Customer Orders Picked", 10, 3},
+				        {"Picking", "Customer Order Lines", 11, 3},
+				        {"Picking", "Units Picked", 12, 3},
+				        {"Picking", "Distinct Skus Picked", 13, 3}       
+				    }
+				)
+				```
+
+	annotation PBI_Id = 5a0ac25232954f958f8858566e44324d
+

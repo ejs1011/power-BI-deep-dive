@@ -1,0 +1,36 @@
+table Units_Putaway
+	lineageTag: 13addbf3-cdc7-415a-aea4-282c6db8c683
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 2c3a1800-88c9-4797-b054-62d5252be228
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Units Putaway'
+		dataType: int64
+		formatString: 0
+		lineageTag: 240959eb-7277-417c-bd19-b3cb1b6d0833
+		summarizeBy: sum
+		sourceColumn: Units Putaway
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Units_Putaway = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    dbo_Units_Putaway = Source{[Schema="dbo",Item="Units_Putaway"]}[Data]
+				in
+				    dbo_Units_Putaway
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

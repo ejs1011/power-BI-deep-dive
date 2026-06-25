@@ -1,0 +1,631 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "60144cc4ee55004dc503",
+  "position": {
+    "x": 48,
+    "y": 220,
+    "z": 2000,
+    "height": 395,
+    "width": 2320,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DistinctUsersTable"
+                    }
+                  },
+                  "Property": "Users"
+                }
+              },
+              "queryRef": "DistinctUsersTable.Users",
+              "nativeQueryRef": "Users"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "B Measure"
+                    }
+                  },
+                  "Property": "Orders Completed per User"
+                }
+              },
+              "queryRef": "B Measure.Orders Completed per User",
+              "nativeQueryRef": "Orders Completed",
+              "displayName": "Orders Completed"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "B Measure"
+                    }
+                  },
+                  "Property": "Bin Presentations Completed per User"
+                }
+              },
+              "queryRef": "B Measure.Bin Presentations Completed per User",
+              "nativeQueryRef": "Bin Presentations Completed",
+              "displayName": "Bin Presentations Completed"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "B Measure"
+                    }
+                  },
+                  "Property": "Lines Completed per User"
+                }
+              },
+              "queryRef": "B Measure.Lines Completed per User",
+              "nativeQueryRef": "Lines Completed1",
+              "displayName": "Lines Completed"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "B Measure"
+                    }
+                  },
+                  "Property": "Units Completed per User"
+                }
+              },
+              "queryRef": "B Measure.Units Completed per User",
+              "nativeQueryRef": "Units Completed",
+              "displayName": "Units Completed"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "B Measure"
+                    }
+                  },
+                  "Property": "Orders/HR per User"
+                }
+              },
+              "queryRef": "B Measure.Orders/HR per User",
+              "nativeQueryRef": "Orders/HR",
+              "displayName": "Orders/HR"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "B Measure"
+                    }
+                  },
+                  "Property": "Bins/HR per User"
+                }
+              },
+              "queryRef": "B Measure.Bins/HR per User",
+              "nativeQueryRef": "Bins/HR",
+              "displayName": "Bins/HR"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "B Measure"
+                    }
+                  },
+                  "Property": "Units/HR per User"
+                }
+              },
+              "queryRef": "B Measure.Units/HR per User",
+              "nativeQueryRef": "Units/HR",
+              "displayName": "Units/HR"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "B Measure"
+                    }
+                  },
+                  "Property": "Lines/HR per User"
+                }
+              },
+              "queryRef": "B Measure.Lines/HR per User",
+              "nativeQueryRef": "Lines/HR",
+              "displayName": "Lines/HR"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "B Measure"
+                    }
+                  },
+                  "Property": "Machine wait time per User"
+                }
+              },
+              "queryRef": "B Measure.Machine wait time per User",
+              "nativeQueryRef": "Machine wait time",
+              "displayName": "Machine wait time"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "B Measure"
+                    }
+                  },
+                  "Property": "Average Handle Time/Presentation per User"
+                }
+              },
+              "queryRef": "B Measure.Average Handle Time/Presentation per User",
+              "nativeQueryRef": "Average Handle Time/Presentation per User",
+              "displayName": "Average Handle Time/Presentation"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "B Measure"
+                    }
+                  },
+                  "Property": "Total Logged Time per User"
+                }
+              },
+              "queryRef": "B Measure.Total Logged Time per User",
+              "nativeQueryRef": "Total Logged Time per User",
+              "displayName": "Total Logged Time"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "B Measure"
+                  }
+                },
+                "Property": "Orders Completed per User"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "grid": [
+        {
+          "properties": {
+            "outlineStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "15D"
+                }
+              }
+            },
+            "outlineColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#546A7A'"
+                    }
+                  }
+                }
+              }
+            },
+            "gridVertical": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "gridVerticalColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#546A7A'"
+                    }
+                  }
+                }
+              }
+            },
+            "gridHorizontalColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#546A7A'"
+                    }
+                  }
+                }
+              }
+            },
+            "textSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "11D"
+                }
+              }
+            },
+            "rowPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "4D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "backColorSecondary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#EEF4F9'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "italic": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "total": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "197.69870739209944D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "B Measure.Orders Completed per User"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "201.89581692291932D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "B Measure.Bin Presentations Completed per User"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "181.73872846520652D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "B Measure.Orders/HR per User"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "176.45828829780595D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "B Measure.Bins/HR per User"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "181.114398609286D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "B Measure.Lines Completed per User"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "181.49666345270498D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "B Measure.Machine wait time per User"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "183.89629732748543D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "B Measure.Lines/HR per User"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "183.69223847293884D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "B Measure.Units/HR per User"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "181.98843614594387D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "B Measure.Units Completed per User"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "207.54738142346594D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "DistinctUsersTable.Users"
+          }
+        }
+      ],
+      "accessibility": [
+        {
+          "properties": {
+            "rowWithReferenceText": {
+              "expr": {
+                "Literal": {
+                  "Value": "''"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "border": [
+        {
+          "properties": {
+            "width": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "titleWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Productivity by User'"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "spacing": [
+        {
+          "properties": {
+            "verticalSpacing": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,242 @@
+table Order
+	lineageTag: 81edf848-c512-4917-90b9-4247abf7357e
+
+	column PrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 00115c44-b7ca-49a9-9144-5adf0017815a
+		summarizeBy: count
+		sourceColumn: PrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column TimeStamp
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: aa504917-873a-48b5-9740-97206be6b128
+		summarizeBy: none
+		sourceColumn: TimeStamp
+
+		variation Variation
+			isDefault
+			relationship: da0da4ea-7a36-4452-961d-7bcdff40ddea
+			defaultHierarchy: LocalDateTable_3f8487fe-f8d5-46f1-b70a-1194ab99d68e.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderPrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: dba70373-59f6-41f8-b994-ce85964df837
+		summarizeBy: count
+		sourceColumn: OrderPrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ContainerType
+		dataType: int64
+		formatString: 0
+		lineageTag: 7a976268-588c-45b1-ab42-4836a2d5f00a
+		summarizeBy: sum
+		sourceColumn: ContainerType
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderNumber
+		dataType: string
+		lineageTag: addffe79-0f13-4c9f-a856-877b1cd36a9d
+		summarizeBy: none
+		sourceColumn: OrderNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: de928599-6e78-44f6-bd78-17a03c04666f
+		summarizeBy: none
+		sourceColumn: CreatedDate
+
+		variation Variation
+			isDefault
+			relationship: 863e4dba-2dca-4448-99b5-cae028a0bf28
+			defaultHierarchy: LocalDateTable_d8e45a48-f6f0-4528-9127-0b417c0af807.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column AllocatedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 3add987c-ebe3-4ed3-adb1-08a77013b7b4
+		summarizeBy: none
+		sourceColumn: AllocatedDate
+
+		variation Variation
+			isDefault
+			relationship: 1e24ae9b-38d6-40d6-a63f-a884fa860aab
+			defaultHierarchy: LocalDateTable_902673c8-caab-4660-8ec1-05c268d00f4c.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column ActivatedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 3b763fad-528a-455a-869e-074a7f67a2b0
+		summarizeBy: none
+		sourceColumn: ActivatedDate
+
+		variation Variation
+			isDefault
+			relationship: 20f30373-6ef8-4726-a964-c4e0e1111b94
+			defaultHierarchy: LocalDateTable_e65e911e-18e6-41ab-8b5d-b95c5b34c5d9.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column CompletedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 67ccb534-f79e-4efe-b3e9-54fffd1d0ec1
+		summarizeBy: none
+		sourceColumn: CompletedDate
+
+		variation Variation
+			isDefault
+			relationship: 5aa4e2cc-86af-4990-bf54-fb51cbc0fec9
+			defaultHierarchy: LocalDateTable_0c7407ab-62bb-4414-8258-381de9b730c6.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column User
+		dataType: string
+		lineageTag: 944dae51-c73a-4ba1-ae9f-b89eab613876
+		summarizeBy: none
+		sourceColumn: User
+
+		annotation SummarizationSetBy = Automatic
+
+	column Port
+		dataType: string
+		lineageTag: a6a6e14b-3849-4928-abf7-2fc230d93da2
+		summarizeBy: none
+		sourceColumn: Port
+		sortByColumn: PortSortOrder
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderLineCount
+		dataType: int64
+		formatString: 0
+		lineageTag: 051bdbb3-094c-4045-9e07-dcede67f38c0
+		summarizeBy: sum
+		sourceColumn: OrderLineCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column EachUnitCount
+		dataType: int64
+		formatString: 0
+		lineageTag: 5939d989-d80b-4869-ad45-e2a56976c07d
+		summarizeBy: sum
+		sourceColumn: EachUnitCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalUnitWeight
+		dataType: double
+		lineageTag: c907b649-7be4-49f9-bdc9-6729e3c278d0
+		summarizeBy: sum
+		sourceColumn: TotalUnitWeight
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Priority
+		dataType: int64
+		formatString: 0
+		lineageTag: c954c564-983a-4bcb-9045-c32217bf4b13
+		summarizeBy: sum
+		sourceColumn: Priority
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsSingle
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 2802633a-cc0a-42a3-9995-1c5ccb1f827a
+		summarizeBy: none
+		sourceColumn: IsSingle
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hour =
+			FORMAT('Order'[CompletedDate], "h AM/PM")
+			
+			
+			// FORMAT('Order'[TimeStamp], "hh:mm AM/PM")
+		lineageTag: d2b0ec53-e26c-4743-b9f2-f23483d8f9ba
+		summarizeBy: none
+		sortByColumn: HourSortOrder
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 49234e65-6187-4b6b-8e66-418f8574606c
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: b983f3b3-aa25-45b8-8e22-133d3e99a149
+			defaultHierarchy: LocalDateTable_4e8c83a9-94d0-4c7a-8b5b-261ecdbe807e.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column PortSortOrder
+		dataType: int64
+		formatString: 0
+		lineageTag: b4174409-dd36-4011-bd6e-b6ca0b5a02cc
+		summarizeBy: sum
+		sourceColumn: PortSortOrder
+
+		annotation SummarizationSetBy = Automatic
+
+	column HourSortOrder = ```
+			
+			HOUR('Order'[CompletedDate])
+			
+			```
+		formatString: 0
+		lineageTag: 5f9d2b81-fca5-4387-895a-4f6fbc3bf55e
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Order = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_Order = Source{[Schema="dbo",Item="Order"]}[Data],
+				    #"Added Custom" = Table.AddColumn(dbo_Order, "Date", each DateTime.Date([CompletedDate])),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Added Custom",{{"Date", type date}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Changed Type","No Data","P-1",Replacer.ReplaceText,{"Port"}),
+				    #"Inserted Text Range" = Table.AddColumn(#"Replaced Value", "Text Range", each Text.Middle([Port], 1, 9999999), type text),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Inserted Text Range",{{"Text Range", Int64.Type}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Changed Type1", each true),
+				    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows",{{"Text Range", "PortSortOrder"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

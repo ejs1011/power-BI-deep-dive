@@ -1,0 +1,33 @@
+table OrdersCompletedPerPort
+	lineageTag: 0927a1bf-bb4b-4f93-87f6-75a7758a64e5
+
+	column Ports
+		dataType: string
+		lineageTag: 48016ee9-861b-4e39-b0b2-c9397dd3af0e
+		summarizeBy: none
+		sourceColumn: Ports
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrdersCompleted
+		dataType: int64
+		formatString: 0
+		lineageTag: e44348bd-31b6-4766-859c-f8a0cbad09be
+		summarizeBy: sum
+		sourceColumn: OrdersCompleted
+
+		annotation SummarizationSetBy = Automatic
+
+	partition OrdersCompletedPerPort = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_OrdersCompletedPerPort = Source{[Schema="dbo",Item="OrdersCompletedPerPort"]}[Data]
+				in
+				    dbo_OrdersCompletedPerPort
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

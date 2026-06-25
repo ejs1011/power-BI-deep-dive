@@ -1,0 +1,32 @@
+table OrdersPerHourPerPort
+	lineageTag: 3268fdf4-0fce-4fdc-8418-cb905c4e0cb8
+
+	column Ports
+		dataType: string
+		lineageTag: 5a5c6a20-2509-4b17-ad7a-d97a0bbab6f2
+		summarizeBy: none
+		sourceColumn: Ports
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrdersPerHourPerPort
+		dataType: double
+		lineageTag: 5aaf36a3-95cc-4c1c-8cb0-c3f5cac47f56
+		summarizeBy: sum
+		sourceColumn: OrdersPerHourPerPort
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition OrdersPerHourPerPort = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    dbo_OrdersPerHourPerPort = Source{[Schema="dbo",Item="OrdersPerHourPerPort"]}[Data]
+				in
+				    dbo_OrdersPerHourPerPort
+
+	annotation PBI_ResultType = Table
+

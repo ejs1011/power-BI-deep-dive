@@ -1,0 +1,32 @@
+table UnitsPerHourPerPort
+	lineageTag: 79d780ec-0abb-4137-b4ef-97bec1603b3b
+
+	column Ports
+		dataType: string
+		lineageTag: a05ec12f-514f-4096-841f-a329f030bf52
+		summarizeBy: none
+		sourceColumn: Ports
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitsPerHour
+		dataType: double
+		lineageTag: 27cf53f9-2fc3-43eb-ad75-d49e1898c918
+		summarizeBy: sum
+		sourceColumn: UnitsPerHour
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition UnitsPerHourPerPort = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    dbo_UnitsPerHourPerPort = Source{[Schema="dbo",Item="UnitsPerHourPerPort"]}[Data]
+				in
+				    dbo_UnitsPerHourPerPort
+
+	annotation PBI_ResultType = Table
+

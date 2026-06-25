@@ -1,0 +1,36 @@
+table Presentations_Putaway
+	lineageTag: 0af6acc8-8e39-40bd-a657-a92faad79115
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 5950c4f6-5c4e-436f-8a9e-b10f3a423c2f
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Presentations Putaway'
+		dataType: int64
+		formatString: 0
+		lineageTag: 788d8f10-cf8d-4389-a5d3-86472627a686
+		summarizeBy: sum
+		sourceColumn: Presentations Putaway
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Presentations_Putaway = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_Presentations_Putaway = Source{[Schema="dbo",Item="Presentations_Putaway"]}[Data]
+				in
+				    dbo_Presentations_Putaway
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

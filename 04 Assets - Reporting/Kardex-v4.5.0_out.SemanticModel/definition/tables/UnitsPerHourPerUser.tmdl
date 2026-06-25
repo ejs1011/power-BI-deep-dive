@@ -1,0 +1,34 @@
+table UnitsPerHourPerUser
+	lineageTag: b4fefbb2-acad-43c1-bca9-7b78462c5356
+
+	column Users
+		dataType: string
+		lineageTag: aa51d6c6-f147-4b8e-b55f-40a9ab208bb0
+		summarizeBy: none
+		sourceColumn: Users
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitsPerHour
+		dataType: double
+		lineageTag: ef25425c-0a71-494c-a706-c6a41c2c528c
+		summarizeBy: sum
+		sourceColumn: UnitsPerHour
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition UnitsPerHourPerUser = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_UnitsPerHourPerUser = Source{[Schema="dbo",Item="UnitsPerHourPerUser"]}[Data]
+				in
+				    dbo_UnitsPerHourPerUser
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

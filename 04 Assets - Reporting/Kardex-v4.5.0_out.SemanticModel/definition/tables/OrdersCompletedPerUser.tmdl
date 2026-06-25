@@ -1,0 +1,31 @@
+table OrdersCompletedPerUser
+	lineageTag: 5171c23f-11a6-43fd-873a-26c7d0c3909e
+
+	column Users
+		dataType: string
+		lineageTag: 57ce478a-928a-4b6e-8428-2d571f4505c8
+		summarizeBy: none
+		sourceColumn: Users
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrdersCompleted
+		dataType: int64
+		formatString: 0
+		lineageTag: 74dbafe9-1f1a-4998-8c34-4923ae786686
+		summarizeBy: sum
+		sourceColumn: OrdersCompleted
+
+		annotation SummarizationSetBy = Automatic
+
+	partition OrdersCompletedPerUser = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_OrdersCompletedPerUser = Source{[Schema="dbo",Item="OrdersCompletedPerUser"]}[Data]
+				in
+				    dbo_OrdersCompletedPerUser
+
+	annotation PBI_ResultType = Table
+

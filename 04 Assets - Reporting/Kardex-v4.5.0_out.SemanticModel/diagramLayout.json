@@ -1,0 +1,1050 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 5.2087234724916707,
+        "y": 296.89722357306027
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 3700.7083894872635,
+            "y": 1652.3178625180558
+          },
+          "nodeIndex": "A Measure",
+          "nodeLineageTag": "05026725-1f8e-4cba-8880-100ce9443259",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 50
+        },
+        {
+          "location": {
+            "x": 1375.6477350996984,
+            "y": 525.96445473754557
+          },
+          "nodeIndex": "Calender",
+          "nodeLineageTag": "0ef06304-fc2a-4eb7-86b2-a2c067f26d90",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 46
+        },
+        {
+          "location": {
+            "x": 3967.6115640137223,
+            "y": 1654.4244340203225
+          },
+          "nodeIndex": "B Measure",
+          "nodeLineageTag": "5f137cdb-18be-4ba3-bbf6-b9cb2d6ec2e4",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 51
+        },
+        {
+          "location": {
+            "x": 5010.9569680873392,
+            "y": 1685.3005270160013
+          },
+          "nodeIndex": "_MeasureGroups",
+          "nodeLineageTag": "245541b5-746a-46ec-b324-dc9358574f01",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 73
+        },
+        {
+          "location": {
+            "x": 98.605110958087721,
+            "y": 481.07432387781
+          },
+          "nodeIndex": "ContainerTemplateCompartments",
+          "nodeLineageTag": "568e468d-7747-4b34-afcb-5f0c58c733fd",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 47
+        },
+        {
+          "location": {
+            "x": 2914.3823835992944,
+            "y": 418.28261839958554
+          },
+          "nodeIndex": "InventoryTaskActions",
+          "nodeLineageTag": "94ef31ea-df79-4a88-bfb3-35ce0ac839b9",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 48
+        },
+        {
+          "location": {
+            "x": 254.74220619430184,
+            "y": 1117.480759305477
+          },
+          "nodeIndex": "ContainerCompartmentBarcodes",
+          "nodeLineageTag": "5c60f554-b227-4251-852b-30b5315b31c5",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 45
+        },
+        {
+          "location": {
+            "x": 1030.8113716107305,
+            "y": 542.11492980272146
+          },
+          "nodeIndex": "Containers",
+          "nodeLineageTag": "6267a5fc-5119-46fc-8ac4-92470e2d9188",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 49
+        },
+        {
+          "location": {
+            "x": 447.97500812176247,
+            "y": 805.25830846373856
+          },
+          "nodeIndex": "Inventory",
+          "nodeLineageTag": "9fac1312-45bc-420a-8752-518bbb8174b6",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 44
+        },
+        {
+          "location": {
+            "x": 117.5,
+            "y": 68.237960388842112
+          },
+          "nodeIndex": "CompartmentSizes",
+          "nodeLineageTag": "c113c5ed-17d7-48da-808b-4d5a49ab01b0",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 43
+        },
+        {
+          "location": {
+            "x": 1913.0182997711481,
+            "y": 448.18486221154672
+          },
+          "nodeIndex": "PutAwayContainers",
+          "nodeLineageTag": "4d19e407-489e-4b21-9507-da9799dd61cc",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 59
+        },
+        {
+          "location": {
+            "x": 1657.3204620776341,
+            "y": 909.49796560649315
+          },
+          "nodeIndex": "PutAwayContainerLineItems",
+          "nodeLineageTag": "11f6022d-97ae-4218-af99-c67d4f53a49a",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 56
+        },
+        {
+          "location": {
+            "x": 1758.3455727932126,
+            "y": 94.336363488967891
+          },
+          "nodeIndex": "FulfillmentOrders",
+          "nodeLineageTag": "545125c2-03f1-489a-9702-5713e78446dc",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 42
+        },
+        {
+          "location": {
+            "x": 2076.6819362821807,
+            "y": 97.639076396310429
+          },
+          "nodeIndex": "FulfillmentOrderLines",
+          "nodeLineageTag": "789be9e3-9a9d-440c-9a86-401ec32aef3c",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 70
+        },
+        {
+          "location": {
+            "x": 818.97893666753089,
+            "y": 67.5
+          },
+          "nodeIndex": "ContainerTemplates",
+          "nodeLineageTag": "d0ee2006-e165-4c3d-a63c-f57938568160",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 41
+        },
+        {
+          "location": {
+            "x": 5487.6782871721352,
+            "y": 774.49426975600545
+          },
+          "nodeIndex": "DistinctUsersTable",
+          "nodeLineageTag": "a46ff96a-9fcc-4378-af7a-1c2fbfd222b9",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 68
+        },
+        {
+          "location": {
+            "x": 629.14326340342279,
+            "y": 433.0921567565365
+          },
+          "nodeIndex": "Products",
+          "nodeLineageTag": "e987ab0d-b3bb-46ae-9eb6-c2b86b4c5d59",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 40
+        },
+        {
+          "location": {
+            "x": 2561.6888772531838,
+            "y": 437.97718623831815
+          },
+          "nodeIndex": "InventoryTasks",
+          "nodeLineageTag": "6737a40f-c2a3-4558-97e1-ba5593570507",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 38
+        },
+        {
+          "location": {
+            "x": 2233.011316947975,
+            "y": 439.87588783181104
+          },
+          "nodeIndex": "InventoryTasks_PutAway",
+          "nodeLineageTag": "16da8ea4-f202-40a3-937c-7b4a0663c978",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 39
+        },
+        {
+          "location": {
+            "x": 725.57856968326962,
+            "y": 1078.0946719527064
+          },
+          "nodeIndex": "UnitsOfMeasure",
+          "nodeLineageTag": "2a7d37b3-873d-43c1-b376-54e7d44a3b97",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 37
+        },
+        {
+          "location": {
+            "x": 1041.7543326366444,
+            "y": 960.30081822651346
+          },
+          "nodeIndex": "Order",
+          "nodeLineageTag": "81edf848-c512-4917-90b9-4247abf7357e",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 52
+        },
+        {
+          "location": {
+            "x": 448.68193628218069,
+            "y": 60.683379591573612
+          },
+          "nodeIndex": "Pick",
+          "nodeLineageTag": "c3e5be27-7f59-4878-9b64-a520caeabefa",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 53
+        },
+        {
+          "location": {
+            "x": 1296.4840985886663,
+            "y": 995.806384939679
+          },
+          "nodeIndex": "Throughput",
+          "nodeLineageTag": "17c71326-9912-4c10-b65f-982e5638e9d1",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 54
+        },
+        {
+          "location": {
+            "x": 4695.57861061727,
+            "y": 1681.6196753883069
+          },
+          "nodeIndex": "MetricsSlicer",
+          "nodeLineageTag": "ebebd858-2730-40dc-8ef8-78e19ae782a9",
+          "size": {
+            "height": 150.08510976616708,
+            "width": 234
+          },
+          "zIndex": 72
+        },
+        {
+          "location": {
+            "x": 1465.0092093042447,
+            "y": 84.128091248577675
+          },
+          "nodeIndex": "CycleCountService",
+          "nodeLineageTag": "3e88c81c-96e8-41d7-9d48-15536ede953e",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 55
+        },
+        {
+          "location": {
+            "x": 1167.3113716107305,
+            "y": 80.9686649342998
+          },
+          "nodeIndex": "PutAway",
+          "nodeLineageTag": "d6bc4562-5698-437e-831d-dda918abe9c4",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 36
+        },
+        {
+          "location": {
+            "x": 110.47500812176258,
+            "y": 800.12646417033011
+          },
+          "nodeIndex": "CloseBin-InventoryRecord",
+          "nodeLineageTag": "d2662c64-938d-476a-849e-fef90088f831",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 35
+        },
+        {
+          "location": {
+            "x": 4223.0720063522194,
+            "y": 1656.9652201311894
+          },
+          "nodeIndex": "Calender 2",
+          "nodeLineageTag": "32936cf1-947e-4c3e-8901-8b63a6fe5e63",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 34
+        },
+        {
+          "location": {
+            "x": 3719.0845797333041,
+            "y": 1403
+          },
+          "nodeIndex": "KPI_MetricSeries",
+          "nodeLineageTag": "f9c069f8-9c37-4a53-8ad8-6cfa3169b785",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 57
+        },
+        {
+          "location": {
+            "x": 3973.0845797333041,
+            "y": 1385
+          },
+          "nodeIndex": "MetricsSlicer OWH",
+          "nodeLineageTag": "c9cad7a1-2b9a-493c-96b7-26eb9484c3ac",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 31
+        },
+        {
+          "location": {
+            "x": 4258.2842867645541,
+            "y": 1371
+          },
+          "nodeIndex": "KPI_Series",
+          "nodeLineageTag": "ce52c464-5889-40cf-b5f4-0c54c47cab4d",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 32
+        },
+        {
+          "location": {
+            "x": 3748.1603202461447,
+            "y": 2065
+          },
+          "nodeIndex": "InventoryAndLocationSummary",
+          "nodeLineageTag": "1833ad3b-f9ab-40d2-b76d-4c9ecea36faf",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 33
+        },
+        {
+          "location": {
+            "x": 2161.9893416380664,
+            "y": 963.30952380952385
+          },
+          "nodeIndex": "InventoryTasks_CycleCount",
+          "nodeLineageTag": "77e75e2f-3c6f-46ab-8349-f1780ba34814",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 71
+        },
+        {
+          "location": {
+            "x": 2849.013290670805,
+            "y": 836.5
+          },
+          "nodeIndex": "InventoryTaskGroups",
+          "nodeLineageTag": "40706845-c410-4f5c-9964-92908d6d71c7",
+          "size": {
+            "height": 300,
+            "width": 281.14285714285734
+          },
+          "zIndex": 58
+        },
+        {
+          "location": {
+            "x": 2523.6181083791371,
+            "y": 829.83333333333348
+          },
+          "nodeIndex": "InventoryTasks (2)",
+          "nodeLineageTag": "9c7a1c1b-ba56-466c-a101-a856554542d4",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 30
+        },
+        {
+          "location": {
+            "x": 6522.5119490426587,
+            "y": 509.01609004178636
+          },
+          "nodeIndex": "// DistinctPortsTable",
+          "nodeLineageTag": "020a9447-20a8-4994-8e95-835ec928af75",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 75
+        },
+        {
+          "location": {
+            "x": 3999.0845797333041,
+            "y": 2058
+          },
+          "nodeIndex": "BinPresentedHD",
+          "nodeLineageTag": "25475830-5ab1-4913-9ab8-0b5206653dfe",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 64
+        },
+        {
+          "location": {
+            "x": 4301.4449936498786,
+            "y": 2050
+          },
+          "nodeIndex": "LinesCompletedHD",
+          "nodeLineageTag": "81a61fe1-8541-4362-90ff-55b06650054f",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 18
+        },
+        {
+          "location": {
+            "x": 4616.8054075664522,
+            "y": 2049
+          },
+          "nodeIndex": "OrdersCompletedHD",
+          "nodeLineageTag": "19e57383-2409-44d4-a309-1162de8c49bf",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 19
+        },
+        {
+          "location": {
+            "x": 4899.1658214830268,
+            "y": 2051
+          },
+          "nodeIndex": "UnitsPickedHD",
+          "nodeLineageTag": "7914c666-c562-4d3c-bfc5-33ba22fcdbad",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 20
+        },
+        {
+          "location": {
+            "x": 5212.9661144517768,
+            "y": 188
+          },
+          "nodeIndex": "Customer_Order_Lines",
+          "nodeLineageTag": "55f92d52-63f9-4cca-9002-e31114810f16",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 21
+        },
+        {
+          "location": {
+            "x": 5215.1263330558513,
+            "y": 18
+          },
+          "nodeIndex": "Customer_Orders_Picked",
+          "nodeLineageTag": "29550b74-1dba-4f70-8d40-380fc0781e67",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 63
+        },
+        {
+          "location": {
+            "x": 4740.886649316175,
+            "y": 882
+          },
+          "nodeIndex": "Distinct_bin_compartments_that_had_inventory",
+          "nodeLineageTag": "01ef1db1-2953-4e46-b5a2-d76c61a71430",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 22
+        },
+        {
+          "location": {
+            "x": 4746.2470632327495,
+            "y": 708
+          },
+          "nodeIndex": "Distinct_bins_inventory_added",
+          "nodeLineageTag": "35ee7dbb-b973-41a5-992f-037aafbbb71d",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 23
+        },
+        {
+          "location": {
+            "x": 5206.0078677743222,
+            "y": 554
+          },
+          "nodeIndex": "Distinct_Skus_Picked",
+          "nodeLineageTag": "d53eb16b-ce12-4735-927c-3ac12880aaf6",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 24
+        },
+        {
+          "location": {
+            "x": 4746.9678910658968,
+            "y": 0
+          },
+          "nodeIndex": "Orders_Putaway",
+          "nodeLineageTag": "4eb9b746-a6ac-46ff-b2e7-d1e93902f07d",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 61
+        },
+        {
+          "location": {
+            "x": 4750.3283049824713,
+            "y": 534
+          },
+          "nodeIndex": "Presentations_Putaway",
+          "nodeLineageTag": "0af6acc8-8e39-40bd-a657-a92faad79115",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 25
+        },
+        {
+          "location": {
+            "x": 4749.6887188990459,
+            "y": 366
+          },
+          "nodeIndex": "Skus_Putaway",
+          "nodeLineageTag": "15770e33-549d-41fc-890c-8aaf8d2df232",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 26
+        },
+        {
+          "location": {
+            "x": 4293.04913281562,
+            "y": 398
+          },
+          "nodeIndex": "Total_Locations_Occupied",
+          "nodeLineageTag": "6bf4b528-cd22-4ab2-8e89-bc45cd4d704d",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 27
+        },
+        {
+          "location": {
+            "x": 4288.8099373571931,
+            "y": 46
+          },
+          "nodeIndex": "Total_SKUs_On_Hand",
+          "nodeLineageTag": "dda1364a-7d86-47f7-84a5-f3fe3378203d",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 60
+        },
+        {
+          "location": {
+            "x": 4291.3695700237677,
+            "y": 220
+          },
+          "nodeIndex": "Total_Units_On_Hand",
+          "nodeLineageTag": "cbf06ead-7ae9-40fb-8485-a1a9b98ae58b",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 28
+        },
+        {
+          "location": {
+            "x": 5210.7309605028422,
+            "y": 374
+          },
+          "nodeIndex": "Units_Picked",
+          "nodeLineageTag": "35305d14-c315-4d71-9efb-6b3a2c25839b",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 62
+        },
+        {
+          "location": {
+            "x": 4748.4907884819149,
+            "y": 180
+          },
+          "nodeIndex": "Units_Putaway",
+          "nodeLineageTag": "13addbf3-cdc7-415a-aea4-282c6db8c683",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 29
+        },
+        {
+          "location": {
+            "x": 4361.7712634004065,
+            "y": 635.83135748065285
+          },
+          "nodeIndex": "Calendar_1",
+          "nodeLineageTag": "ab662bea-780b-46cf-ac76-4115129a1bb1",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 17
+        },
+        {
+          "location": {
+            "x": 7338.5845797333041,
+            "y": 916
+          },
+          "nodeIndex": "AverageHandlingTimePerPort",
+          "nodeLineageTag": "604bd7cc-81a1-4dc0-84f3-1a99d5405e7e",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 5561.4449936498786,
+            "y": 1153
+          },
+          "nodeIndex": "AverageHandlingTimePerUser",
+          "nodeLineageTag": "8283f900-4513-45d0-819b-24d2c34ead37",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 7383.8054075664522,
+            "y": 739
+          },
+          "nodeIndex": "BinPresentationsCompletedPerPort",
+          "nodeLineageTag": "bf56778f-6091-4084-bfdc-bb8564bb1ab6",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 5799.6658214830259,
+            "y": 1066
+          },
+          "nodeIndex": "BinPresentationsCompletedPerUser",
+          "nodeLineageTag": "d4e8281d-e9ab-435a-ac1b-5054d3af9f10",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 7353.5262353996,
+            "y": 516
+          },
+          "nodeIndex": "BinsPerHourPerPort",
+          "nodeLineageTag": "16b1c52a-b0ee-49d0-8dde-239917ce6513",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 5850.186454003675,
+            "y": 632
+          },
+          "nodeIndex": "BinsPerHourPerUser",
+          "nodeLineageTag": "8cde5071-cab5-485d-bc76-02a7261cf6cc",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 77
+        },
+        {
+          "location": {
+            "x": 7330.2470632327495,
+            "y": 297.5
+          },
+          "nodeIndex": "LinesCompletedPerPort",
+          "nodeLineageTag": "3d612f65-3ee5-4d68-84cc-23eafd8041a9",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 5811.2075748055722,
+            "y": 432
+          },
+          "nodeIndex": "LinesCompletedPerUser",
+          "nodeLineageTag": "aa858791-3cf8-481c-b271-7cf597e0da32",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 7236.9678910658968,
+            "y": 12
+          },
+          "nodeIndex": "LinesperHourPerPort",
+          "nodeLineageTag": "ca66a84a-50d1-4c3e-be37-8486d9748eaa",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 74
+        },
+        {
+          "location": {
+            "x": 5800.3283049824713,
+            "y": 232
+          },
+          "nodeIndex": "LinesperHourPerUser",
+          "nodeLineageTag": "b774026c-6634-4f1e-bbc5-aa27d87d6c6d",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 67
+        },
+        {
+          "location": {
+            "x": 6830.488523586544,
+            "y": 4.5
+          },
+          "nodeIndex": "MachineWaitTimePerPort",
+          "nodeLineageTag": "db93cb8e-37ef-4d3f-9389-a35b51eb8358",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 6101.0491328156186,
+            "y": 156.5
+          },
+          "nodeIndex": "MachineWaitTimePerUser",
+          "nodeLineageTag": "6491bca4-1ff9-4a93-80ae-fea14c3e9e76",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 66
+        },
+        {
+          "location": {
+            "x": 7017.7093514196931,
+            "y": 195
+          },
+          "nodeIndex": "OrdersCompletedPerPort",
+          "nodeLineageTag": "0927a1bf-bb4b-4f93-87f6-75a7758a64e5",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 76
+        },
+        {
+          "location": {
+            "x": 6134.2699606487677,
+            "y": 410.5
+          },
+          "nodeIndex": "OrdersCompletedPerUser",
+          "nodeLineageTag": "5171c23f-11a6-43fd-873a-26c7d0c3909e",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 7071.7299839403422,
+            "y": 398
+          },
+          "nodeIndex": "OrdersPerHourPerPort",
+          "nodeLineageTag": "3268fdf4-0fce-4fdc-8418-cb905c4e0cb8",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 69
+        },
+        {
+          "location": {
+            "x": 5808.7905931694168,
+            "y": 6.8333333333332575
+          },
+          "nodeIndex": "OrdersPerHourPerUser",
+          "nodeLineageTag": "e7e99af6-2d31-42f8-82fc-e12c2cd25f3e",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 65
+        },
+        {
+          "location": {
+            "x": 6704.4508117734913,
+            "y": 863.5
+          },
+          "nodeIndex": "TotalLoggedTimePerPort",
+          "nodeLineageTag": "b2631e01-6a8e-4f88-a4c2-d8523584447f",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 11
+        },
+        {
+          "location": {
+            "x": 6160.0114210025658,
+            "y": 699.5
+          },
+          "nodeIndex": "TotalLoggedTimePerUser",
+          "nodeLineageTag": "e976213d-67f1-42ba-bc40-3d51d13b759b",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 12
+        },
+        {
+          "location": {
+            "x": 7009.97144429414,
+            "y": 621
+          },
+          "nodeIndex": "UnitsCompletedPerPort",
+          "nodeLineageTag": "045f115f-ca4c-4804-8f67-4278b33a20e8",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 13
+        },
+        {
+          "location": {
+            "x": 6128.7322488357149,
+            "y": 852
+          },
+          "nodeIndex": "UnitsCompletedPerUser",
+          "nodeLineageTag": "e4a16fb5-f56c-4d5c-9862-c65e3b37ceda",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 14
+        },
+        {
+          "location": {
+            "x": 6965.0926627522895,
+            "y": 1042.5
+          },
+          "nodeIndex": "UnitsPerHourPerPort",
+          "nodeLineageTag": "79d780ec-0abb-4137-b4ef-97bec1603b3b",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 15
+        },
+        {
+          "location": {
+            "x": 6261.953076668864,
+            "y": 1023
+          },
+          "nodeIndex": "UnitsPerHourPerUser",
+          "nodeLineageTag": "b4fefbb2-acad-43c1-bca9-7b78462c5356",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 16
+        },
+        {
+          "location": {
+            "x": 5353.4795908455289,
+            "y": 1685
+          },
+          "nodeIndex": "DefragDetailByUomCompartmentSize_Table",
+          "nodeLineageTag": "963aa649-a435-4c43-85d9-fc59ffbdf71d",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 726.03749834683333,
+            "y": 1482.5329093761729
+          },
+          "nodeIndex": "UnitOfMeasureConversions",
+          "nodeLineageTag": "af0030cc-5c90-4648-aeae-a8430ebd7f05",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 61.435398991395253,
+      "pinKeyFieldsToTop": true,
+      "showExtraHeaderInfo": true,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 1,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [],
+      "name": "Layout 1",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": true,
+      "showExtraHeaderInfo": true,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Layout 1",
+  "defaultDiagram": "All tables"
+}

@@ -1,0 +1,36 @@
+table Distinct_Skus_Picked
+	lineageTag: d53eb16b-ce12-4735-927c-3ac12880aaf6
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b856676e-c5f6-423c-bf03-8eb80f03154d
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Distinct Skus Picked'
+		dataType: int64
+		formatString: 0
+		lineageTag: 73fbf638-81f4-4f45-b093-e2429df1d278
+		summarizeBy: sum
+		sourceColumn: Distinct Skus Picked
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Distinct_Skus_Picked = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_Distinct_Skus_Picked = Source{[Schema="dbo",Item="Distinct_Skus_Picked"]}[Data]
+				in
+				    dbo_Distinct_Skus_Picked
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

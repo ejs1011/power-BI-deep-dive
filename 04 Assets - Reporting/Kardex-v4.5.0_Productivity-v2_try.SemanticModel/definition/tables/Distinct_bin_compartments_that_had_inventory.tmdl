@@ -1,0 +1,36 @@
+table Distinct_bin_compartments_that_had_inventory
+	lineageTag: 01ef1db1-2953-4e46-b5a2-d76c61a71430
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: db03c5cb-7f92-4dd2-93e0-5479aa9d605c
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Distinct bin compartments that had inventory'
+		dataType: int64
+		formatString: 0
+		lineageTag: fe4a7165-2718-422e-8a0b-656427e8cab6
+		summarizeBy: sum
+		sourceColumn: Distinct bin compartments that had inventory
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Distinct_bin_compartments_that_had_inventory = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    dbo_Distinct_bin_compartments_that_had_inventory = Source{[Schema="dbo",Item="Distinct_bin_compartments_that_had_inventory"]}[Data]
+				in
+				    dbo_Distinct_bin_compartments_that_had_inventory
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

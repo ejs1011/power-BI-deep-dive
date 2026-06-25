@@ -1,0 +1,31 @@
+table BinPresentationsCompletedPerPort
+	lineageTag: bf56778f-6091-4084-bfdc-bb8564bb1ab6
+
+	column Ports
+		dataType: string
+		lineageTag: 692efbd1-db63-4606-9522-32c674a5230c
+		summarizeBy: none
+		sourceColumn: Ports
+
+		annotation SummarizationSetBy = Automatic
+
+	column BinPresentationsCompleted
+		dataType: int64
+		formatString: 0
+		lineageTag: e9c07e7a-de8a-4363-8bd6-812eef8b961e
+		summarizeBy: sum
+		sourceColumn: BinPresentationsCompleted
+
+		annotation SummarizationSetBy = Automatic
+
+	partition BinPresentationsCompletedPerPort = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_BinPresentationsCompletedPerPort = Source{[Schema="dbo",Item="BinPresentationsCompletedPerPort"]}[Data]
+				in
+				    dbo_BinPresentationsCompletedPerPort
+
+	annotation PBI_ResultType = Table
+

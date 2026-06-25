@@ -1,0 +1,225 @@
+table FulfillmentOrderLines
+	lineageTag: 789be9e3-9a9d-440c-9a86-401ec32aef3c
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 9fc99d22-6d88-4f2f-a02a-3b5d3cdf2267
+		summarizeBy: count
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column PrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 616357cf-11b2-4a0f-9db1-ec92da719a82
+		summarizeBy: count
+		sourceColumn: PrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column FulfillmentOrderPrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 22a0c438-aee9-4e6c-9ef6-3ebe25284742
+		summarizeBy: count
+		sourceColumn: FulfillmentOrderPrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExternalOrderLineNumber
+		dataType: string
+		lineageTag: bbe323ce-2aea-4e41-a33c-04758e493ee6
+		summarizeBy: none
+		sourceColumn: ExternalOrderLineNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitOfMeasurePrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: ab5584ce-be0d-44ce-b564-571c160b2b10
+		summarizeBy: count
+		sourceColumn: UnitOfMeasurePrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column RequiredQuantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 9c23ce10-b183-4795-bba2-9aa7d6fa44a6
+		summarizeBy: sum
+		sourceColumn: RequiredQuantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column AllocatedQuantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 4418fe6c-9918-4623-b22d-471d7ed69c51
+		summarizeBy: sum
+		sourceColumn: AllocatedQuantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column FulfilledQuantity
+		dataType: int64
+		formatString: 0
+		lineageTag: d4c53305-537a-4685-b35a-3262442ab368
+		summarizeBy: sum
+		sourceColumn: FulfilledQuantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column ShortedQuantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 3c78ec0b-7a26-4bd5-ab5c-8e51815fa5b7
+		summarizeBy: sum
+		sourceColumn: ShortedQuantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column Characteristics
+		dataType: string
+		lineageTag: feb6983b-a492-4a56-9aca-bc331c1451c4
+		summarizeBy: none
+		sourceColumn: Characteristics
+
+		annotation SummarizationSetBy = Automatic
+
+	column CharacteristicMatchString
+		dataType: string
+		lineageTag: 194bc8f1-9fa9-4e79-a345-2f34347e0b65
+		summarizeBy: none
+		sourceColumn: CharacteristicMatchString
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedBy
+		dataType: string
+		lineageTag: fd14d9a7-f97a-4466-9d2d-a14a9300c5f6
+		summarizeBy: none
+		sourceColumn: CreatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 0e536ed9-cb71-40ca-b723-ebc247b9cd3c
+		summarizeBy: none
+		sourceColumn: CreatedDate
+
+		variation Variation
+			isDefault
+			relationship: 71adbb58-a542-400f-bc69-995f515591dd
+			defaultHierarchy: LocalDateTable_47d1096d-5130-47d6-8178-e298f1e9f3aa.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedBy
+		dataType: string
+		lineageTag: 005fd6a1-023c-4445-937b-f9030ff254ad
+		summarizeBy: none
+		sourceColumn: LastUpdatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 8aaf89f4-0a87-402a-b21d-0c5be75960ba
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderNumber
+		dataType: string
+		lineageTag: 6354e73e-6bfe-453b-8b67-71bb919c7c81
+		summarizeBy: none
+		sourceColumn: OrderNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column SequenceNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: 206e6244-a30f-4f50-8883-8784c841b821
+		summarizeBy: sum
+		sourceColumn: SequenceNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column LineInstructions
+		dataType: string
+		lineageTag: e9422aa2-c025-4bdc-9455-3b2d38228dba
+		summarizeBy: none
+		sourceColumn: LineInstructions
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedDateInventory
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f4b9fdd8-07e8-4812-a83a-a8cfd833219e
+		summarizeBy: none
+		sourceColumn: LastUpdatedDateInventory
+
+		variation Variation
+			isDefault
+			relationship: 29a2c7ac-4864-4992-a534-88896af0c652
+			defaultHierarchy: LocalDateTable_2b419a11-376b-4ac4-9754-941d641b14d1.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: ee379c8f-bf30-4163-8d4f-b3c2c3c26cf5
+		summarizeBy: none
+		sourceColumn: LastUpdatedDate
+
+		variation Variation
+			isDefault
+			relationship: c34fac44-f707-45cb-9469-0a2863f73cd0
+			defaultHierarchy: LocalDateTable_eea7d074-db9f-4aea-8681-b00a4f74fdc7.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Snapshot_Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 2a2e446e-306d-46a5-8b18-bddbc8529fe9
+		summarizeBy: count
+		sourceColumn: Snapshot_Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 44608506-9266-4d76-9c4d-0fc3031e8286
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition FulfillmentOrderLines = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    dbo_FulfillmentOrderLines = Source{[Schema="dbo",Item="FulfillmentOrderLines"]}[Data],
+				    #"Added Custom" = Table.AddColumn(dbo_FulfillmentOrderLines, "Date", each DateTime.Date([LastUpdatedDate])),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Added Custom",{{"Date", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

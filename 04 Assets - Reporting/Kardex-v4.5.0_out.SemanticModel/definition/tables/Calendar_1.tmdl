@@ -1,0 +1,158 @@
+table Calendar_1
+	lineageTag: ab662bea-780b-46cf-ac76-4115129a1bb1
+
+	column Date
+		formatString: General Date
+		lineageTag: ebd283ed-b060-4b47-b9ad-d861110de304
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		variation Variation
+			isDefault
+			relationship: acf5d2a4-df83-41b9-8ba7-8ffb7e163825
+			defaultHierarchy: LocalDateTable_7dba68b5-8241-408c-b697-7b0a1f94a07f.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column day
+		formatString: 0
+		lineageTag: 0dfd2d5c-7ff9-422e-b7fb-f24a953a1218
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [day]
+
+		annotation SummarizationSetBy = Automatic
+
+	column week
+		formatString: 0
+		lineageTag: 2bdb46e5-45a6-4e29-8ce0-bb5b01a846a8
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [week]
+
+		annotation SummarizationSetBy = Automatic
+
+	column month
+		formatString: 0
+		lineageTag: bdab0c13-2e3d-4fdc-89cf-f56fcce1d124
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [month]
+
+		annotation SummarizationSetBy = Automatic
+
+	column year
+		formatString: 0
+		lineageTag: c8b6084b-57bb-419f-8134-54792330a9e1
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column yearMonth
+		lineageTag: f832e959-8fd8-4564-b003-6bad7c9099f7
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [yearMonth]
+
+		annotation SummarizationSetBy = Automatic
+
+	column quarter
+		formatString: 0
+		lineageTag: 05e18387-cec4-4b73-b23c-bc73061c73cb
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [quarter]
+
+		annotation SummarizationSetBy = Automatic
+
+	column yearQuarter
+		lineageTag: a99d3556-a0dd-4011-88fc-8642c79b3fea
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [yearQuarter]
+
+		annotation SummarizationSetBy = Automatic
+
+	column yearweek
+		lineageTag: 147a144f-a307-4040-83c3-d574e64f30e3
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [yearweek]
+
+		annotation SummarizationSetBy = Automatic
+
+	column yearNow
+		formatString: 0
+		lineageTag: b947bdb0-d6cc-4d34-bb7d-63cc38ce0dd4
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [yearNow]
+
+		annotation SummarizationSetBy = Automatic
+
+	column years
+		lineageTag: 4135bdca-8168-4849-9282-bdd5e9d4294f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [years]
+
+		annotation SummarizationSetBy = Automatic
+
+	column upcoming
+		lineageTag: e5b86050-37f3-4528-bf2b-df2681ad3df6
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [upcoming]
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateOnly = DATEVALUE('Calendar_1'[Date])
+		formatString: Short Date
+		lineageTag: ec37ca97-6a01-44b1-97d9-d4763941419b
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: 73c650cc-9f35-4488-880f-987ef7e69482
+			defaultHierarchy: LocalDateTable_e933ac72-c31d-47ca-a67c-3c7cd592ddbb.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Calendar_1 = calculated
+		mode: import
+		source = ```
+				
+				GENERATE (
+				  CALENDAR ( DATE ( 2024, 1, 1 ),  TODAY()),
+				  VAR currentDay = [Date]
+				  VAR day = DAY( currentDay )
+				  VAR week = WEEKNUM( currentDay,1)
+				  VAR month =  MONTH ( currentDay )
+				  VAR year =  YEAR ( currentDay )
+				  VAR yearMonth = FORMAT(currentDay, "YYYY/MM")
+				  VAR quarter = QUARTER(currentDay)
+				  VAR yearQuarter = YEAR ( currentDay ) & "/Q"& QUARTER(currentDay)
+				    VAR yearweek = FORMAT ( [Date], "YYYY" ) & "/Week" & WEEKNUM([Date])
+				  VAR yearNow = IF(year = YEAR(TODAY()),1,0)
+				  VAR years = FORMAT(IF(yearNow = 1, "Current year", YEAR(currentDay)), "")
+				  VAR upcoming = FORMAT(IF(currentDay > TODAY(),1,0),"")
+				RETURN   ROW (
+				  "day", day,
+				  "week", week,
+				  "month", month,
+				  "year", year,
+				  "yearMonth", yearMonth, 
+				  "quarter", quarter,
+				  "yearQuarter", yearQuarter,
+				  "yearweek",yearweek,
+				  "yearNow", yearNow,
+				  "years", years,
+				  "upcoming", upcoming)
+				)
+				```
+
+	annotation PBI_Id = 4e5b719bb9614daaa228706cf9f413e8
+

@@ -1,0 +1,32 @@
+table DistinctUsersTable
+	lineageTag: a46ff96a-9fcc-4378-af7a-1c2fbfd222b9
+
+	column Users
+		lineageTag: 47e46bb3-5010-471a-9c32-687f26c555a1
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Users]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DistinctUsersTable = calculated
+		mode: import
+		source = ```
+				
+				VAR DistinctUsers =
+				    DISTINCT(
+				        SELECTCOLUMNS(
+				            ProductivityDailyUserPortWorkType_v2,
+				            "Users", ProductivityDailyUserPortWorkType_v2[Users]
+				        )
+				    )
+				RETURN
+				    FILTER(
+				        DistinctUsers,
+				        NOT ISBLANK([Users]) && [Users] <> "Unattributed"
+				    )
+				
+				```
+
+	annotation PBI_Id = d110475ff96b4d2393e596f182fcdce4
+

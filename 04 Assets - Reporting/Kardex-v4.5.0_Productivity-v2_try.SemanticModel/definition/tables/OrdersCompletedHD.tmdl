@@ -1,0 +1,41 @@
+table OrdersCompletedHD
+	lineageTag: 19e57383-2409-44d4-a309-1162de8c49bf
+
+	column Date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 5377288a-f8d1-4a34-bc2f-5389f98323a5
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 226d4358-f579-4df5-8e97-2a210170d040
+			defaultHierarchy: LocalDateTable_92e34d67-8869-4d9d-aa9d-15a2029f18ae.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column OrdersCompleted
+		dataType: int64
+		formatString: 0
+		lineageTag: 4a94ab14-c9be-48c3-9693-44ec13c98001
+		summarizeBy: sum
+		sourceColumn: OrdersCompleted
+
+		annotation SummarizationSetBy = Automatic
+
+	partition OrdersCompletedHD = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    dbo_OrdersCompletedHD = Source{[Schema="dbo",Item="OrdersCompletedHD"]}[Data]
+				in
+				    dbo_OrdersCompletedHD
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

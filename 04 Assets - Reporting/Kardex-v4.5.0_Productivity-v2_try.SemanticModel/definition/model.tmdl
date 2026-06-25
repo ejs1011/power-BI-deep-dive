@@ -1,0 +1,169 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-IN
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["A Measure","B Measure","ContainerTemplateCompartments","InventoryTaskActions","ContainerCompartmentBarcodes","Inventory","Containers","CompartmentSizes","ContainerTemplates","FulfillmentOrderLines","FulfillmentOrders","InventoryTasks","InventoryTasks_PutAway","Products","PutAwayContainerLineItems","PutAwayContainers","Order","Pick","Throughput","PutAway","CycleCountService","CloseBin-InventoryRecord","KPI_MetricSeries","InventoryTasks_CycleCount","InventoryAndLocationSummary","InventoryTaskGroups","InventoryTasks (2)","LinesCompletedHD","OrdersCompletedHD","UnitsPickedHD","BinPresentedHD","Total_SKUs_On_Hand","Total_Units_On_Hand","Total_Locations_Occupied","Skus_Putaway","Orders_Putaway","Units_Putaway","Units_Picked","Presentations_Putaway","Distinct_bin_compartments_that_had_inventory","Distinct_bins_inventory_added","Customer_Orders_Picked","Customer_Order_Lines","Distinct_Skus_Picked","AverageHandlingTimePerPort","AverageHandlingTimePerUser","BinPresentationsCompletedPerPort","BinPresentationsCompletedPerUser","BinsPerHourPerPort","BinsPerHourPerUser","LinesCompletedPerPort","LinesCompletedPerUser","LinesperHourPerPort","LinesperHourPerUser","MachineWaitTimePerPort","MachineWaitTimePerUser","OrdersCompletedPerPort","OrdersCompletedPerUser","OrdersPerHourPerPort","OrdersPerHourPerUser","TotalLoggedTimePerPort","TotalLoggedTimePerUser","UnitsCompletedPerPort","UnitsCompletedPerUser","UnitsPerHourPerPort","UnitsPerHourPerUser","ProductivityDailyUserPortWorkType_v2","DefragDetailByUomCompartmentSize_Table","UnitOfMeasureConversions","UnitsOfMeasure"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table DateTableTemplate_004e8819-9b0d-4fb6-8ea6-31103b2370bb
+ref table 'A Measure'
+ref table Calender
+ref table LocalDateTable_f05d12b6-5388-44eb-b017-6c2ccf2deb4a
+ref table 'B Measure'
+ref table _MeasureGroups
+ref table ContainerTemplateCompartments
+ref table LocalDateTable_1b2a3d44-82c3-4a9a-9d8a-9d4fb080fe11
+ref table InventoryTaskActions
+ref table LocalDateTable_c4383f3f-b1e7-4983-b25c-bf3315e3536d
+ref table ContainerCompartmentBarcodes
+ref table Inventory
+ref table LocalDateTable_3951fc29-8d37-49d1-8a92-43ae43cbbab8
+ref table LocalDateTable_90726d65-cb0d-4fe0-8ba2-49105f675417
+ref table LocalDateTable_67e2f0ea-ab3a-479b-8071-736a049dd6a4
+ref table Containers
+ref table LocalDateTable_d13e15e0-321b-4e09-80f0-1cb0a14cf2b6
+ref table LocalDateTable_9b39ac00-1791-4e7d-bb1b-0f8d52788798
+ref table LocalDateTable_5748c141-1026-4ff0-904e-e7dde6cb6596
+ref table CompartmentSizes
+ref table LocalDateTable_33086b98-48fa-4b70-8f7e-de48960e1f9c
+ref table LocalDateTable_dfb7ceff-9ee6-4853-b320-140bc471511e
+ref table LocalDateTable_17768c8d-4e8f-42cd-92bb-114ea45330ef
+ref table ContainerTemplates
+ref table LocalDateTable_701fa79f-eb60-4a70-975a-2b71cb44f518
+ref table LocalDateTable_bf612fdf-8f75-456d-9557-21e771ebc982
+ref table LocalDateTable_4202c532-9aba-46dc-a4b1-e7e0b37d8f29
+ref table FulfillmentOrderLines
+ref table LocalDateTable_47d1096d-5130-47d6-8178-e298f1e9f3aa
+ref table LocalDateTable_2b419a11-376b-4ac4-9754-941d641b14d1
+ref table LocalDateTable_eea7d074-db9f-4aea-8681-b00a4f74fdc7
+ref table FulfillmentOrders
+ref table LocalDateTable_2bbddcd6-bd4a-46ed-a5ce-eb4af7cc6e98
+ref table LocalDateTable_7e906d81-45cd-4e47-8763-a5b26a7b71c0
+ref table LocalDateTable_ac676153-a8a8-40d1-b71d-ade27c52f5b6
+ref table LocalDateTable_cbb379e5-639e-4deb-9475-e49acc0545b1
+ref table LocalDateTable_e0f9995c-8e0c-4357-bf1f-1e740834b1d8
+ref table InventoryTasks
+ref table LocalDateTable_2d497aeb-dc37-4200-bc96-e0549a2857d2
+ref table LocalDateTable_03649f0a-5cbc-42ee-9922-044877adb3d7
+ref table LocalDateTable_58c829fd-e52f-458b-8896-337d198574b5
+ref table InventoryTasks_PutAway
+ref table LocalDateTable_d408d354-0eb3-4693-ae36-a8418bbeb6b1
+ref table Products
+ref table LocalDateTable_cec1ecc5-a464-4ff9-8c25-249bb4d41bd2
+ref table LocalDateTable_9066cbc1-4131-436a-a85f-68546f732dba
+ref table LocalDateTable_4d9f4678-27b1-45d4-adf5-97fe9dd0beec
+ref table PutAwayContainerLineItems
+ref table LocalDateTable_5f48fcb6-c2a9-48af-a4bd-29bf725fe7e5
+ref table LocalDateTable_93d7876c-a545-4bcf-84de-e4a07c4a3310
+ref table LocalDateTable_99e876d9-f28d-434e-9cf7-5cc706c9e7c6
+ref table PutAwayContainers
+ref table LocalDateTable_bd7d65a3-9f70-416b-bebc-bbeb4c2f35c6
+ref table LocalDateTable_ba402b17-1aab-4c64-9836-8df7ddd398b3
+ref table LocalDateTable_3ef4dd2c-2938-4e8a-9fe5-186a071da17a
+ref table DistinctUsersTable
+ref table '// DistinctPortsTable'
+ref table Order
+ref table LocalDateTable_3f8487fe-f8d5-46f1-b70a-1194ab99d68e
+ref table LocalDateTable_d8e45a48-f6f0-4528-9127-0b417c0af807
+ref table LocalDateTable_902673c8-caab-4660-8ec1-05c268d00f4c
+ref table LocalDateTable_e65e911e-18e6-41ab-8b5d-b95c5b34c5d9
+ref table LocalDateTable_0c7407ab-62bb-4414-8258-381de9b730c6
+ref table Pick
+ref table LocalDateTable_d611d978-d773-44ef-8d0c-a1d03f5e4139
+ref table LocalDateTable_c2ebc98c-5098-4945-a1a9-155592bc4cc3
+ref table LocalDateTable_4e8c83a9-94d0-4c7a-8b5b-261ecdbe807e
+ref table Throughput
+ref table MetricsSlicer
+ref table PutAway
+ref table LocalDateTable_0ac29051-0b8e-465e-9d19-0adeac22e1c9
+ref table LocalDateTable_44eab975-9ece-449f-badd-f0325d78e680
+ref table LocalDateTable_5d96b2ef-b21b-49ae-bd8e-4758219d2756
+ref table CycleCountService
+ref table LocalDateTable_f3749b83-e89f-4c11-a8e4-601444e0d84b
+ref table CloseBin-InventoryRecord
+ref table LocalDateTable_19310448-05a3-4a80-9103-16f0210b431b
+ref table LocalDateTable_1e1736c1-f51d-4c87-a840-b1fdae73e0f7
+ref table 'Calender 2'
+ref table LocalDateTable_70c0e63f-6d68-4d85-a31b-3a32c67ae0fb
+ref table LocalDateTable_c6476ee9-410a-44fe-b2dd-c9283b54da38
+ref table KPI_MetricSeries
+ref table 'MetricsSlicer OWH'
+ref table KPI_Series
+ref table InventoryTasks_CycleCount
+ref table LocalDateTable_1c6487d6-6124-4285-a060-2845181d5976
+ref table LocalDateTable_1f9d41ff-36f3-4cc5-b034-b944727bbb00
+ref table InventoryAndLocationSummary
+ref table InventoryTaskGroups
+ref table LocalDateTable_78bb9c8f-da1b-4c4f-86b2-0631e8bb8f58
+ref table LocalDateTable_a3e6f8f0-e425-428f-9980-1bef3c2d0a67
+ref table LocalDateTable_21ca7166-36b7-4c0a-8858-2877e24ada2b
+ref table LocalDateTable_db06b2fb-4fe3-4dbc-9caa-d6024b1aa2ea
+ref table LocalDateTable_ee788e30-3f10-4237-91e0-1e008449d58a
+ref table 'InventoryTasks (2)'
+ref table LocalDateTable_fbeb229f-a159-429e-8c00-560e5f2a9476
+ref table LocalDateTable_6cbeee77-06c6-43d1-9964-10a48fe698f4
+ref table LocalDateTable_8ab894d2-5021-412b-8bdc-c03959d67603
+ref table LinesCompletedHD
+ref table OrdersCompletedHD
+ref table LocalDateTable_92e34d67-8869-4d9d-aa9d-15a2029f18ae
+ref table UnitsPickedHD
+ref table LocalDateTable_d3819058-3c9b-4a67-aa1d-d7196fe0277c
+ref table BinPresentedHD
+ref table LocalDateTable_3000e240-bb89-408c-9117-4b610f36b5a7
+ref table Total_SKUs_On_Hand
+ref table Total_Units_On_Hand
+ref table Total_Locations_Occupied
+ref table Skus_Putaway
+ref table Orders_Putaway
+ref table Units_Putaway
+ref table Units_Picked
+ref table Presentations_Putaway
+ref table Distinct_bin_compartments_that_had_inventory
+ref table Distinct_bins_inventory_added
+ref table Customer_Orders_Picked
+ref table Customer_Order_Lines
+ref table Distinct_Skus_Picked
+ref table Calendar_1
+ref table LocalDateTable_7dba68b5-8241-408c-b697-7b0a1f94a07f
+ref table LocalDateTable_e933ac72-c31d-47ca-a67c-3c7cd592ddbb
+ref table AverageHandlingTimePerPort
+ref table AverageHandlingTimePerUser
+ref table BinPresentationsCompletedPerPort
+ref table BinPresentationsCompletedPerUser
+ref table BinsPerHourPerPort
+ref table BinsPerHourPerUser
+ref table LinesCompletedPerPort
+ref table LinesCompletedPerUser
+ref table LinesperHourPerPort
+ref table LinesperHourPerUser
+ref table MachineWaitTimePerPort
+ref table MachineWaitTimePerUser
+ref table OrdersCompletedPerPort
+ref table OrdersCompletedPerUser
+ref table OrdersPerHourPerPort
+ref table OrdersPerHourPerUser
+ref table TotalLoggedTimePerPort
+ref table TotalLoggedTimePerUser
+ref table UnitsCompletedPerPort
+ref table UnitsCompletedPerUser
+ref table UnitsPerHourPerPort
+ref table UnitsPerHourPerUser
+ref table ProductivityDailyUserPortWorkType_v2
+ref table DefragDetailByUomCompartmentSize_Table
+ref table LocalDateTable_dbe631d6-0ace-45b5-917c-0f9d6341f820
+ref table UnitOfMeasureConversions
+ref table LocalDateTable_40799d17-2df5-4095-916b-9460083987c1
+ref table UnitsOfMeasure
+ref table LocalDateTable_d622567a-423d-43fc-9cb9-acb0a0d3e913
+ref table LocalDateTable_de61ab24-1869-4380-ad47-6a4a9cdfd643
+ref table LocalDateTable_34055458-690d-4c58-afd3-5bd3d3f051b7
+
+ref cultureInfo en-US
+

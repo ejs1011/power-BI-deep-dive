@@ -1,0 +1,167 @@
+table InventoryTaskGroups
+	lineageTag: 40706845-c410-4f5c-9964-92908d6d71c7
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: fb72669e-6f2c-4536-ae87-83790183725b
+		summarizeBy: count
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column PrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: f9b1e49e-a0b5-44a2-9626-325dd9ff1758
+		summarizeBy: none
+		sourceColumn: PrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column GroupName
+		dataType: string
+		lineageTag: fa03a261-9427-49be-abae-3674ae97e6cb
+		summarizeBy: none
+		sourceColumn: GroupName
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 8cce02fb-d399-4317-b17a-153ab9cf1742
+		summarizeBy: none
+		sourceColumn: CreatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 163d77ac-6204-4e1b-8658-58c2bd7456bd
+		summarizeBy: none
+		sourceColumn: CreatedDate
+
+		variation Variation
+			isDefault
+			relationship: 3de4e6c4-89a7-4f67-90b2-1ce5c4687e2c
+			defaultHierarchy: LocalDateTable_78bb9c8f-da1b-4c4f-86b2-0631e8bb8f58.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedBy
+		dataType: string
+		lineageTag: 8657b346-2d85-465a-94ac-975ec3e15f3d
+		summarizeBy: none
+		sourceColumn: LastUpdatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: int64
+		formatString: 0
+		lineageTag: b6214c27-e291-43fe-86bc-b2c758b6a5b2
+		summarizeBy: sum
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 51d6d8e4-fe88-401a-8ed8-558fae39d3d9
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column LocationPrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 387429fb-c696-488e-9503-aa53c8c99050
+		summarizeBy: count
+		sourceColumn: LocationPrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExternalId
+		dataType: int64
+		formatString: 0
+		lineageTag: d00867b9-0a54-4dcb-8174-33e88efd3636
+		summarizeBy: count
+		sourceColumn: ExternalId
+
+		annotation SummarizationSetBy = Automatic
+
+	column DueDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5f216a6d-9040-4d5a-9c76-8f9475e61b2e
+		summarizeBy: none
+		sourceColumn: DueDate
+
+		variation Variation
+			isDefault
+			relationship: 2a7a88a7-4c6a-4329-8249-5fe9e7daa11d
+			defaultHierarchy: LocalDateTable_a3e6f8f0-e425-428f-9980-1bef3c2d0a67.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Priority
+		dataType: int64
+		formatString: 0
+		lineageTag: 2175ce13-c6c5-42f1-ba08-b9baacdcf089
+		summarizeBy: sum
+		sourceColumn: Priority
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedDateInventory
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6eeadd4c-0e47-4e20-bce6-eb1dfec6684d
+		summarizeBy: none
+		sourceColumn: LastUpdatedDateInventory
+
+		variation Variation
+			isDefault
+			relationship: 28a8e5d4-b471-4a1b-b9ac-486bc38c4957
+			defaultHierarchy: LocalDateTable_21ca7166-36b7-4c0a-8858-2877e24ada2b.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 0381af76-cf99-4e34-928c-c9f974fde0a2
+		summarizeBy: none
+		sourceColumn: LastUpdatedDate
+
+		variation Variation
+			isDefault
+			relationship: 2eb639b0-57ed-4502-9e46-99ce60407ad8
+			defaultHierarchy: LocalDateTable_db06b2fb-4fe3-4dbc-9caa-d6024b1aa2ea.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Snapshot_Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 67a8989f-f927-4cf7-86e6-4f8491232385
+		summarizeBy: count
+		sourceColumn: Snapshot_Id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition InventoryTaskGroups = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_InventoryTaskGroups = Source{[Schema="dbo",Item="InventoryTaskGroups"]}[Data]
+				in
+				    dbo_InventoryTaskGroups
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

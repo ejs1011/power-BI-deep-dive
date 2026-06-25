@@ -1,0 +1,254 @@
+table ProductivityDailyUserPortWorkType_v2
+	lineageTag: 527f63ec-a90e-4321-a7d2-b9c93cc33981
+
+	column EventDate
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: ddfb8b2c-6d0d-4baa-9aa8-e3624e45220e
+		summarizeBy: none
+		sourceColumn: EventDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column WorkType
+		dataType: string
+		lineageTag: 4816d81d-6f0c-440c-bccb-bd5f60d7fff7
+		summarizeBy: none
+		sourceColumn: WorkType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Users
+		dataType: string
+		lineageTag: ae1f6469-052a-4084-8780-cd95eff44658
+		summarizeBy: none
+		sourceColumn: Users
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ports
+		dataType: string
+		lineageTag: 3ae5ddb1-7f6a-47c0-a1ed-c145281f2abb
+		summarizeBy: none
+		sourceColumn: Ports
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrdersCompleted
+		dataType: int64
+		formatString: 0
+		lineageTag: e0bd883b-5f0d-4ff0-9298-40c186c2f9b9
+		summarizeBy: sum
+		sourceColumn: OrdersCompleted
+
+		annotation SummarizationSetBy = Automatic
+
+	column BinPresentationsCompleted
+		dataType: int64
+		formatString: 0
+		lineageTag: b3d03cb6-f867-48c3-aa4d-8bfb7c452636
+		summarizeBy: sum
+		sourceColumn: BinPresentationsCompleted
+
+		annotation SummarizationSetBy = Automatic
+
+	column LinesCompleted
+		dataType: int64
+		formatString: 0
+		lineageTag: 5c009bf1-7f49-4661-a888-bd5a986b3758
+		summarizeBy: sum
+		sourceColumn: LinesCompleted
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitsCompleted
+		dataType: int64
+		formatString: 0
+		lineageTag: 8ec7d032-0bea-4c12-b4f3-d7c1b17c9d44
+		summarizeBy: sum
+		sourceColumn: UnitsCompleted
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalLoggedHours
+		dataType: double
+		formatString: 0.0000
+		lineageTag: adfa3eb9-9035-44f8-8328-b89a34b7b527
+		summarizeBy: sum
+		sourceColumn: TotalLoggedHours
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalLoggedMinutes
+		dataType: double
+		formatString: 0.00
+		lineageTag: 886ba260-d46d-41d6-b065-10a230fbad51
+		summarizeBy: sum
+		sourceColumn: TotalLoggedMinutes
+
+		annotation SummarizationSetBy = Automatic
+
+	column ActiveHandleMinutes
+		dataType: double
+		formatString: 0.00
+		lineageTag: 6083dbb7-76ef-4368-9122-42c818d5c5b2
+		summarizeBy: sum
+		sourceColumn: ActiveHandleMinutes
+
+		annotation SummarizationSetBy = Automatic
+
+	column MachineWaitMinutes
+		dataType: double
+		formatString: 0.00
+		lineageTag: 6a92ba06-9dc3-427b-9533-b6f05bc3a6d9
+		summarizeBy: sum
+		sourceColumn: MachineWaitMinutes
+
+		annotation SummarizationSetBy = Automatic
+
+	column RateDenominatorHours
+		dataType: double
+		formatString: 0.0000
+		lineageTag: 6b3ab192-f5d2-4a98-a2f9-ce1a0593baa4
+		summarizeBy: sum
+		sourceColumn: RateDenominatorHours
+
+		annotation SummarizationSetBy = Automatic
+
+	column RateDenominatorSource
+		dataType: string
+		lineageTag: 757f65b3-2094-4e3e-80be-8b30c251c480
+		summarizeBy: none
+		sourceColumn: RateDenominatorSource
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrdersPerHour
+		dataType: double
+		formatString: 0.0000
+		lineageTag: 05f19387-9914-487b-865a-694a60a9cf95
+		summarizeBy: sum
+		sourceColumn: OrdersPerHour
+
+		annotation SummarizationSetBy = Automatic
+
+	column BinsPerHour
+		dataType: double
+		formatString: 0.0000
+		lineageTag: 7525c5de-c395-4e0a-9dff-2f882cd229a0
+		summarizeBy: sum
+		sourceColumn: BinsPerHour
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitsPerHour
+		dataType: double
+		formatString: 0.0000
+		lineageTag: 0be62315-6224-4cd8-864d-8aec09a7a8e5
+		summarizeBy: sum
+		sourceColumn: UnitsPerHour
+
+		annotation SummarizationSetBy = Automatic
+
+	column LinesPerHour
+		dataType: double
+		formatString: 0.0000
+		lineageTag: 7e64d367-38f2-4335-a288-83abe907c13c
+		summarizeBy: sum
+		sourceColumn: LinesPerHour
+
+		annotation SummarizationSetBy = Automatic
+
+	column AverageHandleTimePerPresentationMinutes
+		dataType: double
+		formatString: 0.00
+		lineageTag: 56221f01-cd04-4609-a216-052272517851
+		summarizeBy: sum
+		sourceColumn: AverageHandleTimePerPresentationMinutes
+
+		annotation SummarizationSetBy = Automatic
+
+	column EventRows
+		dataType: int64
+		formatString: 0
+		lineageTag: 7b1883b6-8352-4407-8ef4-b40b8dc4cf55
+		summarizeBy: sum
+		sourceColumn: EventRows
+
+		annotation SummarizationSetBy = Automatic
+
+	column SessionEventRows
+		dataType: int64
+		formatString: 0
+		lineageTag: 29727272-3263-479a-8409-1c1be21e1ef9
+		summarizeBy: sum
+		sourceColumn: SessionEventRows
+
+		annotation SummarizationSetBy = Automatic
+
+	column BinPresentationEventRows
+		dataType: int64
+		formatString: 0
+		lineageTag: ec7c790f-d542-4480-8698-89dc20962bf1
+		summarizeBy: sum
+		sourceColumn: BinPresentationEventRows
+
+		annotation SummarizationSetBy = Automatic
+
+	column PickEventRows
+		dataType: int64
+		formatString: 0
+		lineageTag: f01a4d30-ba77-4121-a9ba-d271ddd8f46f
+		summarizeBy: sum
+		sourceColumn: PickEventRows
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderEventRows
+		dataType: int64
+		formatString: 0
+		lineageTag: 25c2e4ba-a804-454c-aa44-bab4e8cfcc10
+		summarizeBy: sum
+		sourceColumn: OrderEventRows
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnattributedEventRows
+		dataType: int64
+		formatString: 0
+		lineageTag: adb413b2-7936-4165-8806-85ad28c4678e
+		summarizeBy: sum
+		sourceColumn: UnattributedEventRows
+
+		annotation SummarizationSetBy = Automatic
+
+	column MinStartTime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e5ee51d5-0184-4707-a5cf-d4fd1d3580ed
+		summarizeBy: none
+		sourceColumn: MinStartTime
+
+		annotation SummarizationSetBy = Automatic
+
+	column MaxStartTime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: eda08e9d-2984-4c6a-b07d-aeca7c9ced16
+		summarizeBy: none
+		sourceColumn: MaxStartTime
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ProductivityDailyUserPortWorkType_v2 = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    dbo_ProductivityDailyUserPortWorkType_v2 = Source{[Schema="dbo",Item="v_ProductivityDailyUserPortWorkType_v2"]}[Data]
+				in
+				    dbo_ProductivityDailyUserPortWorkType_v2
+
+	annotation PBI_ResultType = Table

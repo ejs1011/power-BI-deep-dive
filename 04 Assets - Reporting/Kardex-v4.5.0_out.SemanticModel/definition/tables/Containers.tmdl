@@ -1,0 +1,161 @@
+table Containers
+	lineageTag: 6267a5fc-5119-46fc-8ac4-92470e2d9188
+
+	column PrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 20442d4f-c01d-4eb0-b614-91e47f02e122
+		summarizeBy: none
+		sourceColumn: PrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column TemplatePrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: ffd0a6c5-f130-4a3d-9fd9-218571a809d1
+		summarizeBy: none
+		sourceColumn: TemplatePrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Barcode
+		dataType: string
+		lineageTag: 375a59b7-26d3-4fa4-a934-0fd6122858f1
+		summarizeBy: none
+		sourceColumn: Barcode
+
+		annotation SummarizationSetBy = Automatic
+
+	column LocationPrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 3d1b0e99-affc-4422-9eec-8f6628ea1982
+		summarizeBy: count
+		sourceColumn: LocationPrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: ae66e67d-aec0-46ff-a57c-bee0980dc812
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column Orientation
+		dataType: int64
+		formatString: 0
+		lineageTag: 7c65d5b1-0064-495f-bd94-64349266842b
+		summarizeBy: sum
+		sourceColumn: Orientation
+
+		annotation SummarizationSetBy = Automatic
+
+	column PresentedSide
+		dataType: int64
+		formatString: 0
+		lineageTag: d6813dbb-7da2-49a6-ac41-8422516d30a4
+		summarizeBy: sum
+		sourceColumn: PresentedSide
+
+		annotation SummarizationSetBy = Automatic
+
+	column HasException
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 22a7b4da-5b17-4f70-ae6d-0c6f660e36a6
+		summarizeBy: none
+		sourceColumn: HasException
+
+		annotation SummarizationSetBy = Automatic
+
+	column Characteristics
+		dataType: string
+		lineageTag: c1edba31-65f7-48f3-9fe8-b9d5b1a4c7a5
+		summarizeBy: none
+		sourceColumn: Characteristics
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedBy
+		dataType: string
+		lineageTag: d818ff2a-0742-478c-975a-1eb5b3f195da
+		summarizeBy: none
+		sourceColumn: CreatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a6a60ec6-b88c-4aa7-9fd2-1e5780130435
+		summarizeBy: none
+		sourceColumn: CreatedDate
+
+		variation Variation
+			isDefault
+			relationship: 42e5b15f-3a11-403f-ab1c-38b0816cc0cd
+			defaultHierarchy: LocalDateTable_d13e15e0-321b-4e09-80f0-1cb0a14cf2b6.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedBy
+		dataType: string
+		lineageTag: 0fe9fedc-cb59-4e70-8b83-5e3794730ea7
+		summarizeBy: none
+		sourceColumn: LastUpdatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedDateInventory
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d785dbe5-c4dd-493f-a485-b0ee5d8913a1
+		summarizeBy: none
+		sourceColumn: LastUpdatedDateInventory
+
+		variation Variation
+			isDefault
+			relationship: 47d10a09-a18b-4be5-8fb2-dd7144f0df12
+			defaultHierarchy: LocalDateTable_9b39ac00-1791-4e7d-bb1b-0f8d52788798.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4ec33cc8-c1d7-4b08-99a3-965583ca61a9
+		summarizeBy: none
+		sourceColumn: LastUpdatedDate
+
+		variation Variation
+			isDefault
+			relationship: e15d4dff-c98b-4dcc-97c9-71cfdd14c98e
+			defaultHierarchy: LocalDateTable_5748c141-1026-4ff0-904e-e7dde6cb6596.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Snapshot_Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 6476a9f9-961a-40a6-8a33-66ff60d73dc4
+		summarizeBy: count
+		sourceColumn: Snapshot_Id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Containers = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_Containers = Source{[Schema="dbo",Item="Containers"]}[Data]
+				in
+				    dbo_Containers
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

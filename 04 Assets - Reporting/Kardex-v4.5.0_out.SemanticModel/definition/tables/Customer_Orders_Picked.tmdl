@@ -1,0 +1,36 @@
+table Customer_Orders_Picked
+	lineageTag: 29550b74-1dba-4f70-8d40-380fc0781e67
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 9bbcb513-5c08-4ea9-bca0-ada80eb458fc
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Customer Orders Picked'
+		dataType: int64
+		formatString: 0
+		lineageTag: b23071f2-e3d3-474a-9812-dd2e8d972db0
+		summarizeBy: sum
+		sourceColumn: Customer Orders Picked
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Customer_Orders_Picked = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_Customer_Orders_Picked = Source{[Schema="dbo",Item="Customer_Orders_Picked"]}[Data]
+				in
+				    dbo_Customer_Orders_Picked
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

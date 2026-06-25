@@ -1,0 +1,541 @@
+table 'B Measure'
+	lineageTag: 5f137cdb-18be-4ba3-bbf6-b9cb2d6ec2e4
+
+	measure _DynamicMeasure = ```
+			
+			SWITCH(
+			    TRUE(),
+			    SELECTEDVALUE(_MeasureGroups[MeasureName]) = "Total SKUs On Hand", [Total SKUs On Hand],
+			    SELECTEDVALUE(_MeasureGroups[MeasureName]) = "Total Units On Hand", [Total Units On Hand],
+			    SELECTEDVALUE(_MeasureGroups[MeasureName]) = "Total Locations Occupied", [Total Locations Occupied],
+			    SELECTEDVALUE(_MeasureGroups[MeasureName]) = "Orders Put Away", [Orders Putaway],
+			    SELECTEDVALUE(_MeasureGroups[MeasureName]) = "Units Put Away", [Units Putaway],
+			    SELECTEDVALUE(_MeasureGroups[MeasureName]) = "SKUs Put Away", [Skus Putaway],
+			    SELECTEDVALUE(_MeasureGroups[MeasureName]) = "Bin Presentations Put Away", [Presentations Putaway],
+			    SELECTEDVALUE(_MeasureGroups[MeasureName]) = "Distinct Bins With Inventory Added", [Distinct bins inventory added],
+			    SELECTEDVALUE(_MeasureGroups[MeasureName]) = "Distinct Bin Compartments With Inventory", [Distinct bin compartments that had inventory],
+			    SELECTEDVALUE(_MeasureGroups[MeasureName]) = "Customer Orders Picked", [Customer Orders Picked],
+			    SELECTEDVALUE(_MeasureGroups[MeasureName]) = "Customer Order Lines", [Customer Order Lines],
+			    SELECTEDVALUE(_MeasureGroups[MeasureName]) = "Units Picked", [Units Picked],
+			    SELECTEDVALUE(_MeasureGroups[MeasureName]) = "Distinct SKUs Picked", [Distinct SKUs Picked],
+			    
+			    BLANK()+0
+			)
+			 
+			```
+		formatString: 0
+		displayFolder: Daily KPI Summary Report
+		lineageTag: 0d06113e-8439-469f-8f5c-c15289038ab3
+
+	measure _DistinctLocationsOccupied = ```
+			
+			
+			CALCULATE(
+			    COUNTROWS(
+			        SUMMARIZE(
+			            FILTER(
+			                'Inventory',
+			                'Inventory'[Status] <> "Pending" 
+			            ),
+			            'Inventory'[ContainerPrimaryKey],
+			            'Inventory'[ContainerX],
+			            'Inventory'[ContainerY]
+			        )
+			    )
+			)
+			
+			// CALCULATE (
+			//     SUM ( Report_Data[LocationPrimaryKey] ),
+			//     FILTER ( Report_Data, Report_Data[DataDescription] = "BinPresented" )
+			// )
+			
+			// VAR FilteredInventory =
+			//     FILTER ( Inventory, Inventory[Status] <> "Pending" )
+			// VAR UniquePairs =
+			//     DISTINCT (
+			//         SELECTCOLUMNS (
+			//             FilteredInventory,
+			//             Inventory[ContainerPrimaryKey],
+			//             Inventory[ContainerX],
+			//             Inventory[ContainerY]
+			//         )
+			//     )
+			// RETURN
+			//     COUNTROWS ( UniquePairs )
+			
+			    
+			
+			```
+		formatString: 0
+		displayFolder: Daily KPI Summary Report
+		lineageTag: e8860ed5-81ac-4afa-95b1-f87a9d771518
+
+	measure 'Presentations Putaway' = ```
+			
+			SUM(Presentations_Putaway[Presentations Putaway])+0
+			
+			
+			
+			
+			
+			```
+		formatString: 0
+		displayFolder: Daily KPI Summary Report
+		lineageTag: edaea6de-273c-4bb2-a2c1-722248a4b233
+
+	measure _DistinctTotalInducted = ```
+			
+			
+			CALCULATE(
+			    DISTINCTCOUNT('Inventory'[ContainerPrimaryKey]),
+			    FILTER(
+			        'Inventory',
+			        'Inventory'[Status] <> "Pending"
+			    ),
+			    FILTER(
+			        'Containers',
+			        'Containers'[Status] <> "Outside"
+			    )
+			)
+			
+			// CALCULATE (
+			//     DISTINCTCOUNT ( Report_Data[ContainerBarcode] ),
+			//     FILTER ( Report_Data, Report_Data[DataDescription] = "BinPresented" )
+			// )
+			
+			
+			```
+		formatString: 0
+		displayFolder: Daily KPI Summary Report
+		lineageTag: 6a3f637f-65dc-4ea9-bbcf-5d92e32a5a8d
+
+	measure 'Distinct bin compartments that had inventory' = ```
+			
+			SUM(Distinct_bin_compartments_that_had_inventory[Distinct bin compartments that had inventory])+0
+			
+			```
+		formatString: 0
+		displayFolder: Daily KPI Summary Report
+		lineageTag: 5ca25ad0-1ce0-4719-91ab-b5910becde7a
+
+		changedProperty = IsHidden
+
+	measure 'Units Picked' = ```
+			
+			SUM(Units_Picked[Units Picked])+0
+			
+			```
+		formatString: 0
+		displayFolder: Daily KPI Summary Report
+		lineageTag: 04f1e5c1-a951-40f3-aa30-c1c8f261b1ba
+
+	measure 'Distinct SKUs Picked' =
+			
+			SUM(Distinct_Skus_Picked[Distinct Skus Picked])+0
+		formatString: 0
+		displayFolder: Daily KPI Summary Report
+		lineageTag: 73b5e70a-27c2-40d4-9f92-87080a8c1c9c
+
+	measure 'Orders Putaway' = ```
+			
+			SUM(Orders_Putaway[Orders Putaway])+0
+			
+			```
+		formatString: 0
+		displayFolder: Daily KPI Summary Report
+		lineageTag: d1d5f562-db0b-4ba6-a70e-79b34a947b8f
+
+	measure 'Units Putaway' = ```
+			
+			SUM(Units_Putaway[Units Putaway])+0
+			
+			
+			
+			
+			```
+		formatString: 0
+		displayFolder: Daily KPI Summary Report
+		lineageTag: 702a50cc-3b20-4692-bf59-0081e16bd9eb
+
+	measure 'Skus Putaway' = ```
+			
+			SUM(Skus_Putaway[Skus Putaway])+0
+			
+			
+			
+			```
+		formatString: 0
+		displayFolder: Daily KPI Summary Report
+		lineageTag: b614b18f-6981-4ef6-a9ed-eb2b3f1e5aad
+
+	measure 'Customer Orders Picked' = ```
+			
+			     SUM(Customer_Orders_Picked[Customer Orders Picked] )+0
+			```
+		formatString: 0
+		displayFolder: Daily KPI Summary Report
+		lineageTag: d10cc52f-6029-4d20-8821-017f94d19748
+
+	measure 'Customer Order Lines' = ```
+			
+			SUM(Customer_Order_Lines[Customer Order Lines])+0
+			
+			```
+		formatString: 0
+		displayFolder: Daily KPI Summary Report
+		lineageTag: e5c57b02-3023-42df-bc80-19217f76d300
+
+	measure 'Total Locations Occupied' = ```
+			
+			SUM(Total_Locations_Occupied[Total Locations Occupied])+0
+			
+			```
+		formatString: 0
+		displayFolder: Daily KPI Summary Report
+		lineageTag: 3e26715f-9199-4d69-bee6-503af3d26003
+
+	measure 'Total SKUs On Hand' =
+			
+			SUM(Total_SKUs_On_Hand[Totak SKUs On Hand])+0
+		formatString: 0
+		displayFolder: Daily KPI Summary Report
+		lineageTag: d28344be-c06c-45f9-8b57-c84d55015ee4
+
+	measure 'Total Units On Hand' = SUM(Total_Units_On_Hand[Total Units On Hand])+0
+		formatString: 0
+		displayFolder: Daily KPI Summary Report
+		lineageTag: 5f25b6a9-ea86-4c27-aaf6-c4b92fffe65a
+
+	measure 'Distinct bins inventory added' = ```
+			
+			SUM(Distinct_bins_inventory_added[Distinct bins inventory added])+0
+			
+			```
+		formatString: 0
+		displayFolder: Daily KPI Summary Report
+		lineageTag: 145664e9-6407-4c2f-86f4-c1c767ca114c
+
+	measure 'Total Logged Time per User' = ```
+			
+			CALCULATE(
+			    SUM(ProductivityDailyUserPortWorkType_v2[TotalLoggedMinutes]),
+			    ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			) + 0
+			
+			```
+		formatString: 0.00
+		displayFolder: Productivity by User
+		lineageTag: eea57f34-5aef-4cd9-9ba3-9bb63421d678
+
+	measure 'Average Handle Time/Presentation per User' = ```
+			
+			DIVIDE(
+			    CALCULATE(
+			        SUM(ProductivityDailyUserPortWorkType_v2[ActiveHandleMinutes]),
+			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			    ),
+			    [Bin Presentations Completed per User],
+			    0
+			)
+			
+			```
+		formatString: 0.00
+		displayFolder: Productivity by User
+		lineageTag: 517159b6-0cb9-4355-a13b-73e0ebe870f6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Orders Completed per User' = ```
+			
+			CALCULATE(
+			    SUM(ProductivityDailyUserPortWorkType_v2[OrdersCompleted]),
+			    ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			) + 0
+			
+			```
+		formatString: 0.00
+		displayFolder: Productivity by User
+		lineageTag: 35202a28-cf1d-4cc8-a6fe-998efafad932
+
+	measure 'Bin Presentations Completed per User' = ```
+			
+			CALCULATE(
+			    SUM(ProductivityDailyUserPortWorkType_v2[BinPresentationsCompleted]),
+			    ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			) + 0
+			
+			```
+		formatString: 0.00
+		displayFolder: Productivity by User
+		lineageTag: d6852048-70bc-46a7-8c99-4cbb9282cc84
+
+	measure 'Lines Completed per User' = ```
+			
+			CALCULATE(
+			    SUM(ProductivityDailyUserPortWorkType_v2[LinesCompleted]),
+			    ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			) + 0
+			
+			```
+		formatString: 0.00
+		displayFolder: Productivity by User
+		lineageTag: 208fea37-1cdb-4b5d-aadf-417dcdee46c1
+
+	measure 'Units Completed per User' = ```
+			
+			CALCULATE(
+			    SUM(ProductivityDailyUserPortWorkType_v2[UnitsCompleted]),
+			    ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			) + 0
+			
+			```
+		formatString: 0.00
+		displayFolder: Productivity by User
+		lineageTag: 01b32f5c-6a34-4e3e-9494-d13a2c8980ed
+
+	measure 'Orders/HR per User' = ```
+			
+			DIVIDE(
+			    [Orders Completed per User],
+			    CALCULATE(
+			        SUM(ProductivityDailyUserPortWorkType_v2[RateDenominatorHours]),
+			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			    ),
+			    0
+			)
+			
+			```
+		formatString: 0.00
+		displayFolder: Productivity by User
+		lineageTag: ba385656-e190-4601-a430-94e058ab2b0f
+
+	measure 'Bins/HR per User' = ```
+			
+			DIVIDE(
+			    [Bin Presentations Completed per User],
+			    CALCULATE(
+			        SUM(ProductivityDailyUserPortWorkType_v2[RateDenominatorHours]),
+			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			    ),
+			    0
+			)
+			
+			```
+		formatString: 0.00
+		displayFolder: Productivity by User
+		lineageTag: 9f5fffa7-c1f1-4bf8-a8f0-96302113ff7d
+
+	measure 'Units/HR per User' = ```
+			
+			DIVIDE(
+			    [Units Completed per User],
+			    CALCULATE(
+			        SUM(ProductivityDailyUserPortWorkType_v2[RateDenominatorHours]),
+			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			    ),
+			    0
+			)
+			
+			```
+		formatString: 0.00
+		displayFolder: Productivity by User
+		lineageTag: bc6e6585-5d13-46dc-9baf-8bba13c2abdd
+
+	measure 'Lines/HR per User' = ```
+			
+			DIVIDE(
+			    [Lines Completed per User],
+			    CALCULATE(
+			        SUM(ProductivityDailyUserPortWorkType_v2[RateDenominatorHours]),
+			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			    ),
+			    0
+			)
+			
+			```
+		formatString: 0.00
+		displayFolder: Productivity by User
+		lineageTag: 127fe8f1-ed1c-473f-8c08-c34e041352ed
+
+	measure 'Machine wait time per User' = ```
+			
+			CALCULATE(
+			    SUM(ProductivityDailyUserPortWorkType_v2[MachineWaitMinutes]),
+			    ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			) + 0
+			
+			```
+		formatString: 0.00
+		displayFolder: Productivity by User
+		lineageTag: ec46ef94-57b1-4ffb-9237-5527346c4ab4
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Total Logged Time per Port' = ```
+			
+			CALCULATE(
+			    SUM(ProductivityDailyUserPortWorkType_v2[TotalLoggedMinutes]),
+			    ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			) + 0
+			
+			```
+		formatString: 0.00
+		displayFolder: Productivity by Port
+		lineageTag: 09e3ba4f-dcf0-4509-8ff1-42e004894b00
+
+	measure 'Average Handle Time/Presentation per Port' = ```
+			
+			DIVIDE(
+			    CALCULATE(
+			        SUM(ProductivityDailyUserPortWorkType_v2[ActiveHandleMinutes]),
+			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			    ),
+			    [Bin Presentations Completed per Port],
+			    0
+			)
+			
+			```
+		formatString: 0.00
+		displayFolder: Productivity by Port
+		lineageTag: 94aba6c1-f53e-4c6d-b117-ec2e54678bbd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Bin Presentations Completed per Port' = ```
+			
+			CALCULATE(
+			    SUM(ProductivityDailyUserPortWorkType_v2[BinPresentationsCompleted]),
+			    ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			) + 0
+			
+			```
+		formatString: 0.00
+		displayFolder: Productivity by Port
+		lineageTag: 00a7f06f-d1e6-4050-a4d0-3aa97dc2ad83
+
+	measure 'Bins/HR per Port' = ```
+			
+			DIVIDE(
+			    [Bin Presentations Completed per Port],
+			    CALCULATE(
+			        SUM(ProductivityDailyUserPortWorkType_v2[RateDenominatorHours]),
+			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			    ),
+			    0
+			)
+			
+			```
+		formatString: 0.00
+		displayFolder: Productivity by Port
+		lineageTag: e17f7b55-34bb-4374-9fb2-fbb90bec72be
+
+	measure 'Lines Completed per Port' = ```
+			
+			CALCULATE(
+			    SUM(ProductivityDailyUserPortWorkType_v2[LinesCompleted]),
+			    ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			) + 0
+			
+			```
+		formatString: 0.00
+		displayFolder: Productivity by Port
+		lineageTag: 484d6987-095a-43d1-8c42-a805474a2af9
+
+	measure 'Lines/HR per Port' = ```
+			
+			DIVIDE(
+			    [Lines Completed per Port],
+			    CALCULATE(
+			        SUM(ProductivityDailyUserPortWorkType_v2[RateDenominatorHours]),
+			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			    ),
+			    0
+			)
+			
+			```
+		formatString: 0.00
+		displayFolder: Productivity by Port
+		lineageTag: 9add9808-9bbf-442c-bd1a-5dc818d94bd8
+
+	measure 'Machine wait time per Port' = ```
+			
+			CALCULATE(
+			    SUM(ProductivityDailyUserPortWorkType_v2[MachineWaitMinutes]),
+			    ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			) + 0
+			
+			```
+		formatString: 0.00
+		displayFolder: Productivity by Port
+		lineageTag: 1d52cf89-ded5-4abb-aabb-2a0b9c970194
+
+	measure 'Orders Completed per Port' = ```
+			
+			CALCULATE(
+			    SUM(ProductivityDailyUserPortWorkType_v2[OrdersCompleted]),
+			    ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			) + 0
+			
+			```
+		formatString: 0.00
+		displayFolder: Productivity by Port
+		lineageTag: b2d2dec0-3910-4ba0-acd8-fc9de9619fc0
+
+	measure 'Orders/HR per Port' = ```
+			
+			DIVIDE(
+			    [Orders Completed per Port],
+			    CALCULATE(
+			        SUM(ProductivityDailyUserPortWorkType_v2[RateDenominatorHours]),
+			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			    ),
+			    0
+			)
+			
+			```
+		formatString: 0.00
+		displayFolder: Productivity by Port
+		lineageTag: 544304a4-f862-4ae1-ae77-d20880abc29e
+
+	measure 'Units Completed per Port' = ```
+			
+			CALCULATE(
+			    SUM(ProductivityDailyUserPortWorkType_v2[UnitsCompleted]),
+			    ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			) + 0
+			
+			```
+		formatString: 0.00
+		displayFolder: Productivity by Port
+		lineageTag: 75169f80-9c3f-47ea-b490-b3e532a2e236
+
+	measure 'Units/HR per Port' = ```
+			
+			DIVIDE(
+			    [Units Completed per Port],
+			    CALCULATE(
+			        SUM(ProductivityDailyUserPortWorkType_v2[RateDenominatorHours]),
+			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			    ),
+			    0
+			)
+			
+			```
+		formatString: 0.00
+		displayFolder: Productivity by Port
+		lineageTag: dfa7d043-f839-4a35-9eb9-2cbfa69c34db
+
+	partition 'B Measure' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Column1"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

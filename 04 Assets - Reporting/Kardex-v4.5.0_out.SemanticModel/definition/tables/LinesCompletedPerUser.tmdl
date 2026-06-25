@@ -1,0 +1,31 @@
+table LinesCompletedPerUser
+	lineageTag: aa858791-3cf8-481c-b271-7cf597e0da32
+
+	column Users
+		dataType: string
+		lineageTag: 4ffcc0f9-e92b-462d-b919-4073476196a8
+		summarizeBy: none
+		sourceColumn: Users
+
+		annotation SummarizationSetBy = Automatic
+
+	column LinesCompleted
+		dataType: int64
+		formatString: 0
+		lineageTag: 040c491a-e9d6-4318-a11f-7ec711cf1fdc
+		summarizeBy: sum
+		sourceColumn: LinesCompleted
+
+		annotation SummarizationSetBy = Automatic
+
+	partition LinesCompletedPerUser = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_LinesCompletedPerUser = Source{[Schema="dbo",Item="LinesCompletedPerUser"]}[Data]
+				in
+				    dbo_LinesCompletedPerUser
+
+	annotation PBI_ResultType = Table
+

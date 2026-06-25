@@ -1,0 +1,143 @@
+table CloseBin-InventoryRecord
+	lineageTag: d2662c64-938d-476a-849e-fef90088f831
+
+	column PrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 18a9844c-dfe4-4e73-b391-685ef270909f
+		summarizeBy: count
+		sourceColumn: PrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column TimeStamp
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: abbd7cb2-1296-4c98-bb04-033c7bbfc6bc
+		summarizeBy: none
+		sourceColumn: TimeStamp
+
+		variation Variation
+			isDefault
+			relationship: 372a5ebf-34f7-4a69-8292-fbb13364d93b
+			defaultHierarchy: LocalDateTable_19310448-05a3-4a80-9103-16f0210b431b.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column ContainerBarcode
+		dataType: string
+		lineageTag: 2aaaf131-851c-4980-9dce-675bbed435de
+		summarizeBy: none
+		sourceColumn: ContainerBarcode
+
+		annotation SummarizationSetBy = Automatic
+
+	column LocationPrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: c66e58e4-5c88-48bd-9ee0-e07d266dc2b7
+		summarizeBy: count
+		sourceColumn: LocationPrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column InventoryPrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 7d2dc1da-51b8-4aa3-9265-83c24880d3d4
+		summarizeBy: none
+		sourceColumn: InventoryPrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ContainerX
+		dataType: int64
+		formatString: 0
+		lineageTag: 2784dd3c-2dd7-43d9-bb29-e3d8fb5892a6
+		summarizeBy: sum
+		sourceColumn: ContainerX
+
+		annotation SummarizationSetBy = Automatic
+
+	column ContainerY
+		dataType: int64
+		formatString: 0
+		lineageTag: 5dbf8f2c-29cf-46fd-af08-9cfe30a484c4
+		summarizeBy: sum
+		sourceColumn: ContainerY
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sku
+		dataType: string
+		lineageTag: 22822b4e-965a-47c0-b252-664131baf3e8
+		summarizeBy: none
+		sourceColumn: Sku
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductName
+		dataType: string
+		lineageTag: e41eaa63-4c9f-48b2-9afe-0bb7b07b6338
+		summarizeBy: none
+		sourceColumn: ProductName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductQuantity
+		dataType: int64
+		formatString: 0
+		lineageTag: bfe378f6-f3bc-450c-a553-9a44e9da9cd7
+		summarizeBy: sum
+		sourceColumn: ProductQuantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column InventoryStatus
+		dataType: string
+		lineageTag: 8075e730-e816-486f-ad50-661ce8bf3b4e
+		summarizeBy: none
+		sourceColumn: InventoryStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductUOM
+		dataType: string
+		lineageTag: c9a55ece-98d8-4ee6-8e1a-a96fd10153b3
+		summarizeBy: none
+		sourceColumn: ProductUOM
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: de235fae-6f53-451f-9c37-8dee9737e3c9
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 8961c27c-bea8-4d15-9d72-1e13ec351779
+			defaultHierarchy: LocalDateTable_1e1736c1-f51d-4c87-a840-b1fdae73e0f7.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition CloseBin-InventoryRecord = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    #"dbo_CloseBin-InventoryRecord" = Source{[Schema="dbo",Item="CloseBin-InventoryRecord"]}[Data],
+				    #"Inserted Text Before Delimiter" = Table.AddColumn(#"dbo_CloseBin-InventoryRecord", "Text Before Delimiter", each Text.BeforeDelimiter(Text.From([TimeStamp], "en-IN"), " "), type text),
+				    #"Renamed Columns" = Table.RenameColumns(#"Inserted Text Before Delimiter",{{"Text Before Delimiter", "Date"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"Date", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

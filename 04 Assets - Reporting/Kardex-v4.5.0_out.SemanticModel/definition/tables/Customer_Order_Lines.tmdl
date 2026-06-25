@@ -1,0 +1,36 @@
+table Customer_Order_Lines
+	lineageTag: 55f92d52-63f9-4cca-9002-e31114810f16
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b11a3015-886d-4673-9588-473c8e0a82ab
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Customer Order Lines'
+		dataType: int64
+		formatString: 0
+		lineageTag: ee6023fb-7c62-4666-9726-c5428d8f232b
+		summarizeBy: sum
+		sourceColumn: Customer Order Lines
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Customer_Order_Lines = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_Customer_Order_Lines = Source{[Schema="dbo",Item="Customer_Order_Lines"]}[Data]
+				in
+				    dbo_Customer_Order_Lines
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "e390a00747581a892dea",
+  "displayName": "Open Work History",
+  "displayOption": "FitToPage",
+  "height": 1100,
+  "width": 2400,
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#EEF4F9'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visibility": "HiddenInViewMode",
+  "visualInteractions": [
+    {
+      "source": "eb304022b6d9807e8824",
+      "target": "0c3f0a90645a1d0b94d3",
+      "type": "DataFilter"
+    },
+    {
+      "source": "0c3f0a90645a1d0b94d3",
+      "target": "eb304022b6d9807e8824",
+      "type": "DataFilter"
+    }
+  ]
+}

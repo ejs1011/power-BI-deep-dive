@@ -1,0 +1,31 @@
+table MachineWaitTimePerPort
+	lineageTag: db93cb8e-37ef-4d3f-9389-a35b51eb8358
+
+	column Ports
+		dataType: string
+		lineageTag: 4799c89a-b427-4df2-b24e-5110b1cf8a1c
+		summarizeBy: none
+		sourceColumn: Ports
+
+		annotation SummarizationSetBy = Automatic
+
+	column MachineWaitTime
+		dataType: int64
+		formatString: 0
+		lineageTag: a02c3a10-6299-4b5f-bc80-360cb2c38cf2
+		summarizeBy: sum
+		sourceColumn: MachineWaitTime
+
+		annotation SummarizationSetBy = Automatic
+
+	partition MachineWaitTimePerPort = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_MachineWaitTimePerPort = Source{[Schema="dbo",Item="MachineWaitTimePerPort"]}[Data]
+				in
+				    dbo_MachineWaitTimePerPort
+
+	annotation PBI_ResultType = Table
+

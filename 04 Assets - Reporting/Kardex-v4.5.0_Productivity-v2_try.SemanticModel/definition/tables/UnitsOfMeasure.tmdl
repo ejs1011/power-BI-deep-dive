@@ -1,0 +1,207 @@
+table UnitsOfMeasure
+	lineageTag: 0dc8e13e-1f3e-4199-a5e4-fe196a497942
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 6825f17f-a540-4c0a-83cb-cd585645cde8
+		summarizeBy: count
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column PrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: bf887a9f-2a4f-4c89-9383-82b1c900cfd8
+		summarizeBy: count
+		sourceColumn: PrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitName
+		dataType: string
+		lineageTag: 03449f3d-e98b-4cf2-bda1-b028c35a2a75
+		summarizeBy: none
+		sourceColumn: UnitName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductPrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 8a5ced31-c73b-42fa-9e81-581cc9d47c22
+		summarizeBy: count
+		sourceColumn: ProductPrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Weight
+		dataType: double
+		lineageTag: 1fdb1a3d-36a9-4dd6-a8d4-8f0122db1e6c
+		summarizeBy: sum
+		sourceColumn: Weight
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column IsBaseUnit
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: fd0d355a-3e13-43bb-8fe3-f0ba107703f0
+		summarizeBy: none
+		sourceColumn: IsBaseUnit
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitType
+		dataType: string
+		lineageTag: 9454febd-a432-4c6a-981e-eaa4d8aceac2
+		summarizeBy: none
+		sourceColumn: UnitType
+
+		annotation SummarizationSetBy = Automatic
+
+	column BaseMultiple
+		dataType: int64
+		formatString: 0
+		lineageTag: 285c94f1-470a-4900-8103-9b9dcede8626
+		summarizeBy: sum
+		sourceColumn: BaseMultiple
+
+		annotation SummarizationSetBy = Automatic
+
+	column BaseUnitName
+		dataType: string
+		lineageTag: 4ea4e767-d111-4bb8-a847-560f7ab889c5
+		summarizeBy: none
+		sourceColumn: BaseUnitName
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedBy
+		dataType: string
+		lineageTag: f6ae2b7a-07e5-470f-b492-b08e7c2f2477
+		summarizeBy: none
+		sourceColumn: CreatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 87b28253-e9af-4f72-847d-5a9fec38f34d
+		summarizeBy: none
+		sourceColumn: CreatedDate
+
+		variation Variation
+			isDefault
+			relationship: 2a72e58c-4778-47cd-a19e-98e8fcede004
+			defaultHierarchy: LocalDateTable_d622567a-423d-43fc-9cb9-acb0a0d3e913.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedBy
+		dataType: string
+		lineageTag: b0e058e6-040b-4b9d-9b96-cdeac0a217c3
+		summarizeBy: none
+		sourceColumn: LastUpdatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column Height
+		dataType: double
+		lineageTag: 075dea46-6223-4a94-9531-f05c16919593
+		summarizeBy: sum
+		sourceColumn: Height
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Length
+		dataType: double
+		lineageTag: 1b7ce060-0de3-436f-bedb-15d7a6b6a58d
+		summarizeBy: sum
+		sourceColumn: Length
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Width
+		dataType: double
+		lineageTag: 14c88bb9-e88d-47bf-96c3-b018aebfcaa2
+		summarizeBy: sum
+		sourceColumn: Width
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column LiquidityPercentage
+		dataType: double
+		lineageTag: 62f97e96-002a-4f11-b2df-81558c327017
+		summarizeBy: sum
+		sourceColumn: LiquidityPercentage
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AllocationStrategy
+		dataType: int64
+		formatString: 0
+		lineageTag: c917ee8c-4e2c-4798-a393-5d2e83e206f9
+		summarizeBy: sum
+		sourceColumn: AllocationStrategy
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedDateInventory
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: cabf678d-09ee-4cc1-bf07-8bd0e4cffaa8
+		summarizeBy: none
+		sourceColumn: LastUpdatedDateInventory
+
+		variation Variation
+			isDefault
+			relationship: e739a94d-9c7f-4c96-809e-59e8e4391781
+			defaultHierarchy: LocalDateTable_de61ab24-1869-4380-ad47-6a4a9cdfd643.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 8b959265-7f00-4fc6-b52e-6ddb1612f9c6
+		summarizeBy: none
+		sourceColumn: LastUpdatedDate
+
+		variation Variation
+			isDefault
+			relationship: b096ef9c-5baa-4dbd-8f43-2706483d94b5
+			defaultHierarchy: LocalDateTable_34055458-690d-4c58-afd3-5bd3d3f051b7.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Snapshot_Id
+		dataType: int64
+		formatString: 0
+		lineageTag: a28c9085-78c5-46ff-a123-f6de8a8f0188
+		summarizeBy: count
+		sourceColumn: Snapshot_Id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition UnitsOfMeasure = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    dbo_UnitsOfMeasure = Source{[Schema="dbo",Item="UnitsOfMeasure"]}[Data]
+				in
+				    dbo_UnitsOfMeasure
+

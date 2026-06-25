@@ -1,0 +1,32 @@
+table LinesperHourPerUser
+	lineageTag: b774026c-6634-4f1e-bbc5-aa27d87d6c6d
+
+	column Users
+		dataType: string
+		lineageTag: e94ddcf9-5628-4b21-af9f-0d506febf6d0
+		summarizeBy: none
+		sourceColumn: Users
+
+		annotation SummarizationSetBy = Automatic
+
+	column LinesPerHour
+		dataType: double
+		lineageTag: deb67d61-5c62-4cfe-b23b-edd25b50525f
+		summarizeBy: sum
+		sourceColumn: LinesPerHour
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition LinesperHourPerUser = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_LinesperHourPerUser = Source{[Schema="dbo",Item="LinesperHourPerUser"]}[Data]
+				in
+				    dbo_LinesperHourPerUser
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,57 @@
+table InventoryAndLocationSummary
+	lineageTag: 1833ad3b-f9ab-40d2-b76d-4c9ecea36faf
+
+	column CompartmentLabel
+		dataType: string
+		lineageTag: dcc7e544-e412-4146-8999-e83c3e6aa90d
+		summarizeBy: none
+		sourceColumn: CompartmentLabel
+
+		annotation SummarizationSetBy = Automatic
+
+	column MetricName
+		dataType: string
+		lineageTag: 13818510-14e2-4ba5-b0ce-2d0015fa0724
+		summarizeBy: none
+		sourceColumn: MetricName
+		sortByColumn: MetricSort
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column MetricValue
+		dataType: string
+		lineageTag: 4f604680-7b8e-4054-8a24-b6ff32c45572
+		summarizeBy: none
+		sourceColumn: MetricValue
+
+		annotation SummarizationSetBy = Automatic
+
+	column MetricSort
+		dataType: int64
+		formatString: 0
+		lineageTag: 3826cfe6-13e0-4246-b939-cc410c5c555d
+		summarizeBy: sum
+		sourceColumn: MetricSort
+
+		changedProperty = SortByColumn
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	partition InventoryAndLocationSummary = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    dbo_InventoryAndLocationSummary = Source{[Schema="dbo",Item="InventoryAndLocationSummary"]}[Data],
+				    #"Added Conditional Column" = Table.AddColumn(dbo_InventoryAndLocationSummary, "MetricSort", each if [MetricName] = "Total Bin(s) w/ Inventory" then 1 else if [MetricName] = "Total Bin(s) w/ No Inventory" then 2 else if [MetricName] = "Total Bin(s)" then 3 else if [MetricName] = "% of Bin(s) w/ Inventory" then 4 else if [MetricName] = "% of Bin(s) w/ No Inventory" then 5 else if [MetricName] = "% of Total Bin(s)" then 6 else if [MetricName] = "Total Locations Occupied" then 7 else if [MetricName] = "Total Locations Empty" then 8 else if [MetricName] = "Total Locations" then 9 else if [MetricName] = "% Locations Occupied" then 10 else if [MetricName] = "% Locations Empty" then 11 else if [MetricName] = "Distinct SKUs Stocked" then 12 else if [MetricName] = "Units Stocked" then 13 else if [MetricName] = "% Units Stocked" then 14 else if [MetricName] = "Avg Units Stocked Per Location" then 15 else if [MetricName] = "Avg Units Stocked per Bin(s)" then 16 else if [MetricName] = "Avg Units Stocked per SKU" then 17 else if [MetricName] = "Avg Locations Stocked per SKU" then 18 else 99999)
+				in
+				    #"Added Conditional Column"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

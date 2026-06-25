@@ -1,0 +1,32 @@
+table LinesperHourPerPort
+	lineageTag: ca66a84a-50d1-4c3e-be37-8486d9748eaa
+
+	column LinesPerHour
+		dataType: double
+		lineageTag: b85a85ff-15fd-4a05-a7a7-35cc9308f366
+		summarizeBy: sum
+		sourceColumn: LinesPerHour
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Ports
+		dataType: string
+		lineageTag: f5e9143e-ab9b-4ec7-b51d-6a83c40e5429
+		summarizeBy: none
+		sourceColumn: Ports
+
+		annotation SummarizationSetBy = Automatic
+
+	partition LinesperHourPerPort = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    dbo_LinesperHourPerPort = Source{[Schema="dbo",Item="LinesperHourPerPort"]}[Data]
+				in
+				    dbo_LinesperHourPerPort
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,697 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "eaf9b8194b56ba1f624c",
+  "position": {
+    "x": 48,
+    "y": 650,
+    "z": 9000,
+    "height": 395,
+    "width": 2320,
+    "tabOrder": 9000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "// DistinctPortsTable"
+                    }
+                  },
+                  "Property": "Ports"
+                }
+              },
+              "queryRef": "DistinctPortsTable.Ports",
+              "nativeQueryRef": "Ports"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "B Measure"
+                    }
+                  },
+                  "Property": "Orders Completed per Port"
+                }
+              },
+              "queryRef": "B Measure.Orders Completed per Port",
+              "nativeQueryRef": "Orders Completed",
+              "displayName": "Orders Completed"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "B Measure"
+                    }
+                  },
+                  "Property": "Bin Presentations Completed per Port"
+                }
+              },
+              "queryRef": "B Measure.Bin Presentations Completed per Port",
+              "nativeQueryRef": "Bin Presentations Completed",
+              "displayName": "Bin Presentations Completed"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "B Measure"
+                    }
+                  },
+                  "Property": "Lines Completed per Port"
+                }
+              },
+              "queryRef": "B Measure.Lines Completed per Port",
+              "nativeQueryRef": "Lines Completed1",
+              "displayName": "Lines Completed"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "B Measure"
+                    }
+                  },
+                  "Property": "Units Completed per Port"
+                }
+              },
+              "queryRef": "B Measure.Units Completed per Port",
+              "nativeQueryRef": "Units Completed",
+              "displayName": "Units Completed"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "B Measure"
+                    }
+                  },
+                  "Property": "Orders/HR per Port"
+                }
+              },
+              "queryRef": "B Measure.Orders/HR per Port",
+              "nativeQueryRef": "Orders/HR",
+              "displayName": "Orders/HR"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "B Measure"
+                    }
+                  },
+                  "Property": "Bins/HR per Port"
+                }
+              },
+              "queryRef": "B Measure.Bins/HR per Port",
+              "nativeQueryRef": "Bins/HR",
+              "displayName": "Bins/HR"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "B Measure"
+                    }
+                  },
+                  "Property": "Units/HR per Port"
+                }
+              },
+              "queryRef": "B Measure.Units/HR per Port",
+              "nativeQueryRef": "Units/HR",
+              "displayName": "Units/HR"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "B Measure"
+                    }
+                  },
+                  "Property": "Lines/HR per Port"
+                }
+              },
+              "queryRef": "B Measure.Lines/HR per Port",
+              "nativeQueryRef": "Lines/HR",
+              "displayName": "Lines/HR"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "B Measure"
+                    }
+                  },
+                  "Property": "Machine wait time per Port"
+                }
+              },
+              "queryRef": "B Measure.Machine wait time per Port",
+              "nativeQueryRef": "Machine wait time",
+              "displayName": "Machine wait time"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "B Measure"
+                    }
+                  },
+                  "Property": "Average Handle Time/Presentation per Port"
+                }
+              },
+              "queryRef": "B Measure.Average Handle Time/Presentation per Port",
+              "nativeQueryRef": "Average Handle Time/Presentation per Port",
+              "displayName": "Average Handle Time/Presentation"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "B Measure"
+                    }
+                  },
+                  "Property": "Total Logged Time per Port"
+                }
+              },
+              "queryRef": "B Measure.Total Logged Time per Port",
+              "nativeQueryRef": "Total Logged Time per Port",
+              "displayName": "Total Logged Time"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "grid": [
+        {
+          "properties": {
+            "outlineStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "15D"
+                }
+              }
+            },
+            "outlineColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#546A7A'"
+                    }
+                  }
+                }
+              }
+            },
+            "gridVertical": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "gridVerticalColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#546A7A'"
+                    }
+                  }
+                }
+              }
+            },
+            "gridHorizontalColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#546A7A'"
+                    }
+                  }
+                }
+              }
+            },
+            "textSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "11D"
+                }
+              }
+            },
+            "rowPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "4D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "backColorSecondary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#EEF4F9'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "italic": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "total": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "accessibility": [
+        {
+          "properties": {
+            "rowWithReferenceText": {
+              "expr": {
+                "Literal": {
+                  "Value": "''"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "201.75031678955813D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "B Measure.Bin Presentations Completed per Port"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "197.4046289771319D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "B Measure.Orders Completed per Port"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "186.57367891102717D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "B Measure.Lines Completed per Port"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "179.96099934626636D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "B Measure.Units Completed per Port"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "177.5332083211464D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "B Measure.Orders/HR per Port"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "176.409718196386D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "B Measure.Bins/HR per Port"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "183.79229170602196D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "B Measure.Units/HR per Port"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "179.57707364999413D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "B Measure.Machine wait time per Port"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "186.3637539859822D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "B Measure.Lines/HR per Port"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "209.42085450055728D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "DistinctPortsTable.Ports"
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "border": [
+        {
+          "properties": {
+            "width": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "titleWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Productivity by Port'"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "spacing": [
+        {
+          "properties": {
+            "verticalSpacing": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "60d7b7d60a03aee4e524",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "// DistinctPortsTable"
+              }
+            },
+            "Property": "Ports"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "d",
+              "Entity": "// DistinctPortsTable",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Not": {
+                  "Expression": {
+                    "In": {
+                      "Expressions": [
+                        {
+                          "Column": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Source": "d"
+                              }
+                            },
+                            "Property": "Ports"
+                          }
+                        }
+                      ],
+                      "Values": [
+                        [
+                          {
+                            "Literal": {
+                              "Value": "null"
+                            }
+                          }
+                        ],
+                        [
+                          {
+                            "Literal": {
+                              "Value": "'No Data'"
+                            }
+                          }
+                        ]
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "objects": {
+          "general": [
+            {
+              "properties": {
+                "isInvertedSelectionMode": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "true"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

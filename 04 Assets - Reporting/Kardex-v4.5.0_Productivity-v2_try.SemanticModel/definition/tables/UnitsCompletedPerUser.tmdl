@@ -1,0 +1,31 @@
+table UnitsCompletedPerUser
+	lineageTag: e4a16fb5-f56c-4d5c-9862-c65e3b37ceda
+
+	column Users
+		dataType: string
+		lineageTag: a1ea49a7-a53d-446d-a957-0b1d22f0ee93
+		summarizeBy: none
+		sourceColumn: Users
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitsCompleted
+		dataType: int64
+		formatString: 0
+		lineageTag: dfd48e90-8b6c-481a-ace4-79e8e00b7474
+		summarizeBy: sum
+		sourceColumn: UnitsCompleted
+
+		annotation SummarizationSetBy = Automatic
+
+	partition UnitsCompletedPerUser = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    dbo_UnitsCompletedPerUser = Source{[Schema="dbo",Item="UnitsCompletedPerUser"]}[Data]
+				in
+				    dbo_UnitsCompletedPerUser
+
+	annotation PBI_ResultType = Table
+

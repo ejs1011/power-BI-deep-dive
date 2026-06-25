@@ -1,0 +1,31 @@
+table TotalLoggedTimePerUser
+	lineageTag: e976213d-67f1-42ba-bc40-3d51d13b759b
+
+	column Users
+		dataType: string
+		lineageTag: 4e20e09f-0e88-46f4-83be-84745cbc48f7
+		summarizeBy: none
+		sourceColumn: Users
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalLoggedTime
+		dataType: int64
+		formatString: 0
+		lineageTag: eff99b67-ad47-41ec-b316-73c14d572a84
+		summarizeBy: sum
+		sourceColumn: TotalLoggedTime
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TotalLoggedTimePerUser = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    dbo_TotalLoggedTimePerUser = Source{[Schema="dbo",Item="TotalLoggedTimePerUser"]}[Data]
+				in
+				    dbo_TotalLoggedTimePerUser
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,161 @@
+table 'Calender 2'
+	lineageTag: 32936cf1-947e-4c3e-8901-8b63a6fe5e63
+
+	column Date
+		formatString: General Date
+		lineageTag: 5ac83a6d-4718-490a-8892-367100741f6c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		variation Variation
+			isDefault
+			relationship: 2737f88f-3594-45d3-9c08-e62f4f77f617
+			defaultHierarchy: LocalDateTable_70c0e63f-6d68-4d85-a31b-3a32c67ae0fb.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column day
+		formatString: 0
+		lineageTag: ce3bcadf-27a5-4461-b647-f2131adc50ba
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [day]
+
+		annotation SummarizationSetBy = Automatic
+
+	column week
+		formatString: 0
+		lineageTag: a8e54c04-c70c-494e-8c41-1fb4a01f5b7f
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [week]
+
+		annotation SummarizationSetBy = Automatic
+
+	column month
+		formatString: 0
+		lineageTag: 2055da4b-906f-4cab-80a0-c7d887547f23
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [month]
+
+		annotation SummarizationSetBy = Automatic
+
+	column year
+		formatString: 0
+		lineageTag: bdfdf4c5-d1e3-4662-a6ea-aead7a0ffbea
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column yearMonth
+		lineageTag: eea68e7d-2672-4d7a-8305-6e89933b0c78
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [yearMonth]
+
+		annotation SummarizationSetBy = Automatic
+
+	column quarter
+		formatString: 0
+		lineageTag: 3980d128-502d-4a9a-82ab-29af766dc567
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [quarter]
+
+		annotation SummarizationSetBy = Automatic
+
+	column yearQuarter
+		lineageTag: 4eda2e4c-59c8-43eb-938f-aef96c217c70
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [yearQuarter]
+
+		annotation SummarizationSetBy = Automatic
+
+	column yearweek
+		lineageTag: 68d1ca79-2092-4282-bb33-85850787cfb1
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [yearweek]
+
+		annotation SummarizationSetBy = Automatic
+
+	column yearNow
+		formatString: 0
+		lineageTag: 3f0b9a0a-69b6-4d29-8e4a-bbdac3b0e083
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [yearNow]
+
+		annotation SummarizationSetBy = Automatic
+
+	column years
+		lineageTag: 8c3d1803-36e6-4060-9a85-c1c29bc0c328
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [years]
+
+		annotation SummarizationSetBy = Automatic
+
+	column upcoming
+		lineageTag: b6c74281-9281-4af3-bd39-3b2f066c0217
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [upcoming]
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateOnly = ```
+			DATEVALUE('Calender 2'[Date])
+			 
+			```
+		formatString: Short Date
+		lineageTag: 1e6c0bcc-947f-4d55-8b49-31fe94a0e800
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: 304aab42-f088-40e0-ae39-7ba3ff63928a
+			defaultHierarchy: LocalDateTable_c6476ee9-410a-44fe-b2dd-c9283b54da38.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Calender 2' = calculated
+		mode: import
+		source = ```
+				
+				GENERATE (
+				  CALENDAR ( DATE ( 2024, 1, 1 ),  TODAY()),
+				  VAR currentDay = [Date]
+				  VAR day = DAY( currentDay )
+				  VAR week = WEEKNUM( currentDay,1)
+				  VAR month =  MONTH ( currentDay )
+				  VAR year =  YEAR ( currentDay )
+				  VAR yearMonth = FORMAT(currentDay, "YYYY/MM")
+				  VAR quarter = QUARTER(currentDay)
+				  VAR yearQuarter = YEAR ( currentDay ) & "/Q"& QUARTER(currentDay)
+				    VAR yearweek = FORMAT ( [Date], "YYYY" ) & "/Week" & WEEKNUM([Date])
+				  VAR yearNow = IF(year = YEAR(TODAY()),1,0)
+				  VAR years = FORMAT(IF(yearNow = 1, "Current year", YEAR(currentDay)), "")
+				  VAR upcoming = FORMAT(IF(currentDay > TODAY(),1,0),"")
+				RETURN   ROW (
+				  "day", day,
+				  "week", week,
+				  "month", month,
+				  "year", year,
+				  "yearMonth", yearMonth, 
+				  "quarter", quarter,
+				  "yearQuarter", yearQuarter,
+				  "yearweek",yearweek,
+				  "yearNow", yearNow,
+				  "years", years,
+				  "upcoming", upcoming)
+				)
+				```
+
+	annotation PBI_Id = ef98be31554e457db7ed40523635a94f
+

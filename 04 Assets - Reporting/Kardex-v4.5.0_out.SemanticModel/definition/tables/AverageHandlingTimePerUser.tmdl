@@ -1,0 +1,32 @@
+table AverageHandlingTimePerUser
+	lineageTag: 8283f900-4513-45d0-819b-24d2c34ead37
+
+	column Users
+		dataType: string
+		lineageTag: d676952d-c362-4cd1-a69e-8653a236073f
+		summarizeBy: none
+		sourceColumn: Users
+
+		annotation SummarizationSetBy = Automatic
+
+	column AverageHandlingTime
+		dataType: double
+		lineageTag: db88cb9c-cda4-4ff7-9dde-ce9fba9b33fc
+		summarizeBy: sum
+		sourceColumn: AverageHandlingTime
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition AverageHandlingTimePerUser = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_AverageHandlingTimePerUser = Source{[Schema="dbo",Item="AverageHandlingTimePerUser"]}[Data]
+				in
+				    dbo_AverageHandlingTimePerUser
+
+	annotation PBI_ResultType = Table
+

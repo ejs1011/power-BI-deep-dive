@@ -1,0 +1,176 @@
+table Inventory
+	lineageTag: 9fac1312-45bc-420a-8752-518bbb8174b6
+
+	column PrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 004ad154-e312-4793-8a3d-9fa7c880b5fe
+		summarizeBy: none
+		sourceColumn: PrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitOfMeasurePrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: e283b961-5d76-464b-9958-cd46c11c733a
+		summarizeBy: count
+		sourceColumn: UnitOfMeasurePrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReasonCodePrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: b251803f-d90e-4698-8446-48ca558fc526
+		summarizeBy: count
+		sourceColumn: ReasonCodePrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ContainerPrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: a2713daa-6c51-434d-9e68-12af773dfbcc
+		summarizeBy: none
+		sourceColumn: ContainerPrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 6f3165a8-284e-4de0-911e-18a5c96aa247
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column ContainerSide
+		dataType: int64
+		formatString: 0
+		lineageTag: 526facb9-3662-490c-bf92-2e9cb99b5cf6
+		summarizeBy: sum
+		sourceColumn: ContainerSide
+
+		annotation SummarizationSetBy = Automatic
+
+	column ContainerX
+		dataType: int64
+		formatString: 0
+		lineageTag: bf1e3f27-d5b7-4ec1-bc20-72acc44b01f9
+		summarizeBy: sum
+		sourceColumn: ContainerX
+
+		annotation SummarizationSetBy = Automatic
+
+	column ContainerY
+		dataType: int64
+		formatString: 0
+		lineageTag: bfa7a440-95d3-440d-bb73-8e52adcbe3d2
+		summarizeBy: sum
+		sourceColumn: ContainerY
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 1a756fe5-10d1-4b66-8622-0535ad61d356
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedBy
+		dataType: string
+		lineageTag: fe059699-ce25-4b38-a3db-a7b278e5bfa1
+		summarizeBy: none
+		sourceColumn: CreatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1e9c75df-8769-4901-90a3-7bafccaf58ba
+		summarizeBy: none
+		sourceColumn: CreatedDate
+
+		variation Variation
+			isDefault
+			relationship: 75ad5991-8876-4e79-9c13-a74f93118494
+			defaultHierarchy: LocalDateTable_3951fc29-8d37-49d1-8a92-43ae43cbbab8.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedBy
+		dataType: string
+		lineageTag: 3cd9a5ac-d9a1-4956-82b2-f761e1ca18e3
+		summarizeBy: none
+		sourceColumn: LastUpdatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedDateInventory
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6f51c8fe-d88f-4d11-97f6-3d7d555f1945
+		summarizeBy: none
+		sourceColumn: LastUpdatedDateInventory
+
+		variation Variation
+			isDefault
+			relationship: 2c310284-96ec-4260-9d1c-32e054e82114
+			defaultHierarchy: LocalDateTable_90726d65-cb0d-4fe0-8ba2-49105f675417.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: ba6cded7-c2ff-48ab-babf-76bfbafb306f
+		summarizeBy: none
+		sourceColumn: LastUpdatedDate
+
+		variation Variation
+			isDefault
+			relationship: e60546f5-484f-4250-a043-92cd04b29227
+			defaultHierarchy: LocalDateTable_67e2f0ea-ab3a-479b-8071-736a049dd6a4.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Snapshot_Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 9211fb8d-bba8-4b50-9515-c00ef8d3f9cf
+		summarizeBy: count
+		sourceColumn: Snapshot_Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 44ca8542-c8eb-4e7c-9736-cee3cdfd716d
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition Inventory = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    dbo_Inventory = Source{[Schema="dbo",Item="Inventory"]}[Data],
+				    #"Added Custom" = Table.AddColumn(dbo_Inventory, "Date", each DateTime.Date([LastUpdatedDate])),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Added Custom",{{"Date", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

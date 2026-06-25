@@ -1,0 +1,132 @@
+table ContainerCompartmentBarcodes
+	lineageTag: 5c60f554-b227-4251-852b-30b5315b31c5
+
+	column PrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 99cc7ad8-3b68-434d-bf47-4d05c0941347
+		summarizeBy: count
+		sourceColumn: PrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ContainerPrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: d3f41d01-7b92-4f25-9758-e4c2eb050262
+		summarizeBy: none
+		sourceColumn: ContainerPrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ContainerSide
+		dataType: int64
+		formatString: 0
+		lineageTag: 3d634d3c-de70-4864-97cd-c96bf1fe2fc6
+		summarizeBy: sum
+		sourceColumn: ContainerSide
+
+		annotation SummarizationSetBy = Automatic
+
+	column XPosition
+		dataType: int64
+		formatString: 0
+		lineageTag: f6382627-df8d-4924-97d4-65ba64dff433
+		summarizeBy: sum
+		sourceColumn: XPosition
+
+		annotation SummarizationSetBy = Automatic
+
+	column YPosition
+		dataType: int64
+		formatString: 0
+		lineageTag: 80864964-0aa0-437a-b2f4-a5490b5b1c96
+		summarizeBy: sum
+		sourceColumn: YPosition
+
+		annotation SummarizationSetBy = Automatic
+
+	column Barcode
+		dataType: string
+		lineageTag: 772ddfa2-cd66-47a4-9da5-a242d325fb02
+		summarizeBy: none
+		sourceColumn: Barcode
+
+		annotation SummarizationSetBy = Automatic
+
+	column FlaggedForArbitrarySerialNumberValidation
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 085eb3fe-e605-4931-a4ea-a69e0cc44cfd
+		summarizeBy: none
+		sourceColumn: FlaggedForArbitrarySerialNumberValidation
+
+		annotation SummarizationSetBy = Automatic
+
+	column XAnchor
+		dataType: int64
+		formatString: 0
+		lineageTag: b8b10a3c-4186-4f6c-8f63-07b89e61c888
+		summarizeBy: sum
+		sourceColumn: XAnchor
+
+		annotation SummarizationSetBy = Automatic
+
+	column XSize
+		dataType: int64
+		formatString: 0
+		lineageTag: 2c26f990-f6f0-4f3a-881c-ba537743ff23
+		summarizeBy: sum
+		sourceColumn: XSize
+
+		annotation SummarizationSetBy = Automatic
+
+	column YAnchor
+		dataType: int64
+		formatString: 0
+		lineageTag: 43a9d0f0-a8dd-4e4e-969f-669b146809d4
+		summarizeBy: sum
+		sourceColumn: YAnchor
+
+		annotation SummarizationSetBy = Automatic
+
+	column YSize
+		dataType: int64
+		formatString: 0
+		lineageTag: c0aca354-3b54-4bb6-aed7-f3cf6fbfb048
+		summarizeBy: sum
+		sourceColumn: YSize
+
+		annotation SummarizationSetBy = Automatic
+
+	column AutoStoreCustom
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 61d7f119-008c-452f-a3ec-5e74e9ace4d0
+		summarizeBy: none
+		sourceColumn: AutoStoreCustom
+
+		annotation SummarizationSetBy = Automatic
+
+	column BatchId
+		dataType: int64
+		formatString: 0
+		lineageTag: e73fc755-5184-42db-a194-ced4574b21de
+		summarizeBy: count
+		sourceColumn: BatchId
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ContainerCompartmentBarcodes = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_ContainerCompartmentBarcodes = Source{[Schema="dbo",Item="ContainerCompartmentBarcodes"]}[Data]
+				in
+				    dbo_ContainerCompartmentBarcodes
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,134 @@
+table DefragDetailByUomCompartmentSize_Table
+	lineageTag: 963aa649-a435-4c43-85d9-fc59ffbdf71d
+
+	column Sku
+		dataType: string
+		lineageTag: 7ba3ef77-d23f-488a-877f-b1f4e7a40f1c
+		summarizeBy: none
+		sourceColumn: Sku
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitOfMeasurePrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 2a8dc25a-2ddf-4828-8aa5-a2681bb8ee0b
+		summarizeBy: count
+		sourceColumn: UnitOfMeasurePrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column CompartmentSizeName
+		dataType: string
+		lineageTag: 543be0a3-d9e3-44f9-802d-dbc3df3b5455
+		summarizeBy: none
+		sourceColumn: CompartmentSizeName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: fb10e066-8f0d-4a24-b52e-7a59c8a4f6f4
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalCompartments
+		dataType: int64
+		formatString: 0
+		lineageTag: b4283820-8c9a-4518-bcdd-a90beab26072
+		summarizeBy: sum
+		sourceColumn: TotalCompartments
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalUnrealizedCapacity
+		dataType: int64
+		formatString: 0
+		lineageTag: b0ab94be-5287-4b2d-98ce-a7662d19b337
+		summarizeBy: sum
+		sourceColumn: TotalUnrealizedCapacity
+
+		annotation SummarizationSetBy = Automatic
+
+	column PercentFragmentation
+		dataType: double
+		lineageTag: e20decee-b5a5-4bcc-bd69-d9d9c2b166ee
+		summarizeBy: sum
+		sourceColumn: PercentFragmentation
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AverageUnrealizedCapacity
+		dataType: double
+		lineageTag: 453ad765-dd1c-4687-b365-cad3a78cef10
+		summarizeBy: sum
+		sourceColumn: AverageUnrealizedCapacity
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column StandardDeviationUnrealizedCapacity
+		dataType: double
+		lineageTag: 7194b780-4a27-4434-80da-817aa36f862f
+		summarizeBy: sum
+		sourceColumn: StandardDeviationUnrealizedCapacity
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CompartmentSizeCapacity
+		dataType: int64
+		formatString: 0
+		lineageTag: fb04dc80-7d9b-4f1d-a4a3-cb6a9bc46206
+		summarizeBy: sum
+		sourceColumn: CompartmentSizeCapacity
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdealizedCompartmentUsage
+		dataType: int64
+		formatString: 0
+		lineageTag: 0cbf4887-adc4-412f-8d62-b40379a731f0
+		summarizeBy: sum
+		sourceColumn: IdealizedCompartmentUsage
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdealizedUnrealizedCapacity
+		dataType: int64
+		formatString: 0
+		lineageTag: df4052f3-7c73-46ad-a2ab-887d5c4b8fb2
+		summarizeBy: sum
+		sourceColumn: IdealizedUnrealizedCapacity
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdealizedPercentFragmentation
+		dataType: int64
+		formatString: 0
+		lineageTag: ebbbb4c3-74b1-4148-96c3-b3a37525e079
+		summarizeBy: sum
+		sourceColumn: IdealizedPercentFragmentation
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DefragDetailByUomCompartmentSize_Table = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_DefragDetailByUomCompartmentSize_Table = Source{[Schema="dbo",Item="DefragDetailByUomCompartmentSize_Table"]}[Data]
+				in
+				    dbo_DefragDetailByUomCompartmentSize_Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

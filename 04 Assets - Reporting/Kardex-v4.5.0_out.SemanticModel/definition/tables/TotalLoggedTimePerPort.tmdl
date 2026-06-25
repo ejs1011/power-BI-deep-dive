@@ -1,0 +1,31 @@
+table TotalLoggedTimePerPort
+	lineageTag: b2631e01-6a8e-4f88-a4c2-d8523584447f
+
+	column Ports
+		dataType: string
+		lineageTag: a261c942-81f2-4c65-ac3d-76fa21b6a47c
+		summarizeBy: none
+		sourceColumn: Ports
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalLoggedTime
+		dataType: int64
+		formatString: 0
+		lineageTag: 338d99f6-de50-48c5-8786-c494db7140dd
+		summarizeBy: sum
+		sourceColumn: TotalLoggedTime
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TotalLoggedTimePerPort = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_TotalLoggedTimePerPort = Source{[Schema="dbo",Item="TotalLoggedTimePerPort"]}[Data]
+				in
+				    dbo_TotalLoggedTimePerPort
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,107 @@
+table ContainerTemplateCompartments
+	lineageTag: 568e468d-7747-4b34-afcb-5f0c58c733fd
+
+	measure 'test container' = DISTINCT(ContainerTemplateCompartments[ContainerSide])
+		formatString: 0
+		lineageTag: 11ab3d09-274c-4dc4-9b73-a9c4722cecee
+
+	measure 'test CountRows' = ```
+			COUNTROWS(ContainerTemplateCompartments)
+			
+			```
+		formatString: 0
+		lineageTag: a48ed96a-d3bb-4065-adfa-a5e98c1a45bc
+
+	column PrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 2db23bc1-7026-42d6-8854-19c2a7f4a35b
+		summarizeBy: count
+		sourceColumn: PrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ContainerSide
+		dataType: int64
+		formatString: 0
+		lineageTag: e29985fc-15a3-4c61-a8d8-87f721327c73
+		summarizeBy: sum
+		sourceColumn: ContainerSide
+
+		annotation SummarizationSetBy = Automatic
+
+	column XPosition
+		dataType: int64
+		formatString: 0
+		lineageTag: fec52ddf-9bda-43f6-bfda-f70f451bcaaa
+		summarizeBy: sum
+		sourceColumn: XPosition
+
+		annotation SummarizationSetBy = Automatic
+
+	column YPosition
+		dataType: int64
+		formatString: 0
+		lineageTag: 605a9d45-c8a3-42c2-9328-1f77a232dc03
+		summarizeBy: sum
+		sourceColumn: YPosition
+
+		annotation SummarizationSetBy = Automatic
+
+	column CompartmentSizePrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 91390a2c-efbb-473b-ac65-b755d1b22cf3
+		summarizeBy: none
+		sourceColumn: CompartmentSizePrimaryKey
+
+		annotation SummarizationSetBy = User
+
+	column ContainerTemplateCompartmentName
+		dataType: string
+		lineageTag: 00473778-eb7f-4549-89b8-d82f3c7ad0fc
+		summarizeBy: none
+		sourceColumn: ContainerTemplateCompartmentName
+
+		annotation SummarizationSetBy = Automatic
+
+	column PutawayPath
+		dataType: int64
+		formatString: 0
+		lineageTag: 706a92ce-7749-4c12-988b-a798dceae392
+		summarizeBy: sum
+		sourceColumn: PutawayPath
+
+		annotation SummarizationSetBy = Automatic
+
+	column TemplatePrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 682457d8-3b60-4b5a-8312-804495c54a1d
+		summarizeBy: none
+		sourceColumn: TemplatePrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column BatchId
+		dataType: int64
+		formatString: 0
+		lineageTag: 219dd352-9eb0-45cb-bf4e-7a8910b69506
+		summarizeBy: count
+		sourceColumn: BatchId
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ContainerTemplateCompartments = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_ContainerTemplateCompartments = Source{[Schema="dbo",Item="ContainerTemplateCompartments"]}[Data]
+				in
+				    dbo_ContainerTemplateCompartments
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

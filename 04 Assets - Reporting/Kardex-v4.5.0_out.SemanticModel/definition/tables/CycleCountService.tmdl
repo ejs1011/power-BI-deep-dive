@@ -1,0 +1,164 @@
+table CycleCountService
+	lineageTag: 3e88c81c-96e8-41d7-9d48-15536ede953e
+
+	column PrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 4e9cf15e-c72d-48f5-8543-84c7c453cb55
+		summarizeBy: count
+		sourceColumn: PrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column TimeStamp
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5ec0f2d5-29aa-47b3-bff3-316a9e200b1e
+		summarizeBy: none
+		sourceColumn: TimeStamp
+
+		variation Variation
+			isDefault
+			relationship: 0eae9187-986d-48db-bb2b-d0064dee18ee
+			defaultHierarchy: LocalDateTable_f3749b83-e89f-4c11-a8e4-601444e0d84b.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column TransportOrderPrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: e911cb87-46f3-47a1-a2d1-4dd5a2fa6165
+		summarizeBy: count
+		sourceColumn: TransportOrderPrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column LocationBarcode
+		dataType: string
+		lineageTag: 781a4638-0a59-44ab-b15d-c837e6917cc1
+		summarizeBy: none
+		sourceColumn: LocationBarcode
+
+		annotation SummarizationSetBy = Automatic
+
+	column ContainerBarcode
+		dataType: string
+		lineageTag: 6e07dbcf-20f9-493f-ab3d-3905778d87da
+		summarizeBy: none
+		sourceColumn: ContainerBarcode
+
+		annotation SummarizationSetBy = Automatic
+
+	column TemplateName
+		dataType: string
+		lineageTag: 0b509c19-3644-4a66-a3bf-d800acc8298a
+		summarizeBy: none
+		sourceColumn: TemplateName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ContainerX
+		dataType: int64
+		formatString: 0
+		lineageTag: 07e9805e-f550-420f-be0d-daa02ef7feee
+		summarizeBy: sum
+		sourceColumn: ContainerX
+
+		annotation SummarizationSetBy = Automatic
+
+	column ContainerY
+		dataType: int64
+		formatString: 0
+		lineageTag: 6a771447-58fa-4e01-9bee-f177b6261e22
+		summarizeBy: sum
+		sourceColumn: ContainerY
+
+		annotation SummarizationSetBy = Automatic
+
+	column ContainerSide
+		dataType: int64
+		formatString: 0
+		lineageTag: 34f58308-5b99-4423-a34b-85ecbab3433c
+		summarizeBy: sum
+		sourceColumn: ContainerSide
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitName
+		dataType: string
+		lineageTag: cbfc2839-d3c4-48fc-b133-751768157670
+		summarizeBy: none
+		sourceColumn: UnitName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sku
+		dataType: string
+		lineageTag: 39ab5333-4b80-4ac5-ab23-8a038e6460b2
+		summarizeBy: none
+		sourceColumn: Sku
+
+		annotation SummarizationSetBy = Automatic
+
+	column User
+		dataType: string
+		lineageTag: 81279550-b61f-4682-94ac-cea486e6e209
+		summarizeBy: none
+		sourceColumn: User
+
+		annotation SummarizationSetBy = Automatic
+
+	column QuantityCounted
+		dataType: int64
+		formatString: 0
+		lineageTag: e66a158d-eb67-444c-b59e-9870a76b69ef
+		summarizeBy: sum
+		sourceColumn: QuantityCounted
+
+		annotation SummarizationSetBy = Automatic
+
+	column SkipBin
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 30f17b65-1a17-4f0b-b425-cd788478fb2b
+		summarizeBy: none
+		sourceColumn: SkipBin
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReasonCodePrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 381fa95b-dd00-4f71-9155-4bbe258dc284
+		summarizeBy: count
+		sourceColumn: ReasonCodePrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: e958a02d-f512-4bec-914f-0499a908d102
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition CycleCountService = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_CycleCountService = Source{[Schema="dbo",Item="CycleCountService"]}[Data],
+				    #"Inserted Text Before Delimiter" = Table.AddColumn(dbo_CycleCountService, "Text Before Delimiter", each Text.BeforeDelimiter(Text.From([TimeStamp], "en-IN"), " "), type text),
+				    #"Renamed Columns" = Table.RenameColumns(#"Inserted Text Before Delimiter",{{"Text Before Delimiter", "Date"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"Date", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

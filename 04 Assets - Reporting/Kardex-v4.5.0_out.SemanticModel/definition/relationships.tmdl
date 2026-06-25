@@ -1,0 +1,621 @@
+relationship ef1fd862-443f-49bf-8be7-c5d12a101797
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calender.DateOnly
+	toColumn: LocalDateTable_f05d12b6-5388-44eb-b017-6c2ccf2deb4a.Date
+
+relationship e6ca2951-1cb9-484d-963f-c850b8c8c6a1
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calender.Date
+	toColumn: LocalDateTable_1b2a3d44-82c3-4a9a-9d8a-9d4fb080fe11.Date
+
+relationship 3c0f4037-f80b-47d0-9014-89c8e1ec64ff
+	joinOnDateBehavior: datePartOnly
+	fromColumn: InventoryTaskActions.CompletedTime
+	toColumn: LocalDateTable_c4383f3f-b1e7-4983-b25c-bf3315e3536d.Date
+
+relationship 75ad5991-8876-4e79-9c13-a74f93118494
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Inventory.CreatedDate
+	toColumn: LocalDateTable_3951fc29-8d37-49d1-8a92-43ae43cbbab8.Date
+
+relationship 2c310284-96ec-4260-9d1c-32e054e82114
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Inventory.LastUpdatedDateInventory
+	toColumn: LocalDateTable_90726d65-cb0d-4fe0-8ba2-49105f675417.Date
+
+relationship e60546f5-484f-4250-a043-92cd04b29227
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Inventory.LastUpdatedDate
+	toColumn: LocalDateTable_67e2f0ea-ab3a-479b-8071-736a049dd6a4.Date
+
+relationship 42e5b15f-3a11-403f-ab1c-38b0816cc0cd
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Containers.CreatedDate
+	toColumn: LocalDateTable_d13e15e0-321b-4e09-80f0-1cb0a14cf2b6.Date
+
+relationship 47d10a09-a18b-4be5-8fb2-dd7144f0df12
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Containers.LastUpdatedDateInventory
+	toColumn: LocalDateTable_9b39ac00-1791-4e7d-bb1b-0f8d52788798.Date
+
+relationship e15d4dff-c98b-4dcc-97c9-71cfdd14c98e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Containers.LastUpdatedDate
+	toColumn: LocalDateTable_5748c141-1026-4ff0-904e-e7dde6cb6596.Date
+
+relationship 6dc827f5-7a2d-23bd-89db-a85afa5c1a94
+	fromColumn: Inventory.Date
+	toColumn: Calender.DateOnly
+
+relationship 62e13809-5333-7d3f-3d76-a88fde9f41a5
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: ContainerCompartmentBarcodes.ContainerPrimaryKey
+	toColumn: Containers.PrimaryKey
+
+relationship 904c122b-90be-4eb7-958b-84c103853cc3
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CompartmentSizes.CreatedDate
+	toColumn: LocalDateTable_33086b98-48fa-4b70-8f7e-de48960e1f9c.Date
+
+relationship e621608c-4958-4f6b-b187-5c083322f67f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CompartmentSizes.LastUpdatedDateInventory
+	toColumn: LocalDateTable_dfb7ceff-9ee6-4853-b320-140bc471511e.Date
+
+relationship 788a1ac0-4a47-4bf0-adf4-007b2e837e83
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CompartmentSizes.LastUpdatedDate
+	toColumn: LocalDateTable_17768c8d-4e8f-42cd-92bb-114ea45330ef.Date
+
+relationship 3cf3317c-07ed-4691-9f14-9fcef6d6eef5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: ContainerTemplates.CreatedDate
+	toColumn: LocalDateTable_701fa79f-eb60-4a70-975a-2b71cb44f518.Date
+
+relationship e2176f53-670e-4200-8581-16503c294c3c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: ContainerTemplates.LastUpdatedDateInventory
+	toColumn: LocalDateTable_bf612fdf-8f75-456d-9557-21e771ebc982.Date
+
+relationship ff3c144d-5494-48f9-b30b-a5ee6950ce39
+	joinOnDateBehavior: datePartOnly
+	fromColumn: ContainerTemplates.LastUpdatedDate
+	toColumn: LocalDateTable_4202c532-9aba-46dc-a4b1-e7e0b37d8f29.Date
+
+relationship 71adbb58-a542-400f-bc69-995f515591dd
+	joinOnDateBehavior: datePartOnly
+	fromColumn: FulfillmentOrderLines.CreatedDate
+	toColumn: LocalDateTable_47d1096d-5130-47d6-8178-e298f1e9f3aa.Date
+
+relationship 29a2c7ac-4864-4992-a534-88896af0c652
+	joinOnDateBehavior: datePartOnly
+	fromColumn: FulfillmentOrderLines.LastUpdatedDateInventory
+	toColumn: LocalDateTable_2b419a11-376b-4ac4-9754-941d641b14d1.Date
+
+relationship c34fac44-f707-45cb-9469-0a2863f73cd0
+	joinOnDateBehavior: datePartOnly
+	fromColumn: FulfillmentOrderLines.LastUpdatedDate
+	toColumn: LocalDateTable_eea7d074-db9f-4aea-8681-b00a4f74fdc7.Date
+
+relationship 8356629d-539f-46f0-9e50-f1f180be433f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: FulfillmentOrders.AllocationFailDate
+	toColumn: LocalDateTable_2bbddcd6-bd4a-46ed-a5ce-eb4af7cc6e98.Date
+
+relationship 0706f5ea-2ac8-4561-b195-aa2711363703
+	joinOnDateBehavior: datePartOnly
+	fromColumn: FulfillmentOrders.CutOffDate
+	toColumn: LocalDateTable_7e906d81-45cd-4e47-8763-a5b26a7b71c0.Date
+
+relationship fb7a05f7-059b-43c3-950b-f447f756d71c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: FulfillmentOrders.CreatedDate
+	toColumn: LocalDateTable_ac676153-a8a8-40d1-b71d-ade27c52f5b6.Date
+
+relationship f2ef254c-7f39-4cf4-ac9c-272dc7b4d898
+	joinOnDateBehavior: datePartOnly
+	fromColumn: FulfillmentOrders.LastUpdatedDateInventory
+	toColumn: LocalDateTable_cbb379e5-639e-4deb-9475-e49acc0545b1.Date
+
+relationship 32e035c9-4882-4cf3-9553-ece066058b3a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: FulfillmentOrders.LastUpdatedDate
+	toColumn: LocalDateTable_e0f9995c-8e0c-4357-bf1f-1e740834b1d8.Date
+
+relationship d52a92da-11d3-4ecd-be5c-b13765999071
+	joinOnDateBehavior: datePartOnly
+	fromColumn: InventoryTasks.CreatedDate
+	toColumn: LocalDateTable_2d497aeb-dc37-4200-bc96-e0549a2857d2.Date
+
+relationship 054f8966-02c3-455a-b2d9-959a28c909d9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: InventoryTasks.LastUpdatedDateInventory
+	toColumn: LocalDateTable_03649f0a-5cbc-42ee-9922-044877adb3d7.Date
+
+relationship 8c4fd79a-3583-425a-9957-f1189741c833
+	joinOnDateBehavior: datePartOnly
+	fromColumn: InventoryTasks.LastUpdatedDate
+	toColumn: LocalDateTable_58c829fd-e52f-458b-8896-337d198574b5.Date
+
+relationship 0f197fa6-6066-4581-b02d-72da930f6fe5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: InventoryTasks_PutAway.LastUpdatedDate
+	toColumn: LocalDateTable_d408d354-0eb3-4693-ae36-a8418bbeb6b1.Date
+
+relationship 065cc3f3-67f1-4fe7-a8b6-b5f55a534c63
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Products.CreatedDate
+	toColumn: LocalDateTable_cec1ecc5-a464-4ff9-8c25-249bb4d41bd2.Date
+
+relationship 30dac046-1623-445d-ac47-b4e87353948f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Products.LastUpdatedDateInventory
+	toColumn: LocalDateTable_9066cbc1-4131-436a-a85f-68546f732dba.Date
+
+relationship 4276a323-d468-4285-96de-4cb9b77bfa84
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Products.LastUpdatedDate
+	toColumn: LocalDateTable_4d9f4678-27b1-45d4-adf5-97fe9dd0beec.Date
+
+relationship 6ed19b34-2bff-4688-9ab6-7e3dc094fc81
+	joinOnDateBehavior: datePartOnly
+	fromColumn: PutAwayContainerLineItems.CreatedDate
+	toColumn: LocalDateTable_5f48fcb6-c2a9-48af-a4bd-29bf725fe7e5.Date
+
+relationship 48664ea2-b047-4987-a120-4af5982a7547
+	joinOnDateBehavior: datePartOnly
+	fromColumn: PutAwayContainerLineItems.LastUpdatedDateInventory
+	toColumn: LocalDateTable_93d7876c-a545-4bcf-84de-e4a07c4a3310.Date
+
+relationship 4fa2f082-de81-4ac0-92c3-35004b4d8694
+	joinOnDateBehavior: datePartOnly
+	fromColumn: PutAwayContainerLineItems.LastUpdatedDate
+	toColumn: LocalDateTable_99e876d9-f28d-434e-9cf7-5cc706c9e7c6.Date
+
+relationship c721e49b-d504-4a41-921e-89d579fbbc7c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: PutAwayContainers.CreatedDate
+	toColumn: LocalDateTable_bd7d65a3-9f70-416b-bebc-bbeb4c2f35c6.Date
+
+relationship 30f1f1f8-81db-4bf8-8962-d94e90be61b3
+	joinOnDateBehavior: datePartOnly
+	fromColumn: PutAwayContainers.LastUpdatedDateInventory
+	toColumn: LocalDateTable_ba402b17-1aab-4c64-9836-8df7ddd398b3.Date
+
+relationship 613237b6-ef60-4097-8c75-96648449efef
+	joinOnDateBehavior: datePartOnly
+	fromColumn: PutAwayContainers.LastUpdatedDate
+	toColumn: LocalDateTable_3ef4dd2c-2938-4e8a-9fe5-186a071da17a.Date
+
+relationship ad4f2271-adc9-83f2-f544-3613dbddc510
+	toCardinality: many
+	fromColumn: CompartmentSizes.PrimaryKey
+	toColumn: ContainerTemplateCompartments.CompartmentSizePrimaryKey
+
+relationship 477de2d8-b2fb-0e4a-9001-31d375c07291
+	fromColumn: PutAwayContainers.Date
+	toColumn: Calender.DateOnly
+
+relationship 9ced0652-2fd9-7afc-0374-75485cc632f0
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: PutAwayContainers.PrimaryKey
+	toColumn: PutAwayContainerLineItems.PutAwayContainerPrimaryKey
+
+relationship 65d5c904-e9f5-dff9-12ef-1541e5c6bb3d
+	fromColumn: FulfillmentOrders.Date
+	toColumn: Calender.DateOnly
+
+relationship f8e2f228-270f-63fd-2b91-f7b99ad15fa0
+	crossFilteringBehavior: bothDirections
+	securityFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: ContainerTemplates.PrimaryKey
+	toColumn: ContainerTemplateCompartments.TemplatePrimaryKey
+
+relationship 2c07e11f-be23-db3f-e76a-6e94356196f3
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: InventoryTasks.PrimaryKey
+	toColumn: InventoryTasks_PutAway.InventoryTaskPrimaryKey
+
+relationship d5f03aaf-3211-1d6c-6d29-2ef4f8cbd287
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: InventoryTasks_PutAway.PutAwayContainerPrimaryKey
+	toColumn: PutAwayContainers.PrimaryKey
+
+relationship da0da4ea-7a36-4452-961d-7bcdff40ddea
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Order.TimeStamp
+	toColumn: LocalDateTable_3f8487fe-f8d5-46f1-b70a-1194ab99d68e.Date
+
+relationship 863e4dba-2dca-4448-99b5-cae028a0bf28
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Order.CreatedDate
+	toColumn: LocalDateTable_d8e45a48-f6f0-4528-9127-0b417c0af807.Date
+
+relationship 1e24ae9b-38d6-40d6-a63f-a884fa860aab
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Order.AllocatedDate
+	toColumn: LocalDateTable_902673c8-caab-4660-8ec1-05c268d00f4c.Date
+
+relationship 20f30373-6ef8-4726-a964-c4e0e1111b94
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Order.ActivatedDate
+	toColumn: LocalDateTable_e65e911e-18e6-41ab-8b5d-b95c5b34c5d9.Date
+
+relationship 5aa4e2cc-86af-4990-bf54-fb51cbc0fec9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Order.CompletedDate
+	toColumn: LocalDateTable_0c7407ab-62bb-4414-8258-381de9b730c6.Date
+
+relationship 75ff6766-1c71-445c-80ad-d47825939c1f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Pick.TimeStamp
+	toColumn: LocalDateTable_d611d978-d773-44ef-8d0c-a1d03f5e4139.Date
+
+relationship c25389f9-51f0-4bc0-8775-e4ac12dcb72a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Pick.PickCompleteDate
+	toColumn: LocalDateTable_c2ebc98c-5098-4945-a1a9-155592bc4cc3.Date
+
+relationship b983f3b3-aa25-45b8-8e22-133d3e99a149
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Order.Date
+	toColumn: LocalDateTable_4e8c83a9-94d0-4c7a-8b5b-261ecdbe807e.Date
+
+relationship bed1f762-97ed-adfd-050a-31982aec5778
+	crossFilteringBehavior: bothDirections
+	securityFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: Pick.OrderNumber
+	toColumn: Order.OrderNumber
+
+relationship e69f297e-ab6e-3318-344c-0a8c8f4562f3
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: InventoryTasks.PrimaryKey
+	toColumn: InventoryTaskActions.InventoryTaskPrimaryKey
+
+relationship b9a2d43f-3019-26b0-c2b7-53cc8790954a
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: Containers.PrimaryKey
+	toColumn: Inventory.ContainerPrimaryKey
+
+relationship dcb0c98b-5605-598b-f6d8-0c5de3af9e46
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: ContainerTemplates.PrimaryKey
+	toColumn: Containers.TemplatePrimaryKey
+
+relationship 98872802-a454-4f71-a292-2df92693de54
+	joinOnDateBehavior: datePartOnly
+	fromColumn: PutAway.TimeStamp
+	toColumn: LocalDateTable_0ac29051-0b8e-465e-9d19-0adeac22e1c9.Date
+
+relationship d9059ed6-4204-4da7-8ca9-413a12112382
+	joinOnDateBehavior: datePartOnly
+	fromColumn: PutAway.CreatedDate
+	toColumn: LocalDateTable_44eab975-9ece-449f-badd-f0325d78e680.Date
+
+relationship 4ec43278-0e09-416c-b746-cb31737b0bf2
+	joinOnDateBehavior: datePartOnly
+	fromColumn: PutAway.LastUpdatedDate
+	toColumn: LocalDateTable_5d96b2ef-b21b-49ae-bd8e-4758219d2756.Date
+
+relationship 0eae9187-986d-48db-bb2b-d0064dee18ee
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CycleCountService.TimeStamp
+	toColumn: LocalDateTable_f3749b83-e89f-4c11-a8e4-601444e0d84b.Date
+
+relationship 3a60e3f9-999d-6ece-71b1-c1c5a6089613
+	fromColumn: PutAway.Date
+	toColumn: Calender.DateOnly
+
+relationship d2d0dd5b-ab22-9579-3875-ab82b6dd3352
+	fromColumn: CycleCountService.Date
+	toColumn: Calender.DateOnly
+
+relationship d9382de0-d94d-0eea-fcbd-7fe2a781d9cf
+	fromColumn: Pick.Date
+	toColumn: Calender.DateOnly
+
+relationship 372a5ebf-34f7-4a69-8292-fbb13364d93b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CloseBin-InventoryRecord.TimeStamp
+	toColumn: LocalDateTable_19310448-05a3-4a80-9103-16f0210b431b.Date
+
+relationship 8961c27c-bea8-4d15-9d72-1e13ec351779
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CloseBin-InventoryRecord.Date
+	toColumn: LocalDateTable_1e1736c1-f51d-4c87-a840-b1fdae73e0f7.Date
+
+relationship 5777180b-53d6-dbc5-deb7-63686bc407d9
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: Inventory.PrimaryKey
+	toColumn: CloseBin-InventoryRecord.InventoryPrimaryKey
+
+relationship ff59a016-9e37-4d76-da61-d37b1a9bca3b
+	fromColumn: Throughput.Date
+	toColumn: Calender.DateOnly
+
+relationship 2737f88f-3594-45d3-9c08-e62f4f77f617
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Calender 2'.Date
+	toColumn: LocalDateTable_70c0e63f-6d68-4d85-a31b-3a32c67ae0fb.Date
+
+relationship 304aab42-f088-40e0-ae39-7ba3ff63928a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Calender 2'.DateOnly
+	toColumn: LocalDateTable_c6476ee9-410a-44fe-b2dd-c9283b54da38.Date
+
+relationship 403d8d05-7154-4e09-b7f1-b00156cefcc1
+	joinOnDateBehavior: datePartOnly
+	fromColumn: InventoryTasks_CycleCount.LastUpdatedDateInventory
+	toColumn: LocalDateTable_1c6487d6-6124-4285-a060-2845181d5976.Date
+
+relationship ed58c08c-0086-460e-9496-c565aa6ad123
+	joinOnDateBehavior: datePartOnly
+	fromColumn: InventoryTasks_CycleCount.LastUpdatedDate
+	toColumn: LocalDateTable_1f9d41ff-36f3-4cc5-b034-b944727bbb00.Date
+
+relationship 3de4e6c4-89a7-4f67-90b2-1ce5c4687e2c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: InventoryTaskGroups.CreatedDate
+	toColumn: LocalDateTable_78bb9c8f-da1b-4c4f-86b2-0631e8bb8f58.Date
+
+relationship 2a7a88a7-4c6a-4329-8249-5fe9e7daa11d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: InventoryTaskGroups.DueDate
+	toColumn: LocalDateTable_a3e6f8f0-e425-428f-9980-1bef3c2d0a67.Date
+
+relationship 28a8e5d4-b471-4a1b-b9ac-486bc38c4957
+	joinOnDateBehavior: datePartOnly
+	fromColumn: InventoryTaskGroups.LastUpdatedDateInventory
+	toColumn: LocalDateTable_21ca7166-36b7-4c0a-8858-2877e24ada2b.Date
+
+relationship 2eb639b0-57ed-4502-9e46-99ce60407ad8
+	joinOnDateBehavior: datePartOnly
+	fromColumn: InventoryTaskGroups.LastUpdatedDate
+	toColumn: LocalDateTable_db06b2fb-4fe3-4dbc-9caa-d6024b1aa2ea.Date
+
+relationship b894a2ab-efcc-4fc1-ae65-c7e9342bc9ba
+	joinOnDateBehavior: datePartOnly
+	fromColumn: InventoryTasks.Date
+	toColumn: LocalDateTable_ee788e30-3f10-4237-91e0-1e008449d58a.Date
+
+relationship 652a102c-56f4-4bf8-90f3-ced54eac7680
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'InventoryTasks (2)'.CreatedDate
+	toColumn: LocalDateTable_fbeb229f-a159-429e-8c00-560e5f2a9476.Date
+
+relationship 644787c5-eb76-4012-9784-269587dc6156
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'InventoryTasks (2)'.LastUpdatedDateInventory
+	toColumn: LocalDateTable_6cbeee77-06c6-43d1-9964-10a48fe698f4.Date
+
+relationship dd33488d-b1b2-46f2-b874-8129d15b731f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'InventoryTasks (2)'.LastUpdatedDate
+	toColumn: LocalDateTable_8ab894d2-5021-412b-8bdc-c03959d67603.Date
+
+relationship 49dbfacc-b393-4625-58bc-b45a9e7bdc25
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: 'InventoryTasks (2)'.TaskGroupPrimaryKey
+	toColumn: InventoryTaskGroups.PrimaryKey
+
+relationship e40edfde-8e9b-f80e-a9d1-95b0c7ebb08b
+	fromColumn: 'InventoryTasks (2)'.Date
+	toColumn: Calender.DateOnly
+
+relationship 226d4358-f579-4df5-8e97-2a210170d040
+	joinOnDateBehavior: datePartOnly
+	fromColumn: OrdersCompletedHD.Date
+	toColumn: LocalDateTable_92e34d67-8869-4d9d-aa9d-15a2029f18ae.Date
+
+relationship ff7f5560-ada8-466c-a8ce-430c0e47c8ba
+	joinOnDateBehavior: datePartOnly
+	fromColumn: UnitsPickedHD.Date
+	toColumn: LocalDateTable_d3819058-3c9b-4a67-aa1d-d7196fe0277c.Date
+
+relationship 01c7b646-20c1-44f2-803f-7d5899310b5e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: BinPresentedHD.Date
+	toColumn: LocalDateTable_3000e240-bb89-408c-9117-4b610f36b5a7.Date
+
+relationship acf5d2a4-df83-41b9-8ba7-8ffb7e163825
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendar_1.Date
+	toColumn: LocalDateTable_7dba68b5-8241-408c-b697-7b0a1f94a07f.Date
+
+relationship 73c650cc-9f35-4488-880f-987ef7e69482
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendar_1.DateOnly
+	toColumn: LocalDateTable_e933ac72-c31d-47ca-a67c-3c7cd592ddbb.Date
+
+relationship 1f057bf2-4c73-f20d-2dea-d096fd58ff8e
+	fromColumn: Total_SKUs_On_Hand.Date
+	toColumn: Calendar_1.DateOnly
+
+relationship aa65de29-3c24-eb83-e364-6c7c2342ca07
+	fromColumn: Total_Units_On_Hand.Date
+	toColumn: Calendar_1.DateOnly
+
+relationship b0c32c08-27cd-9f18-f3a7-db6ec484f984
+	fromColumn: Total_Locations_Occupied.Date
+	toColumn: Calendar_1.DateOnly
+
+relationship 2342cb9f-28b5-caa4-5e15-93d271ff513a
+	fromColumn: Orders_Putaway.Date
+	toColumn: Calendar_1.DateOnly
+
+relationship a9eac586-e7a3-76fd-6794-ab3821f6ddb0
+	fromColumn: Units_Putaway.Date
+	toColumn: Calendar_1.DateOnly
+
+relationship eb1d6c51-7ad8-a256-a627-65666f826dfc
+	fromColumn: Skus_Putaway.Date
+	toColumn: Calendar_1.DateOnly
+
+relationship edb0aeda-5a10-2e0a-d144-09c181f54336
+	fromColumn: Presentations_Putaway.Date
+	toColumn: Calendar_1.DateOnly
+
+relationship bd4145c7-a73d-ab2c-0c3f-aee32c88c038
+	fromColumn: Distinct_bins_inventory_added.Date
+	toColumn: Calendar_1.DateOnly
+
+relationship 6fd5ae20-c95f-9410-000e-54b90ebfaa4a
+	fromColumn: Distinct_bin_compartments_that_had_inventory.Date
+	toColumn: Calendar_1.DateOnly
+
+relationship 330d6309-0f81-4a8a-6ed2-14031301baa5
+	fromColumn: Customer_Orders_Picked.Date
+	toColumn: Calendar_1.DateOnly
+
+relationship 9b87876f-cb95-1627-f7eb-bf4ab1d09f86
+	fromColumn: Customer_Order_Lines.Date
+	toColumn: Calendar_1.DateOnly
+
+relationship 2e5c19d2-bf15-e7c7-f924-74a2d6c55362
+	fromColumn: Units_Picked.Date
+	toColumn: Calendar_1.DateOnly
+
+relationship 3c826d7d-4c3c-5cde-c99d-d5fda7f31874
+	fromColumn: Distinct_Skus_Picked.Date
+	toColumn: Calendar_1.DateOnly
+
+relationship e946ec10-d83f-43a0-00f7-4a1e5640f08b
+	fromColumn: LinesperHourPerUser.Users
+	toColumn: DistinctUsersTable.Users
+
+relationship 3f777178-b2e0-cca7-93a7-a53ff69ebff4
+	fromColumn: LinesCompletedPerUser.Users
+	toColumn: DistinctUsersTable.Users
+
+relationship 2599fac0-eade-4ae9-ce49-00aa5011e697
+	fromColumn: BinsPerHourPerUser.Users
+	toColumn: DistinctUsersTable.Users
+
+relationship 4a770333-62e9-8d65-89e6-08891bc805d6
+	fromColumn: BinPresentationsCompletedPerUser.Users
+	toColumn: DistinctUsersTable.Users
+
+relationship 3e49de0c-a1d9-3b50-64c2-3949fd1b3f3e
+	fromColumn: AverageHandlingTimePerUser.Users
+	toColumn: DistinctUsersTable.Users
+
+relationship a0ba80f3-a26c-96fd-da63-45af7bd027fb
+	fromColumn: MachineWaitTimePerUser.Users
+	toColumn: DistinctUsersTable.Users
+
+relationship 096c8eae-02de-59ed-fee5-b93a93a0d569
+	fromColumn: OrdersCompletedPerUser.Users
+	toColumn: DistinctUsersTable.Users
+
+relationship b80b3978-1251-8703-8061-0049dc773d4f
+	fromColumn: TotalLoggedTimePerUser.Users
+	toColumn: DistinctUsersTable.Users
+
+relationship d6ddbbff-87e7-7dfe-cedb-c3ac1eeaaa22
+	fromColumn: UnitsCompletedPerUser.Users
+	toColumn: DistinctUsersTable.Users
+
+relationship 99505208-afc2-04b5-ff62-4bb3804539bc
+	fromColumn: UnitsPerHourPerUser.Users
+	toColumn: DistinctUsersTable.Users
+
+relationship 13cb6015-dee9-585c-dbab-172304a69549
+	fromColumn: MachineWaitTimePerPort.Ports
+	toColumn: '// DistinctPortsTable'.Ports
+
+relationship c5e65836-21f3-e9d4-426d-b19168aff1e9
+	fromColumn: OrdersCompletedPerPort.Ports
+	toColumn: '// DistinctPortsTable'.Ports
+
+relationship 03a1c667-9c8f-45c9-4235-d04df298edbd
+	fromColumn: LinesCompletedPerPort.Ports
+	toColumn: '// DistinctPortsTable'.Ports
+
+relationship 69f6cdd5-6f19-e2ee-560e-2445603d79af
+	fromColumn: OrdersPerHourPerPort.Ports
+	toColumn: '// DistinctPortsTable'.Ports
+
+relationship c671cff2-2050-c3f8-bfa1-8a00a2b481b3
+	fromColumn: BinsPerHourPerPort.Ports
+	toColumn: '// DistinctPortsTable'.Ports
+
+relationship 9dae642c-1f1c-a7b5-7f49-69f4a7b3f688
+	fromColumn: BinPresentationsCompletedPerPort.Ports
+	toColumn: '// DistinctPortsTable'.Ports
+
+relationship 84689c6b-e5bc-6615-e51f-edb06b3cb350
+	fromColumn: TotalLoggedTimePerPort.Ports
+	toColumn: '// DistinctPortsTable'.Ports
+
+relationship f00c6b41-a7c2-5e6c-d0c6-9d6a7314e208
+	fromColumn: AverageHandlingTimePerPort.Ports
+	toColumn: '// DistinctPortsTable'.Ports
+
+relationship 7f771c16-d520-cdc4-cf2e-9180e82d46e0
+	fromColumn: UnitsCompletedPerPort.Ports
+	toColumn: '// DistinctPortsTable'.Ports
+
+relationship 2d6a0810-21ac-efcb-d4f3-3c5706fea348
+	fromColumn: UnitsPerHourPerPort.Ports
+	toColumn: '// DistinctPortsTable'.Ports
+
+relationship 9b15f2ef-1f90-4ca7-4139-dce857eb0975
+	fromColumn: FulfillmentOrderLines.Date
+	toColumn: Calender.DateOnly
+
+relationship dfe96293-a173-b400-80e5-c49196fad8ae
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: 'InventoryTasks (2)'.PrimaryKey
+	toColumn: InventoryTasks_CycleCount.InventoryTaskPrimaryKey
+
+relationship 498a3c6a-254e-dde4-3972-c93a9843dacc
+	fromColumn: PutAwayContainerLineItems.Date
+	toColumn: Calender.DateOnly
+
+relationship c94b9dfb-69e2-eb05-cb0a-dca2c3cbb0b5
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: DistinctUsersTable.Users
+	toColumn: OrdersPerHourPerUser.Users
+
+relationship 8d05bb22-9b2f-18a8-25f5-4fd3de1675ae
+	fromColumn: LinesperHourPerPort.Ports
+	toColumn: '// DistinctPortsTable'.Ports
+
+relationship 8b73865c-fdf7-498f-b69b-c081764d6d06
+	joinOnDateBehavior: datePartOnly
+	fromColumn: LinesCompletedHD.Date
+	toColumn: LocalDateTable_dbe631d6-0ace-45b5-917c-0f9d6341f820.Date
+
+relationship f01df3f6-d0d3-40c5-931a-5c92b29009f7
+	joinOnDateBehavior: datePartOnly
+	fromColumn: UnitOfMeasureConversions.LastUpdatedDate
+	toColumn: LocalDateTable_40799d17-2df5-4095-916b-9460083987c1.Date
+
+relationship 2a72e58c-4778-47cd-a19e-98e8fcede004
+	joinOnDateBehavior: datePartOnly
+	fromColumn: UnitsOfMeasure.CreatedDate
+	toColumn: LocalDateTable_d622567a-423d-43fc-9cb9-acb0a0d3e913.Date
+
+relationship e739a94d-9c7f-4c96-809e-59e8e4391781
+	joinOnDateBehavior: datePartOnly
+	fromColumn: UnitsOfMeasure.LastUpdatedDateInventory
+	toColumn: LocalDateTable_de61ab24-1869-4380-ad47-6a4a9cdfd643.Date
+
+relationship b096ef9c-5baa-4dbd-8f43-2706483d94b5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: UnitsOfMeasure.LastUpdatedDate
+	toColumn: LocalDateTable_34055458-690d-4c58-afd3-5bd3d3f051b7.Date
+

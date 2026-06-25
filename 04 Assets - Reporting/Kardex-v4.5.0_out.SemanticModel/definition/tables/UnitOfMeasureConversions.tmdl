@@ -1,0 +1,80 @@
+table UnitOfMeasureConversions
+	lineageTag: af0030cc-5c90-4648-aeae-a8430ebd7f05
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: ff95f714-cc66-40e1-86ae-cfe3d4b229d4
+		summarizeBy: count
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column PrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 3f2d1d10-68f8-4350-8719-ba337e69e2a6
+		summarizeBy: count
+		sourceColumn: PrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitOfMeasurePrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: fe873d63-a5b3-4072-93f7-cdb3f421d967
+		summarizeBy: count
+		sourceColumn: UnitOfMeasurePrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column DisplayUnit
+		dataType: string
+		lineageTag: 00a540e5-6153-4410-ad0c-7571b959d290
+		summarizeBy: none
+		sourceColumn: DisplayUnit
+
+		annotation SummarizationSetBy = Automatic
+
+	column DisplayConversion
+		dataType: double
+		lineageTag: 2ff8eeb6-5937-49e1-9353-0f980aa6a34b
+		summarizeBy: sum
+		sourceColumn: DisplayConversion
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column LastUpdatedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 76ba0d67-4b30-4243-ac3a-fb34b8f25c4f
+		summarizeBy: none
+		sourceColumn: LastUpdatedDate
+
+		variation Variation
+			isDefault
+			relationship: f01df3f6-d0d3-40c5-931a-5c92b29009f7
+			defaultHierarchy: LocalDateTable_40799d17-2df5-4095-916b-9460083987c1.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Snapshot_Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 453228d6-d01c-4fda-a8dd-626eaf0db535
+		summarizeBy: count
+		sourceColumn: Snapshot_Id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition UnitOfMeasureConversions = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_UnitOfMeasureConversions = Source{[Schema="dbo",Item="UnitOfMeasureConversions"]}[Data]
+				in
+				    dbo_UnitOfMeasureConversions
+

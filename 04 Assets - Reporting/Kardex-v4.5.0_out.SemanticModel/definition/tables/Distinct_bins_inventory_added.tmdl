@@ -1,0 +1,36 @@
+table Distinct_bins_inventory_added
+	lineageTag: 35ee7dbb-b973-41a5-992f-037aafbbb71d
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 882c820f-72d0-40d7-97f5-8815de395fe9
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Distinct bins inventory added'
+		dataType: int64
+		formatString: 0
+		lineageTag: 734d8252-80e3-4531-954c-94d5c5af383a
+		summarizeBy: sum
+		sourceColumn: Distinct bins inventory added
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Distinct_bins_inventory_added = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_Distinct_bins_inventory_added = Source{[Schema="dbo",Item="Distinct_bins_inventory_added"]}[Data]
+				in
+				    dbo_Distinct_bins_inventory_added
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

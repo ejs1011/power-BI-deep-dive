@@ -1,0 +1,28 @@
+table 'MetricsSlicer OWH'
+	lineageTag: c9cad7a1-2b9a-493c-96b7-26eb9484c3ac
+
+	column Metric
+		lineageTag: 812887a6-f2ef-44a2-ba1b-4e0c2f46484f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Metric]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'MetricsSlicer OWH' = calculated
+		mode: import
+		source = ```
+				
+				    DATATABLE(
+				        "Metric", STRING,
+				        { 
+				            {"Orders"},
+				            {"Lines"},
+				            {"All"}
+				        }
+				    )
+				
+				```
+
+	annotation PBI_Id = be1078f3919d43b682e03afb46d497f9
+

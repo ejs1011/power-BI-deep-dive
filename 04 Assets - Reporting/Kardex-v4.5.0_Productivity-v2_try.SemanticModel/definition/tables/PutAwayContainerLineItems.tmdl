@@ -1,0 +1,209 @@
+table PutAwayContainerLineItems
+	lineageTag: 11f6022d-97ae-4218-af99-c67d4f53a49a
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 76aa3f0d-d047-42b9-8a56-619f10d3817c
+		summarizeBy: count
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column PrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: ec20c379-8c14-44f4-adc4-32bec997875d
+		summarizeBy: count
+		sourceColumn: PrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column PutAwayContainerPrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 037bd5b3-c40d-4867-8042-ec7fe0e93815
+		summarizeBy: none
+		sourceColumn: PutAwayContainerPrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExternalLineItemNumber
+		dataType: string
+		lineageTag: 62d9aaaa-0de9-4240-ab43-6d323c90b581
+		summarizeBy: none
+		sourceColumn: ExternalLineItemNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitOfMeasurePrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: cafc58e1-0064-43de-87c5-1a5b610b29fb
+		summarizeBy: count
+		sourceColumn: UnitOfMeasurePrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column InventoryCharacteristics
+		dataType: string
+		lineageTag: 19b7c676-3326-4737-b96d-0111f1d86f91
+		summarizeBy: none
+		sourceColumn: InventoryCharacteristics
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 0caddf29-3dbf-43eb-a534-2698626679f9
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column ActualQuantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 5860d49c-b29e-4f3d-a149-b52344ddc1b7
+		summarizeBy: sum
+		sourceColumn: ActualQuantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column MissingQuantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 6baa5634-1817-4a6c-aa52-0c811c180937
+		summarizeBy: sum
+		sourceColumn: MissingQuantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 92bbe585-b30d-4159-b1f3-83546ad712c1
+		summarizeBy: none
+		sourceColumn: CreatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 383369a4-a1d9-40ed-9d04-232fe57cf4e5
+		summarizeBy: none
+		sourceColumn: CreatedDate
+
+		variation Variation
+			isDefault
+			relationship: 6ed19b34-2bff-4688-9ab6-7e3dc094fc81
+			defaultHierarchy: LocalDateTable_5f48fcb6-c2a9-48af-a4bd-29bf725fe7e5.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedBy
+		dataType: string
+		lineageTag: deb635b8-2ce1-48e4-8f6b-c854a49c42be
+		summarizeBy: none
+		sourceColumn: LastUpdatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column PreferredPutawayCompartment
+		dataType: string
+		lineageTag: c61417fa-a4e8-4ca9-846d-fb7699f8e197
+		summarizeBy: none
+		sourceColumn: PreferredPutawayCompartment
+
+		annotation SummarizationSetBy = Automatic
+
+	column TopOff
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 85b50615-0d9f-4d3b-ab97-64a75b55e554
+		summarizeBy: none
+		sourceColumn: TopOff
+
+		annotation SummarizationSetBy = Automatic
+
+	column HasException
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: ed56b2a2-b004-4af1-8a0c-9f98fac427a9
+		summarizeBy: none
+		sourceColumn: HasException
+
+		annotation SummarizationSetBy = Automatic
+
+	column LineInstructions
+		dataType: string
+		lineageTag: 3f8c15e0-7c12-4d50-8e03-1a1fbd0a06f3
+		summarizeBy: none
+		sourceColumn: LineInstructions
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedDateInventory
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d1662b60-40b1-4663-8e9f-936d30ae22ac
+		summarizeBy: none
+		sourceColumn: LastUpdatedDateInventory
+
+		variation Variation
+			isDefault
+			relationship: 48664ea2-b047-4987-a120-4af5982a7547
+			defaultHierarchy: LocalDateTable_93d7876c-a545-4bcf-84de-e4a07c4a3310.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4792bf5f-858b-4f16-89be-315693704aaf
+		summarizeBy: none
+		sourceColumn: LastUpdatedDate
+
+		variation Variation
+			isDefault
+			relationship: 4fa2f082-de81-4ac0-92c3-35004b4d8694
+			defaultHierarchy: LocalDateTable_99e876d9-f28d-434e-9cf7-5cc706c9e7c6.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Snapshot_Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 97551410-9151-41bc-b160-f888f52ed5e7
+		summarizeBy: count
+		sourceColumn: Snapshot_Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 97129033-8272-45b3-83fc-6782b47d0d3d
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition PutAwayContainerLineItems = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    dbo_PutAwayContainerLineItems = Source{[Schema="dbo",Item="PutAwayContainerLineItems"]}[Data],
+				    #"Added Custom" = Table.AddColumn(dbo_PutAwayContainerLineItems, "Date", each DateTime.Date([LastUpdatedDate])),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Added Custom",{{"Date", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

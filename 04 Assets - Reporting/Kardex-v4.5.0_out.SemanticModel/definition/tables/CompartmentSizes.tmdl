@@ -1,0 +1,126 @@
+table CompartmentSizes
+	lineageTag: c113c5ed-17d7-48da-808b-4d5a49ab01b0
+
+	column PrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 73e698da-6f7f-45f7-b084-54f2dc4c1982
+		summarizeBy: none
+		sourceColumn: PrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: 781f4601-4e07-4901-a675-52976ef35329
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Description
+		dataType: string
+		lineageTag: a4860b8a-f14a-4f71-85ee-838422da7e48
+		summarizeBy: none
+		sourceColumn: Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalHorizontalUnits
+		dataType: int64
+		formatString: 0
+		lineageTag: 020295b1-76ce-417b-941b-28c5f70a8dd7
+		summarizeBy: sum
+		sourceColumn: TotalHorizontalUnits
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalVerticalUnits
+		dataType: int64
+		formatString: 0
+		lineageTag: da593968-c9b5-4ac1-b174-d71a805221c6
+		summarizeBy: sum
+		sourceColumn: TotalVerticalUnits
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 55aff077-6610-47a3-9d08-a31199a724dc
+		summarizeBy: none
+		sourceColumn: CreatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e45dc834-d73a-455b-bf10-fa0bd21b8616
+		summarizeBy: none
+		sourceColumn: CreatedDate
+
+		variation Variation
+			isDefault
+			relationship: 904c122b-90be-4eb7-958b-84c103853cc3
+			defaultHierarchy: LocalDateTable_33086b98-48fa-4b70-8f7e-de48960e1f9c.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedBy
+		dataType: string
+		lineageTag: e6de7dba-389a-4de5-acb2-4ae0659078db
+		summarizeBy: none
+		sourceColumn: LastUpdatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedDateInventory
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 84805222-181a-4ee8-930b-43b0b8d2aa58
+		summarizeBy: none
+		sourceColumn: LastUpdatedDateInventory
+
+		variation Variation
+			isDefault
+			relationship: e621608c-4958-4f6b-b187-5c083322f67f
+			defaultHierarchy: LocalDateTable_dfb7ceff-9ee6-4853-b320-140bc471511e.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: c979c443-fb04-44e0-a794-5c62203f85fa
+		summarizeBy: none
+		sourceColumn: LastUpdatedDate
+
+		variation Variation
+			isDefault
+			relationship: 788a1ac0-4a47-4bf0-adf4-007b2e837e83
+			defaultHierarchy: LocalDateTable_17768c8d-4e8f-42cd-92bb-114ea45330ef.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Snapshot_Id
+		dataType: int64
+		formatString: 0
+		lineageTag: d49110c4-8251-4814-bb59-0dda93424672
+		summarizeBy: count
+		sourceColumn: Snapshot_Id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition CompartmentSizes = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_CompartmentSizes = Source{[Schema="dbo",Item="CompartmentSizes"]}[Data]
+				in
+				    dbo_CompartmentSizes
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

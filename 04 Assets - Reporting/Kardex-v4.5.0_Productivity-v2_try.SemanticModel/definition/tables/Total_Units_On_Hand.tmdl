@@ -1,0 +1,36 @@
+table Total_Units_On_Hand
+	lineageTag: cbf06ead-7ae9-40fb-8485-a1a9b98ae58b
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 294e8165-0e88-4cd4-b8ac-204f11961eb9
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Total Units On Hand'
+		dataType: int64
+		formatString: 0
+		lineageTag: cad03b3c-e372-4243-ac67-923c50ccc639
+		summarizeBy: sum
+		sourceColumn: Total Units On Hand
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Total_Units_On_Hand = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    dbo_Total_Units_On_Hand = Source{[Schema="dbo",Item="Total_Units_On_Hand"]}[Data]
+				in
+				    dbo_Total_Units_On_Hand
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

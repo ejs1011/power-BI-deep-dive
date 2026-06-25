@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Kardex-v4.5.0_out"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "71710435-0f2f-47fa-8b70-75de1fe653ad"
+  }
+}

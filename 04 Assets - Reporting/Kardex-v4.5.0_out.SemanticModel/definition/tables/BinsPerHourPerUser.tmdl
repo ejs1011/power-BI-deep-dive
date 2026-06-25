@@ -1,0 +1,34 @@
+table BinsPerHourPerUser
+	lineageTag: 8cde5071-cab5-485d-bc76-02a7261cf6cc
+
+	column Users
+		dataType: string
+		lineageTag: e82a7b0b-c3a6-4002-a5db-165d2118c2e4
+		summarizeBy: none
+		sourceColumn: Users
+
+		annotation SummarizationSetBy = Automatic
+
+	column BinsPerHour
+		dataType: double
+		lineageTag: 702bf69d-f6ce-431c-90b4-d3438e8863bd
+		summarizeBy: sum
+		sourceColumn: BinsPerHour
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition BinsPerHourPerUser = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_BinsPerHourPerUser = Source{[Schema="dbo",Item="BinsPerHourPerUser"]}[Data]
+				in
+				    dbo_BinsPerHourPerUser
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

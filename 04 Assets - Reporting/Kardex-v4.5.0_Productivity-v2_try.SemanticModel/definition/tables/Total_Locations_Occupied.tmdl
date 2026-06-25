@@ -1,0 +1,36 @@
+table Total_Locations_Occupied
+	lineageTag: 6bf4b528-cd22-4ab2-8e89-bc45cd4d704d
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 383c0b8e-23df-4215-8b2e-988819b7dd10
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Total Locations Occupied'
+		dataType: int64
+		formatString: 0
+		lineageTag: f9bcd8bf-bb7b-4fa7-837e-9b63d61010b6
+		summarizeBy: sum
+		sourceColumn: Total Locations Occupied
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Total_Locations_Occupied = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    dbo_Total_Locations_Occupied = Source{[Schema="dbo",Item="Total_Locations_Occupied"]}[Data]
+				in
+				    dbo_Total_Locations_Occupied
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

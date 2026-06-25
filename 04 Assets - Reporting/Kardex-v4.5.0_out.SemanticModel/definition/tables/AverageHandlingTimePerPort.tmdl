@@ -1,0 +1,34 @@
+table AverageHandlingTimePerPort
+	lineageTag: 604bd7cc-81a1-4dc0-84f3-1a99d5405e7e
+
+	column Ports
+		dataType: string
+		lineageTag: 327d639a-7489-4dda-b890-baf530333460
+		summarizeBy: none
+		sourceColumn: Ports
+
+		annotation SummarizationSetBy = Automatic
+
+	column AverageHandlingTime
+		dataType: double
+		lineageTag: 4788357d-73c6-457e-b578-60ed91e24e4a
+		summarizeBy: sum
+		sourceColumn: AverageHandlingTime
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition AverageHandlingTimePerPort = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_AverageHandlingTimePerPort = Source{[Schema="dbo",Item="AverageHandlingTimePerPort"]}[Data]
+				in
+				    dbo_AverageHandlingTimePerPort
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

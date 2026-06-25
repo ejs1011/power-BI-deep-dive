@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Kardex-v4.5.0_out"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "edef82d6-ebd4-497f-9032-17f7bfbfce4b"
+  }
+}

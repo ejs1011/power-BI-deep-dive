@@ -1,0 +1,84 @@
+table InventoryTasks_PutAway
+	lineageTag: 16da8ea4-f202-40a3-937c-7b4a0663c978
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: c3dc3b51-8686-4b67-86ee-bdea8c075b6c
+		summarizeBy: count
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column InventoryTaskPrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 64d1295f-5bb3-423a-8be7-cd36f3c433e0
+		summarizeBy: none
+		sourceColumn: InventoryTaskPrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column PutAwayContainerPrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 9ba16d64-f14c-4c75-8a07-55dd82e88d9f
+		summarizeBy: none
+		sourceColumn: PutAwayContainerPrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column LocationPrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 0bc0b369-4f9b-4d6e-9148-99ac828f6a87
+		summarizeBy: count
+		sourceColumn: LocationPrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column PutAwayContainerLineItemPrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: f56c234f-ef51-4e52-9dfa-7fbffd927caa
+		summarizeBy: count
+		sourceColumn: PutAwayContainerLineItemPrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdatedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1f660104-cab0-4469-99df-2dbd05af851e
+		summarizeBy: none
+		sourceColumn: LastUpdatedDate
+
+		variation Variation
+			isDefault
+			relationship: 0f197fa6-6066-4581-b02d-72da930f6fe5
+			defaultHierarchy: LocalDateTable_d408d354-0eb3-4693-ae36-a8418bbeb6b1.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Snapshot_Id
+		dataType: int64
+		formatString: 0
+		lineageTag: e2cddc28-9538-425c-b93f-bfa29aab1eba
+		summarizeBy: count
+		sourceColumn: Snapshot_Id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition InventoryTasks_PutAway = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    dbo_InventoryTasks_PutAway = Source{[Schema="dbo",Item="InventoryTasks_PutAway"]}[Data]
+				in
+				    dbo_InventoryTasks_PutAway
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

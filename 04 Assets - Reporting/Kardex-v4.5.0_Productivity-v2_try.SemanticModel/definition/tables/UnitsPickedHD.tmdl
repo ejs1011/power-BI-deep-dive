@@ -1,0 +1,41 @@
+table UnitsPickedHD
+	lineageTag: 7914c666-c562-4d3c-bfc5-33ba22fcdbad
+
+	column Date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: f26b80d8-954b-433a-a757-a32dc2b2a614
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: ff7f5560-ada8-466c-a8ce-430c0e47c8ba
+			defaultHierarchy: LocalDateTable_d3819058-3c9b-4a67-aa1d-d7196fe0277c.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column UnitsPicked
+		dataType: int64
+		formatString: 0
+		lineageTag: 7bc18164-06ed-4ccd-83d9-c210511f7bed
+		summarizeBy: sum
+		sourceColumn: UnitsPicked
+
+		annotation SummarizationSetBy = Automatic
+
+	partition UnitsPickedHD = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    dbo_UnitsPickedHD = Source{[Schema="dbo",Item="UnitsPickedHD"]}[Data]
+				in
+				    dbo_UnitsPickedHD
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,36 @@
+table Total_SKUs_On_Hand
+	lineageTag: dda1364a-7d86-47f7-84a5-f3fe3378203d
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 10201c2d-27c9-4acb-aa55-188034991430
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Totak SKUs On Hand'
+		dataType: int64
+		formatString: 0
+		lineageTag: c9d2ca95-e335-4195-a6f0-0a08baf2478a
+		summarizeBy: sum
+		sourceColumn: Totak SKUs On Hand
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Total_SKUs_On_Hand = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    dbo_Total_SKUs_On_Hand = Source{[Schema="dbo",Item="Total_SKUs_On_Hand"]}[Data]
+				in
+				    dbo_Total_SKUs_On_Hand
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

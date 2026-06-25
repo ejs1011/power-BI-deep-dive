@@ -1,0 +1,29 @@
+table MetricsSlicer
+	lineageTag: ebebd858-2730-40dc-8ef8-78e19ae782a9
+
+	column Metric
+		lineageTag: 3d1f2678-6b16-427e-8a3f-294b8dd9c113
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Metric]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition MetricsSlicer = calculated
+		mode: import
+		source = ```
+				
+				    DATATABLE(
+				        "Metric", STRING,
+				        { 
+				            {"Orders"},
+				            {"Lines"},
+				            {"Bins"},
+				            {"All"}
+				        }
+				    )
+				
+				```
+
+	annotation PBI_Id = 2d7e4f6b31834e9d9721f6f025502839
+

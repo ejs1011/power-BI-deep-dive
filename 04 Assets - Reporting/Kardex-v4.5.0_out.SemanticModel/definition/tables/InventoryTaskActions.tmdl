@@ -1,0 +1,232 @@
+table InventoryTaskActions
+	lineageTag: 94ef31ea-df79-4a88-bfb3-35ce0ac839b9
+
+	column InventoryTaskPrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 4a9fc292-5c2e-4a90-895f-c6284e24a576
+		summarizeBy: none
+		sourceColumn: InventoryTaskPrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sequence
+		dataType: int64
+		formatString: 0
+		lineageTag: b0929eef-c2dd-467c-8f00-ee599e943fe8
+		summarizeBy: sum
+		sourceColumn: Sequence
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitOfMeasurePrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 954bbc63-bec1-40ab-844e-294e77279397
+		summarizeBy: count
+		sourceColumn: UnitOfMeasurePrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: a94a5fa3-d57b-4615-a2e0-74d9125f531a
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column ActualQuantity
+		dataType: int64
+		formatString: 0
+		lineageTag: b7b912f9-df95-410a-a68e-f6b15ccd7ffa
+		summarizeBy: sum
+		sourceColumn: ActualQuantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column MovementReason
+		dataType: string
+		lineageTag: 09c87912-1a0d-4a89-81d6-fff11251d62e
+		summarizeBy: none
+		sourceColumn: MovementReason
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceInventoryPrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 964912e1-a254-45c5-be0a-bd7300cc8457
+		summarizeBy: count
+		sourceColumn: SourceInventoryPrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column NewInventoryPrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 05fcf104-eb43-45a1-9af5-40abe916b25f
+		summarizeBy: count
+		sourceColumn: NewInventoryPrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceContainerPrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 233a47e5-da12-49dc-be24-aaa48146293a
+		summarizeBy: count
+		sourceColumn: SourceContainerPrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceOrderContainerPrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: c00761a6-1d18-4171-b377-915b18ede7ca
+		summarizeBy: count
+		sourceColumn: SourceOrderContainerPrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceContainerSide
+		dataType: int64
+		formatString: 0
+		lineageTag: afa26485-6909-44a3-9b70-83c6542ae27b
+		summarizeBy: sum
+		sourceColumn: SourceContainerSide
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceContainerX
+		dataType: int64
+		formatString: 0
+		lineageTag: e332d7e5-1987-48dd-9a03-3036e288395e
+		summarizeBy: sum
+		sourceColumn: SourceContainerX
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceContainerY
+		dataType: int64
+		formatString: 0
+		lineageTag: 3ae3a946-0af2-4762-89b6-ed3501932868
+		summarizeBy: sum
+		sourceColumn: SourceContainerY
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceStatus
+		dataType: string
+		lineageTag: d5ae38c6-9196-4b0c-b980-62c13b4af1df
+		summarizeBy: none
+		sourceColumn: SourceStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceInventoryCharacteristics
+		dataType: string
+		lineageTag: 1dbf05ff-3084-4635-ba6c-0fad84ba5435
+		summarizeBy: none
+		sourceColumn: SourceInventoryCharacteristics
+
+		annotation SummarizationSetBy = Automatic
+
+	column NewContainerPrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 01eff1c0-e84f-4c40-a09c-c55e1c2d6f06
+		summarizeBy: count
+		sourceColumn: NewContainerPrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column NewOrderContainerPrimaryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 91737e7d-12f0-40dc-8b59-6f12c2318d67
+		summarizeBy: count
+		sourceColumn: NewOrderContainerPrimaryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column NewContainerSide
+		dataType: int64
+		formatString: 0
+		lineageTag: 58626cf1-c70a-44d1-99c0-8d3002eac0cc
+		summarizeBy: sum
+		sourceColumn: NewContainerSide
+
+		annotation SummarizationSetBy = Automatic
+
+	column NewContainerX
+		dataType: int64
+		formatString: 0
+		lineageTag: 5e026b88-648f-4963-9337-a35dde221c7b
+		summarizeBy: sum
+		sourceColumn: NewContainerX
+
+		annotation SummarizationSetBy = Automatic
+
+	column NewContainerY
+		dataType: int64
+		formatString: 0
+		lineageTag: 1eb51312-778f-4507-bb29-b248bb0ef52d
+		summarizeBy: sum
+		sourceColumn: NewContainerY
+
+		annotation SummarizationSetBy = Automatic
+
+	column NewStatus
+		dataType: string
+		lineageTag: 58c548ce-b373-45d9-9f3e-6b0cbc46545a
+		summarizeBy: none
+		sourceColumn: NewStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	column NewInventoryCharacteristics
+		dataType: string
+		lineageTag: ee20d174-b327-4a4b-85ee-ee9634d8cfed
+		summarizeBy: none
+		sourceColumn: NewInventoryCharacteristics
+
+		annotation SummarizationSetBy = Automatic
+
+	column CompletedTime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e199810e-70a8-4ba2-bdd0-6a5aaf987993
+		summarizeBy: none
+		sourceColumn: CompletedTime
+
+		variation Variation
+			isDefault
+			relationship: 3c0f4037-f80b-47d0-9014-89c8e1ec64ff
+			defaultHierarchy: LocalDateTable_c4383f3f-b1e7-4983-b25c-bf3315e3536d.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column BatchId
+		dataType: int64
+		formatString: 0
+		lineageTag: 74d94b7e-d3db-49da-8898-b5220abbdab5
+		summarizeBy: count
+		sourceColumn: BatchId
+
+		annotation SummarizationSetBy = Automatic
+
+	partition InventoryTaskActions = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
+				    dbo_InventoryTaskActions = Source{[Schema="dbo",Item="InventoryTaskActions"]}[Data]
+				in
+				    dbo_InventoryTaskActions
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

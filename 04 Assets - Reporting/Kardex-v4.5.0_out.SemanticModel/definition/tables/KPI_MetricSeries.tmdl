@@ -1,0 +1,22 @@
+table KPI_MetricSeries
+	lineageTag: f9c069f8-9c37-4a53-8ad8-6cfa3169b785
+
+	column SeriesName
+		dataType: string
+		lineageTag: 9dba286d-4e5f-4312-b078-115e44c9f3c9
+		summarizeBy: none
+		sourceColumn: SeriesName
+
+		annotation SummarizationSetBy = Automatic
+
+	partition KPI_MetricSeries = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WKkktLlFwK81Jy8zJyU3NK/EvSkktKnbOL80rUdCAcDQVlGJ1oCoDSkscyxMrnfPzShIz84CS/gWpeaiqEYrRjfUB6oAZDWZrYhgMEvYsSc1FVxYLAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [SeriesName = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"SeriesName", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

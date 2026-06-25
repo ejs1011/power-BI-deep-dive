@@ -1,0 +1,1374 @@
+table 'A Measure'
+	lineageTag: 05026725-1f8e-4cba-8880-100ce9443259
+
+	measure 'Total Bin(s) w/ Inventory' = ```
+			
+			
+			COALESCE(
+			    CALCULATE(
+			        DISTINCTCOUNT(Inventory[ContainerPrimaryKey]),
+			        Inventory[Status] <> "Pending",
+			        Inventory[Quantity] > 0,
+			        TREATAS(
+			            -- Build a single‐column table of valid container keys from Containers
+			            SELECTCOLUMNS(
+			                FILTER(Containers, Containers[Status] <> "Outside"),
+			                "ContKey", Containers[PrimaryKey]
+			            ),
+			            Inventory[ContainerPrimaryKey]
+			        )
+			    ),
+			    0
+			)
+			
+			
+			
+			
+			// VAR ValidContainers = 
+			//     FILTER(Containers, Containers[Status] <> "Outside")
+			
+			// RETURN
+			// COALESCE(
+			//     CALCULATE(
+			//         DISTINCTCOUNT(Inventory[ContainerPrimaryKey]),
+			//         Inventory[Status] <> "Pending",
+			//         Inventory[Quantity] > 0,
+			//         TREATAS(VALUES(Containers[PrimaryKey]), Inventory[ContainerPrimaryKey])
+			//     ),
+			//     0
+			// )
+			
+			
+			
+			```
+		formatString: 0
+		lineageTag: 8134c74f-93d8-46a4-8c43-ba7c8926e912
+
+	measure 'Total Bin(s) w/ No Inventory' = ```
+			
+			
+			
+			COALESCE(
+			    CALCULATE(
+			        DISTINCTCOUNT(Inventory[ContainerPrimaryKey]),
+			        Inventory[Status] <> "Pending",
+			        Inventory[Quantity] = 0,
+			        TREATAS(
+			            -- Build a single‐column table of valid container keys from Containers
+			            SELECTCOLUMNS(
+			                FILTER(Containers, Containers[Status] <> "Outside"),
+			                "ContKey", Containers[PrimaryKey]
+			            ),
+			            Inventory[ContainerPrimaryKey]
+			        )
+			    ),
+			    0
+			)
+			
+			
+			
+			// VAR ValidContainers = 
+			//     FILTER(Containers, Containers[Status] <> "Outside")
+			
+			// RETURN
+			// COALESCE(
+			//     CALCULATE(
+			//         DISTINCTCOUNT(Inventory[ContainerPrimaryKey]),
+			//         Inventory[Status] <> "Pending",
+			//         Inventory[Quantity] = 0,
+			//         TREATAS(VALUES(Containers[PrimaryKey]), Inventory[ContainerPrimaryKey])
+			//     ),
+			//     0
+			// )
+			
+			
+			
+			```
+		formatString: 0
+		lineageTag: b333891f-582a-4ff1-9a36-22fc68f5275a
+
+	measure 'Total Bin(s)' = ```
+			
+			
+			VAR ValidTemplates =
+			    SELECTCOLUMNS(
+			        FILTER(
+			            ContainerTemplates,
+			            ContainerTemplates[IsGoodsToPerson] = TRUE()
+			        ),
+			        "TemplateKey", ContainerTemplates[PrimaryKey]
+			    )
+			RETURN
+			    COALESCE(
+			        CALCULATE(
+			            DISTINCTCOUNT(Containers[PrimaryKey]),
+			            Containers[Status] <> "Outside",
+			            TREATAS(ValidTemplates, Containers[TemplatePrimaryKey])
+			        ),
+			        0
+			    )
+			
+			
+			
+			
+			
+			
+			
+			// VAR UniqueContainers =
+			//     SUMMARIZE(
+			//         Containers,
+			//         Containers[PrimaryKey]  -- Ensures unique bins are counted
+			//     )
+			// RETURN
+			// CALCULATE(
+			//     COUNTROWS(UniqueContainers),
+			//     Containers[Status] <> "Outside",
+			//     ContainerTemplates[IsGoodsToPerson] = TRUE()
+			//)
+			
+			    // IF(
+			    //     ISBLANK(
+			    //         CALCULATE(
+			    //             COUNTROWS(Containers),
+			    //             ContainerTemplates[IsGoodsToPerson] = TRUE(),
+			    //             Containers[Status] <> "Outside"
+			    //         )
+			    //     ),
+			    //     0,
+			    //     CALCULATE(
+			    //         COUNTROWS(Containers),
+			    //         ContainerTemplates[IsGoodsToPerson] = TRUE(),
+			    //         Containers[Status] <> "Outside"
+			    //     )
+			    // )
+			
+			
+			```
+		formatString: 0
+		lineageTag: 02571066-259d-45fa-9c7c-56cdea97ca1d
+
+	measure '% of Bin(s) w/ Inventory' = ```
+			
+			
+			// VAR EligibleContainers =
+			//     FILTER(
+			//         ALL(Containers),
+			//         Containers[Status] <> "Outside"
+			//             && LOOKUPVALUE(
+			//                    ContainerTemplates[IsGoodsToPerson],
+			//                    ContainerTemplates[PrimaryKey],
+			//                    Containers[TemplatePrimaryKey]
+			//                ) = TRUE()
+			//     )
+			// VAR TotalContainers =
+			//     COUNTROWS(EligibleContainers)
+			// VAR ContainersWithInventory =
+			//     SUMX(
+			//         EligibleContainers,
+			//         VAR ThisContainer = Containers[PrimaryKey]
+			//         VAR HasInventory =
+			//             IF(
+			//                 CALCULATE(
+			//                     COUNTROWS(Inventory),
+			//                     Inventory[ContainerPrimaryKey] = ThisContainer,
+			//                     Inventory[Status] <> "Pending",
+			//                     COALESCE(Inventory[Quantity], 0) > 0
+			//                 ) > 0,
+			//                 1,
+			//                 0
+			//             )
+			//         RETURN HasInventory
+			//     )
+			// VAR ResultPct =
+			//     IF(
+			//         TotalContainers = 0,
+			//         0,
+			//         DIVIDE(ContainersWithInventory, TotalContainers, 0) * 100
+			//     )
+			// RETURN
+			//     FORMAT(ROUND(ResultPct, 2), "0.00") & "%"
+			
+			
+			
+			    VAR BinsWithStock = [Total Bin(s) w/ Inventory]
+			    VAR Total = [Total Bin(s)]
+			    RETURN 
+			        IF(
+			            Total = 0, 
+			            "0%", 
+			            CONCATENATE(
+			                ROUND((BinsWithStock / Total) * 100, 2) & "%", 
+			                ""
+			            )
+			        )
+			        
+			
+			```
+		lineageTag: 8a8e63e2-839a-4424-bc56-41fc4dae776b
+
+	measure '% of Bin(s) w/ No Inventory' = ```
+			
+			
+			VAR BinsWithStock = COALESCE([Total Bin(s) w/ No Inventory], 0)
+			VAR Total = COALESCE([Total Bin(s)], 0)
+			RETURN 
+			    IF(
+			        Total = 0,
+			        "0%",
+			        CONCATENATE(
+			            ROUND((BinsWithStock / Total) * 100, 2) & "%",
+			            ""
+			        )
+			    )
+			
+			
+			
+			```
+		lineageTag: 808003f4-61dd-4f3f-8999-77f38b4477f1
+
+	measure 'Total Locations Occupied 2' = ```
+			
+			
+			// SUMX(
+			//     GENERATE(
+			//         FILTER(
+			//             Containers,
+			//             RELATED(ContainerTemplates[IsGoodsToPerson]) = TRUE()
+			//         ),
+			//         FILTER(
+			//             ContainerTemplateCompartments,
+			//             ContainerTemplateCompartments[TemplatePrimaryKey] = Containers[TemplatePrimaryKey]
+			//         )
+			//     ),
+			//     VAR CurrentContainer = Containers[PrimaryKey]
+			//     VAR CurrentX = ContainerTemplateCompartments[XPosition]
+			//     VAR CurrentY = ContainerTemplateCompartments[YPosition]
+			//     RETURN
+			//     IF(
+			//         CALCULATE(
+			//             COUNTROWS(
+			//                 FILTER(
+			//                     Inventory,
+			//                     Inventory[ContainerPrimaryKey] = CurrentContainer &&
+			//                     Inventory[ContainerX] = CurrentX &&
+			//                     Inventory[ContainerY] = CurrentY &&
+			//                     Inventory[Status] <> "Pending"
+			//                 )
+			//             )
+			//         ) > 0,
+			//         1,
+			//         0
+			//     )
+			// )
+			
+			
+			
+			
+			
+			
+			
+			// VAR UniquePairs = 
+			//     SUMMARIZE(
+			//         FILTER(
+			//             Inventory,
+			//             Inventory[Status] <> "Pending"
+			//         ),
+			//         Inventory[ContainerPrimaryKey],
+			//         Inventory[ContainerX],
+			//         Inventory[ContainerY]
+			//     )
+			// RETURN
+			//     COALESCE(
+			//         CALCULATE(
+			//             COUNTROWS(UniquePairs),
+			//             TREATAS(
+			//                 VALUES(Containers[PrimaryKey]), 
+			//                 Inventory[ContainerPrimaryKey]
+			//             ),
+			//             Containers[Status] <> "Outside"
+			//         ),
+			//         0
+			//     )
+			
+			
+			
+			
+			
+			 VAR ValidContainers = 
+			    FILTER(Containers, Containers[Status] <> "Outside")
+			
+			RETURN 
+			COALESCE(
+			    CALCULATE(
+			        COUNTROWS(
+			            SUMMARIZE(
+			                Inventory, 
+			                Inventory[ContainerPrimaryKey], 
+			                Inventory[ContainerX], 
+			                Inventory[ContainerY]
+			            )
+			        ),
+			        Inventory[Status] <> "Pending",
+			        TREATAS(VALUES(Containers[PrimaryKey]), Inventory[ContainerPrimaryKey])
+			    ),
+			    0
+			)
+			
+			
+			
+			```
+		formatString: 0
+		lineageTag: 842384c2-c199-4288-b2b0-262ad730e259
+
+	measure 'Total Locations Empty' = ```
+			
+			VAR ContainerFiltered =
+			    FILTER(
+			        'Containers',
+			        'Containers'[Status] <> "Outside"
+			    )
+			VAR CompartmentWithContainers =
+			    CROSSJOIN(
+			        ContainerFiltered,
+			        'ContainerTemplateCompartments'
+			    )
+			VAR InventoryByCompartment =
+			    ADDCOLUMNS(
+			        CompartmentWithContainers,
+			        "IsGoodsToPerson",
+			            LOOKUPVALUE(
+			                'ContainerTemplates'[IsGoodsToPerson],
+			                'ContainerTemplates'[PrimaryKey],
+			                'Containers'[TemplatePrimaryKey]
+			            ),
+			        "HasInventory",
+			            VAR currentContainer = 'Containers'[PrimaryKey]
+			            VAR currentX = 'ContainerTemplateCompartments'[XPosition]
+			            VAR currentY = 'ContainerTemplateCompartments'[YPosition]
+			            VAR InventoryCount =
+			                CALCULATE(
+			                    COUNTROWS('Inventory'),
+			                    FILTER(
+			                        'Inventory',
+			                        'Inventory'[ContainerPrimaryKey] = currentContainer &&
+			                        'Inventory'[ContainerX] = currentX &&
+			                        'Inventory'[ContainerY] = currentY &&
+			                        'Inventory'[Status] <> "Pending"
+			                    )
+			                )
+			            RETURN IF(InventoryCount > 0, 1, 0)
+			    )
+			VAR FilteredCompartments =
+			    FILTER(
+			        InventoryByCompartment,
+			        [IsGoodsToPerson] = TRUE()
+			    )
+			VAR TotalCompartments =
+			    COUNTROWS(FilteredCompartments)
+			VAR OccupiedCompartments =
+			    SUMX(FilteredCompartments, [HasInventory])
+			RETURN
+			    TotalCompartments - OccupiedCompartments
+			
+			
+			
+			// VAR Total = [Total Locations]
+			// VAR Occupied = [Total Locations Occupied 2]
+			// RETURN 
+			//     COALESCE(Total - Occupied, 0)
+			
+			
+			
+			```
+		formatString: 0
+		lineageTag: e993566c-6528-450b-ac44-cea1cc578818
+
+	measure 'Total Locations' = ```
+			
+			
+			VAR ValidContainers = 
+			    FILTER(Containers, Containers[Status] <> "Outside")
+			
+			RETURN 
+			CALCULATE(
+			    COUNTROWS(
+			        SUMMARIZE(
+			            ContainerCompartmentBarcodes, 
+			            ContainerCompartmentBarcodes[ContainerPrimaryKey], 
+			            ContainerCompartmentBarcodes[XPosition], 
+			            ContainerCompartmentBarcodes[YPosition]
+			        )
+			    ),
+			    TREATAS(VALUES(Containers[PrimaryKey]), ContainerCompartmentBarcodes[ContainerPrimaryKey])
+			)
+			
+			
+			// VAR FilteredContainerCompartmentBarcodes =
+			//     FILTER(
+			//         ContainerCompartmentBarcodes,
+			//         TRUE
+			//     )
+			// VAR FilteredContainers =
+			//     FILTER(
+			//         Containers,
+			//         Containers[Status] <> "Outside"
+			//     )
+			// VAR UniqueLocations =
+			//     DISTINCT(
+			//         SELECTCOLUMNS(
+			//             FILTER(
+			//                 NATURALINNERJOIN(FilteredContainerCompartmentBarcodes, FilteredContainers),
+			//                 TRUE
+			//             ),
+			//             "ContainerPrimaryKey", ContainerCompartmentBarcodes[ContainerPrimaryKey],
+			//             "XPosition", ContainerCompartmentBarcodes[XPosition],
+			//             "YPosition", ContainerCompartmentBarcodes[YPosition]
+			//         )
+			//     )
+			// RETURN
+			//     COALESCE(COUNTROWS(UniqueLocations), 0)
+			
+			 
+			    // IF(
+			    //     ISBLANK(
+			    //         COUNTROWS(
+			    //             DISTINCT(
+			    //                 SELECTCOLUMNS(
+			    //                     FILTER(
+			    //                         NATURALLEFTOUTERJOIN(
+			    //                             ContainerCompartmentBarcodes,
+			    //                             Containers
+			    //                         ),
+			    //                         Containers[Status] <> "Outside"
+			    //                     ),
+			    //                     "ContainerPrimaryKey", ContainerCompartmentBarcodes[ContainerPrimaryKey],
+			    //                     "XPosition", ContainerCompartmentBarcodes[XPosition],
+			    //                     "YPosition", ContainerCompartmentBarcodes[YPosition]
+			    //                 )
+			    //             )
+			    //         )
+			    //     ),
+			    //     0,
+			    //     COUNTROWS(
+			    //         DISTINCT(
+			    //             SELECTCOLUMNS(
+			    //                 FILTER(
+			    //                     NATURALLEFTOUTERJOIN(
+			    //                         ContainerCompartmentBarcodes,
+			    //                         Containers
+			    //                     ),
+			    //                     Containers[Status] <> "Outside"
+			    //                 ),
+			    //                 "ContainerPrimaryKey", ContainerCompartmentBarcodes[ContainerPrimaryKey],
+			    //                 "XPosition", ContainerCompartmentBarcodes[XPosition],
+			    //                 "YPosition", ContainerCompartmentBarcodes[YPosition]
+			    //             )
+			    //         )
+			    //     )
+			    // )
+			
+			
+			// CALCULATE(
+			//     COUNT('Containers'[LocationPrimaryKey]),
+			//     NOT(ISBLANK('Containers'[PrimaryKey])),
+			//     NOT(ISBLANK('Containers'[Barcode]))
+			// )
+			
+			
+			
+			
+			// [Total Locations Occupied] + [Total Locations Empty]
+			
+			```
+		formatString: 0
+		lineageTag: 131c569d-6aff-4072-8531-68549906a5a6
+
+	measure '% Locations Occupied' = ```
+			
+			
+			    VAR Occupied = [Total Locations Occupied 2]
+			    VAR Total = [Total Locations]
+			    RETURN 
+			        IF(
+			            Total = 0,
+			            "0%",
+			            CONCATENATE(
+			                ROUND((Occupied / Total) * 100, 2) & "%",
+			                ""
+			            )
+			        )
+			
+			
+			
+			```
+		lineageTag: 695b7ce3-f923-444a-81f6-ec9cf46a0fed
+
+	measure '% Locations Empty' = ```
+			
+			
+			    VAR Occupied = [Total Locations Empty]
+			    VAR Total = [Total Locations]
+			    RETURN 
+			        IF(
+			            Total = 0,
+			            "0%",
+			            CONCATENATE(
+			                ROUND((Occupied / Total) * 100, 2) & "%",
+			                ""
+			            )
+			        )
+			
+			```
+		lineageTag: 866b6fc2-5de3-4f97-a4de-5afef1ff0316
+
+	measure 'Distinct SKUs Stocked' = ```
+			
+			 
+			COALESCE(
+			    CALCULATE(
+			        DISTINCTCOUNT(Inventory[UnitOfMeasurePrimaryKey]),
+			        Inventory[Status] <> "Pending",
+			        TREATAS(
+			            VALUES(Containers[PrimaryKey]), 
+			            Inventory[ContainerPrimaryKey]
+			        ),
+			        Containers[Status] <> "Outside"
+			    ),
+			    0
+			)
+			
+			
+			
+			
+			
+			// COALESCE(
+			//     CALCULATE(
+			//         DISTINCTCOUNT('Inventory'[UnitOfMeasurePrimaryKey]),
+			//         FILTER(
+			//             'Inventory',
+			//             'Inventory'[Status] <> "Pending"
+			//         ),
+			//         FILTER(
+			//             'Containers',
+			//             'Containers'[Status] <> "Outside"
+			//         )
+			//     ),
+			//     0
+			//)
+			
+			
+			
+			```
+		formatString: 0
+		lineageTag: d94976fe-3e3b-4e98-b4a7-c4530be87cf9
+
+	measure 'Units Stocked' = ```
+			
+			VAR UniqueInventory =
+			    SUMMARIZE(
+			        FILTER(
+			            'Inventory',
+			            'Inventory'[Status] <> "Pending"
+			        ),
+			        'Inventory'[PrimaryKey],
+			        'Inventory'[Quantity]
+			    )
+			VAR FilteredContainers =
+			    FILTER(
+			        'Containers',
+			        'Containers'[Status] <> "Outside"
+			    )
+			VAR Result =
+			    SUMX(
+			        UniqueInventory,
+			        'Inventory'[Quantity]
+			    )
+			RETURN
+			    COALESCE(Result, 0)
+			 
+			// COALESCE(
+			//     CALCULATE(
+			//         SUM('Inventory'[Quantity]),
+			//         FILTER(
+			//             'Inventory',
+			//             'Inventory'[Status] <> "Pending"
+			//         ),
+			//         FILTER(
+			//             'Containers',
+			//             'Containers'[Status] <> "Outside"
+			//         )
+			//     ),
+			//     0
+			// )
+			
+			
+			```
+		formatString: 0
+		lineageTag: e4d8b335-8ca3-446d-a8c2-de351e0189d4
+
+	measure '% Units Stocked' = ```
+			
+			
+			DIVIDE(
+			  [Units Stocked]  ,  // Use your already defined Units Stocked measure here
+			    [Total_Units],    // Use the Total Units measure
+			    0                 // Returns 0 if the denominator is zero
+			)
+			
+			// Var _units = SUM('CloseBin-InventoryRecord'[ProductQuantity])
+			// VAR _unitsbycell = CALCULATE(SUM('CloseBin-InventoryRecord'[ProductQuantity]),ContainerTemplateCompartments[CompartmentSizePrimaryKey])
+			
+			// RETURN 
+			// DIVIDE(_unitsbycell,_units)
+			
+			// DIVIDE(
+			//     SUM('CloseBin-InventoryRecord'[ProductQuantity]),
+			//     [Units Stocked]
+			// ) * 100
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: f134fbd7-43c4-4265-b419-5efed165c28e
+
+	measure '% of Total Bin(s)' = ```
+			
+			
+			DIVIDE(
+			    COALESCE([Total Bin(s) w/ Inventory], 0) + COALESCE([Total Bin(s) w/ No Inventory], 0),
+			    COALESCE([Total Bin(s)], 1),
+			    0
+			)
+			
+			
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: 565958a3-f3f4-44d2-bd5a-df19adb7e6a1
+
+	measure 'Avg Units Stocked Per Location' = ```
+			
+			
+			
+			// VAR UniqueCompartments =
+			//     SUMMARIZE(
+			//         ContainerTemplateCompartments,
+			//         ContainerTemplateCompartments[XPosition],
+			//         ContainerTemplateCompartments[YPosition],
+			//         ContainerTemplateCompartments[TemplatePrimaryKey],
+			//         ContainerTemplateCompartments[CompartmentSizePrimaryKey] -- Ensuring correct mapping
+			//     )
+			
+			// VAR UniqueInventory =
+			//     SUMMARIZE(
+			//         Inventory,
+			//         Inventory[ContainerPrimaryKey],
+			//         Inventory[ContainerX],
+			//         Inventory[ContainerY],
+			//         "UnitsStocked", MAX(Inventory[Quantity]) -- Ensuring only the latest snapshot quantity
+			//     )
+			
+			// VAR TotalUnitsStocked =
+			//     CALCULATE(
+			//         SUMX(UniqueInventory, [UnitsStocked]), -- Summing only distinct quantities per compartment
+			//         FILTER(Containers, Containers[Status] <> "Outside"),
+			//         FILTER(ContainerTemplates, ContainerTemplates[IsGoodsToPerson] = TRUE())
+			//     )
+			
+			// VAR CompartmentCube =
+			//     SUMX(
+			//         UniqueCompartments,
+			//         VAR CompartmentSize = 
+			//             CALCULATE(
+			//                 MAX(CompartmentSizes[TotalHorizontalUnits]),
+			//                 FILTER(CompartmentSizes, CompartmentSizes[PrimaryKey] = ContainerTemplateCompartments[CompartmentSizePrimaryKey])
+			//             )
+			//         VAR ContainerLength = 
+			//             CALCULATE(
+			//                 MAX(ContainerTemplates[Length]),
+			//                 FILTER(ContainerTemplates, ContainerTemplates[PrimaryKey] = ContainerTemplateCompartments[TemplatePrimaryKey])
+			//             )
+			//         VAR ContainerWidth = 
+			//             CALCULATE(
+			//                 MAX(ContainerTemplates[Width]),
+			//                 FILTER(ContainerTemplates, ContainerTemplates[PrimaryKey] = ContainerTemplateCompartments[TemplatePrimaryKey])
+			//             )
+			//         VAR ContainerHeight = 
+			//             CALCULATE(
+			//                 MAX(ContainerTemplates[Height]),
+			//                 FILTER(ContainerTemplates, ContainerTemplates[PrimaryKey] = ContainerTemplateCompartments[TemplatePrimaryKey])
+			//             )
+			//         RETURN
+			//             ContainerLength * ContainerWidth * ContainerHeight * (CompartmentSize / 8.0) * (CompartmentSize / 4.0)
+			//     )
+			
+			// VAR TotalCompartmentCube =
+			//     SUMX(UniqueCompartments, CompartmentCube) -- Summing the calculated compartment cubes
+			
+			// RETURN
+			//     DIVIDE(TotalUnitsStocked, TotalCompartmentCube, BLANK())  -- Using BLANK() to avoid division by zero
+			
+			
+			
+			
+			
+			
+			
+			
+			VAR Compartments =
+			    -- Generate a table with the distinct combinations of relevant keys.
+			    CROSSJOIN(
+			        VALUES(Containers[PrimaryKey]),
+			        VALUES(ContainerTemplateCompartments[XPosition]),
+			        VALUES(ContainerTemplateCompartments[YPosition])
+			    )
+			    
+			VAR TotalUnitsStocked =
+			    -- Calculate the total inventory quantity, replacing blanks with 0.
+			    COALESCE(
+			        CALCULATE(
+			            SUM(Inventory[Quantity]),
+			            TREATAS(VALUES(Containers[PrimaryKey]), Inventory[ContainerPrimaryKey]),
+			            TREATAS(VALUES(ContainerTemplateCompartments[XPosition]), Inventory[ContainerX]),
+			            TREATAS(VALUES(ContainerTemplateCompartments[YPosition]), Inventory[ContainerY])
+			        ),
+			        0
+			    )
+			    
+			VAR CompartmentCount =
+			    -- Count the compartments and use COALESCE to ensure a blank count becomes 0.
+			    COALESCE(COUNTROWS(Compartments), 0)
+			    
+			RETURN
+			    -- Safely divide the total units by the count of compartments.
+			    DIVIDE(TotalUnitsStocked, CompartmentCount, 0)
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			```
+		lineageTag: 9c826af8-670b-4760-a62f-5b3ecd31203d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Units Stocked per Bin(s)' = ```
+			
+			
+			VAR UnitsPerBin =
+			    SUMMARIZE(
+			        Inventory,
+			        Inventory[ContainerPrimaryKey],
+			        "TotalUnitsInBin", 
+			            IF(
+			                ISBLANK(SUM(Inventory[Quantity])),
+			                0,
+			                SUM(Inventory[Quantity])
+			            )
+			    )
+			RETURN
+			    IF(
+			        ISBLANK(AVERAGEX(UnitsPerBin, [TotalUnitsInBin])),
+			        0,
+			        ROUND(AVERAGEX(UnitsPerBin, [TotalUnitsInBin]), 2)
+			    )
+			
+			
+			```
+		lineageTag: 8afda641-3a02-4016-b429-2b4b1062e5b5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Units Stocked per SKU' = ```
+			
+			
+			VAR TotalUnitsPerProduct =
+			    SUMMARIZE(
+			        Products,
+			        Products[PrimaryKey],
+			        "TotalQuantity",
+			            COALESCE(
+			                SUMX(
+			                    FILTER(
+			                        Inventory,
+			                        Inventory[UnitOfMeasurePrimaryKey] IN
+			                            SELECTCOLUMNS(
+			                                FILTER(
+			                                    UnitsOfMeasure,
+			                                    UnitsOfMeasure[ProductPrimaryKey] = Products[PrimaryKey]
+			                                ),
+			                                "UnitOfMeasurePrimaryKey", UnitsOfMeasure[PrimaryKey]
+			                            )
+			                    ),
+			                    Inventory[Quantity]
+			                ),
+			                0 -- Replace blanks with 0
+			            )
+			    )
+			RETURN
+			    COALESCE(
+			        AVERAGEX(TotalUnitsPerProduct, [TotalQuantity]),
+			        0 -- Replace blank average with 0
+			    )
+			
+			
+			```
+		lineageTag: d1181464-a09d-4e22-8be7-179e860405e5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Locations Stocked per SKU' = ```
+			
+			VAR TotalCompartmentsSum =
+			    COALESCE(
+			        CALCULATE(
+			            COUNTROWS(Inventory),
+			            TREATAS(
+			                VALUES(UnitsOfMeasure[PrimaryKey]),
+			                Inventory[UnitOfMeasurePrimaryKey]
+			            ),
+			            CROSSFILTER(UnitsOfMeasure[ProductPrimaryKey], Products[PrimaryKey], BOTH)
+			        ),
+			        0
+			    )
+			
+			VAR ProductCount = COALESCE(COUNTROWS(Products), 0)
+			
+			RETURN 
+			    DIVIDE(TotalCompartmentsSum, ProductCount, 0)
+			
+			
+			// VAR TotalCompartmentsSum =
+			//     CALCULATE(
+			//         COUNTROWS(Inventory),
+			//         TREATAS(
+			//             VALUES(UnitsOfMeasure[PrimaryKey]),
+			//             Inventory[UnitOfMeasurePrimaryKey]
+			//         ),
+			
+			//         CROSSFILTER(UnitsOfMeasure[ProductPrimaryKey], Products[PrimaryKey], Both)
+			//     )
+			// VAR ProductCount =
+			//     COUNTROWS(Products)
+			// RETURN
+			//     DIVIDE(TotalCompartmentsSum, ProductCount, 0)
+			
+			
+			```
+		lineageTag: 89dff2d9-8c72-4d2a-a100-5bbc8f02e3d3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Bins =
+			SUM(Throughput[BinPresentationsCompleted])
+			// SUM(BinPresentationsTable[BinPresentationsCompleted])
+			
+			// CALCULATE(
+			//     COUNTROWS('BinPresented'),
+			//     TREATAS(
+			//         VALUES('Pick'[ContainerBarcode]),
+			//         'BinPresented'[ContainerBarcode]
+			//     )
+			// )
+			
+			
+			// COUNT(BinPresented[PrimaryKey])
+		formatString: 0
+		lineageTag: 56844fd4-4183-4303-aac7-64f11a78a5b5
+
+	measure Total_Units = ```
+			
+			 
+			CALCULATE(
+			    [Units Stocked],        -- The measure you want to sum
+			    REMOVEFILTERS()         -- This removes all filters from the data context
+			)
+			
+			
+			
+			
+			
+			// COALESCE(
+			//     SUM('Inventory'[Quantity]),
+			//     0
+			// )
+			
+			```
+		formatString: 0
+		lineageTag: 2e2a32ec-1a5b-4ce9-bdff-ac9c82686ec0
+
+	measure Orders =
+			SUM(Throughput[OrdersCompleted])
+			
+			// COUNT('Order'[CompletedDate])
+		formatString: 0
+		lineageTag: 4d47b47d-c52e-4d16-bd08-d0897c484c81
+
+	measure All_Orders+Lines+Bins = [Orders] + [Lines] + [Bins]
+		formatString: 0
+		lineageTag: 513da777-f853-4c80-abdb-c94deca0f1f5
+
+	measure KPI_Selected = ```
+			
+			SWITCH(
+			    TRUE(),
+			    SELECTEDVALUE(MetricsSlicer[Metric]) = "Orders", [Orders],
+			    SELECTEDVALUE(MetricsSlicer[Metric]) = "Lines", [Lines],
+			    SELECTEDVALUE(MetricsSlicer[Metric]) = "Bins", [Bins],
+			    SELECTEDVALUE(MetricsSlicer[Metric]) = "All", [All_Orders+Lines+Bins]
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 846f2821-74ae-4071-a488-7d5f9393f887
+
+	measure Pick = COUNTROWS(Pick)
+		formatString: 0
+		lineageTag: 90824152-679d-4d83-93d8-c9855234d8dc
+
+	measure Put = COUNTROWS(PutAway)
+		formatString: 0
+		lineageTag: f51c8cf9-8660-4ad8-b6d4-47b09dfd7c26
+
+	measure 'Cycle Count' = COUNTROWS(CycleCountService)
+		formatString: 0
+		lineageTag: aaf5e819-c2c6-4737-b5cb-e3777015e1a9
+
+	measure 'Orders HD' =
+			
+			
+			DISTINCTCOUNT('Order'[OrderNumber])
+		formatString: 0
+		lineageTag: 621e8fac-12e7-4505-b0f5-79a70f1a3883
+
+	measure 'Lines HD' = COUNTROWS('Order')
+		formatString: 0
+		lineageTag: e483a985-a35d-4a8d-b617-c1037f2bd0c2
+
+	measure 'Units HD' = SUM('Order'[EachUnitCount])
+		formatString: 0
+		lineageTag: cf279fb8-d5db-4add-bbba-ec5b4fd64581
+
+	measure 'Num Bins Occupied' = CALCULATE(COUNTROWS('CloseBin-InventoryRecord'),'CloseBin-InventoryRecord'[InventoryStatus] <> "Pending",'CloseBin-InventoryRecord'[ProductQuantity] > 0) +0
+		formatString: 0
+		lineageTag: bfa25c59-5e9b-4795-99d2-2b814cff8968
+
+	measure 'Pick OWH' =
+			
+			VAR SelMetric = [SelectedMetricValue]
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    SelMetric = "Orders",
+			        CALCULATE(
+			            COUNTROWS(Pick),
+			            /* Example filter: only include picks associated with orders */
+			            NOT(ISBLANK(Pick[TransportOrderPrimaryKey]))
+			        ),
+			    SelMetric = "Lines",
+			        CALCULATE(
+			            COUNTROWS(Pick),
+			            /* Example filter: only include picks associated with a line (replace with your logic) */
+			            NOT(ISBLANK(Pick[PercentOfOrderLine]))
+			        ),
+			    SelMetric = "Bins",
+			        CALCULATE(
+			            COUNTROWS(Pick),
+			            /* Example filter: only include picks associated with bins (replace with your logic) */
+			            NOT(ISBLANK(Pick[PrimaryKey]))
+			        ),
+			    SelMetric = "All",
+			        COUNTROWS(Pick),
+			    BLANK()
+			)
+			
+			// CALCULATE(
+			//     COUNTROWS(Pick),
+			//     FILTER(
+			//         Pick,
+			//         [SelectedMetricValue] > 0
+			//     )
+			// )
+		formatString: 0
+		lineageTag: 58bd63db-c8d0-43a9-9e28-897a46445b0b
+
+	measure 'Put OWH' = ```
+			
+			
+			VAR SelMetric = [SelectedMetricValue]
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    SelMetric = "Orders",
+			        CALCULATE(
+			            COUNTROWS(PutAway),
+			            /* Filter condition for Orders */
+			            NOT(ISBLANK(PutAway[InventoryTaskGroupPrimaryKey]))
+			        ),
+			    SelMetric = "Lines",
+			        CALCULATE(
+			            COUNTROWS(PutAway),
+			            /* Filter condition for Lines */
+			            NOT(ISBLANK(PutAway[PutAwayContainerPrimaryKey]))
+			        ),
+			    SelMetric = "Bins",
+			        CALCULATE(
+			            COUNTROWS(PutAway),
+			            /* Filter condition for Bins */
+			            NOT(ISBLANK(PutAway[ReasonCodePrimaryKey]))
+			        ),
+			    SelMetric = "All",
+			        COUNTROWS(PutAway),
+			    BLANK()
+			)
+			
+			
+			// CALCULATE(
+			//     COUNTROWS(PutAway),
+			//     FILTER(
+			//         PutAway,
+			//         [SelectedMetricValue] > 0
+			//     )
+			// )
+			
+			```
+		formatString: 0
+		lineageTag: fac8724e-1d60-4bd5-a8cd-cd768372565d
+
+	measure 'CycleCount OWH' = ```
+			
+			
+			VAR SelMetric = [SelectedMetricValue]
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    SelMetric = "Orders",
+			        CALCULATE(
+			            COUNTROWS(CycleCountService),
+			            /* Filter condition for Orders */
+			            NOT(ISBLANK(CycleCountService[TransportOrderPrimaryKey]))
+			        ),
+			    SelMetric = "Lines",
+			        CALCULATE(
+			            COUNTROWS(CycleCountService),
+			            /* Filter condition for Lines */
+			            NOT(ISBLANK(CycleCountService[LocationBarcode]))
+			        ),
+			    SelMetric = "Bins",
+			        CALCULATE(
+			            COUNTROWS(CycleCountService),
+			            /* Filter condition for Bins */
+			            NOT(ISBLANK(CycleCountService[ReasonCodePrimaryKey]))
+			        ),
+			    SelMetric = "All",
+			        COUNTROWS(CycleCountService),
+			    BLANK()
+			)
+			
+			
+			// CALCULATE(
+			//     COUNTROWS(CycleCountService),
+			//     FILTER(
+			//         CycleCountService,
+			//         [SelectedMetricValue] > 0
+			//     )
+			// )
+			
+			```
+		formatString: 0
+		lineageTag: f9dfc649-0f67-4d40-97a2-db70a1803857
+
+	measure SelectedMetricValue = ```
+			
+			SWITCH(
+			    TRUE(),
+			    SELECTEDVALUE(MetricsSlicer[Metric]) = "Orders", [Orders],
+			    SELECTEDVALUE(MetricsSlicer[Metric]) = "Lines", [Lines],
+			    SELECTEDVALUE(MetricsSlicer[Metric]) = "Bins", [Bins],
+			    SELECTEDVALUE(MetricsSlicer[Metric]) = "All", [Orders] + [Lines] + [Bins],
+			    BLANK()
+			)
+			
+			```
+		formatString: 0
+		lineageTag: b5f27cc0-03f4-42f9-86ee-d7188c01a90b
+
+	measure 'test Orders Putaway' = ```
+			
+			
+			CALCULATE(
+			    COUNT('PutAwayContainers'[PrimaryKey]),
+			    'PutAwayContainers'[Status] = "Closed" &&
+			    FORMAT('PutAwayContainers'[LastUpdatedDate], "YYYY-MM-DD") = 
+			    FORMAT('PutAwayContainers'[LastUpdatedDateInventory], "YYYY-MM-DD")
+			) + 0
+			```
+		formatString: 0
+		lineageTag: bf644783-a340-4785-8d20-2f0faed4c2a7
+
+	measure 'test Customer Orders Picked' = ```
+			
+			        COUNTROWS(
+			            FILTER(
+			                'FulfillmentOrders',
+			                'FulfillmentOrders'[Status] = "Completed" &&
+			            FORMAT('FulfillmentOrders'[LastUpdatedDate], "YYYY-MM-DD") = 
+			            FORMAT('FulfillmentOrders'[LastUpdatedDateInventory], "YYYY-MM-DD")
+			            )
+			        )+0
+			```
+		formatString: 0
+		lineageTag: 577def71-cfc2-4b5b-acb6-14cf9e02acf9
+
+	measure 'test Customer Order Lines' = ```
+			
+			
+			CALCULATE(
+			    COUNTROWS('FulfillmentOrderLines'),
+			    FILTER(
+			        'FulfillmentOrders',
+			        'FulfillmentOrders'[Status] = "Completed" && FORMAT('FulfillmentOrders'[LastUpdatedDate], "YYYY-MM-DD") = 
+			    FORMAT('FulfillmentOrders'[LastUpdatedDateInventory], "YYYY-MM-DD")
+			    ),
+			    FORMAT('FulfillmentOrderLines'[LastUpdatedDate], "YYYY-MM-DD") = 
+			    FORMAT('FulfillmentOrderLines'[LastUpdatedDateInventory], "YYYY-MM-DD")
+			)+0
+			
+			```
+		formatString: 0
+		lineageTag: b7610eec-f5c8-473c-a44c-ad2767c0b20e
+
+	measure 'FulfillmentOrderLinesCount (Lines)' = ```
+			
+			CALCULATE(
+			    COUNTROWS(FulfillmentOrderLines),
+			    FulfillmentOrderLines[Status] IN { "active", "allocated", "allocating", "new", "pending" }
+			)+0
+			 
+			
+			
+			```
+		formatString: 0
+		lineageTag: ce90ec3d-c9ae-409e-9328-6944111950a5
+
+	measure 'PutAwayLineItemsCount (Lines)' = ```
+			
+			CALCULATE(
+			    COUNTROWS(PutAwayContainerLineItems),
+			    FILTER(
+			        PutAwayContainerLineItems,
+			        PutAwayContainerLineItems[ActualQuantity] + PutAwayContainerLineItems[MissingQuantity] < PutAwayContainerLineItems[Quantity]
+			    )
+			) +0
+			
+			```
+		formatString: 0
+		lineageTag: 443629d7-0b90-4846-97f4-eb22f32535d6
+
+	measure 'FulfillmentOrdersCount (Orders)' = ```
+			
+			CALCULATE(
+			    COUNTROWS(FulfillmentOrders),
+			    FulfillmentOrders[status] IN {
+			        "allocated", 
+			        "allocating", 
+			        "active", 
+			        "batched", 
+			        "new", 
+			        "released", 
+			        "importing", 
+			        "falied allocation"
+			    }
+			)+0
+			
+			```
+		formatString: 0
+		lineageTag: 5115968f-b272-412a-9060-8e3899525095
+
+	measure 'PutAwayContainersOpenCount (Orders)' =
+			
+			CALCULATE(
+			    COUNTROWS(PutAwayContainers),
+			    PutAwayContainers[IsClosed] = FALSE()
+			)+0
+		formatString: 0
+		lineageTag: e2a64cf2-5d30-428b-9427-756ed5530658
+
+	measure KPI_Selected_OWH = ```
+			
+			VAR SelectedMetric = SELECTEDVALUE( 'MetricsSlicer OWH'[Metric] )
+			VAR SelectedSeries = SELECTEDVALUE( KPI_Series[Series] )
+			RETURN
+			SWITCH(
+			    SelectedMetric,
+			    "Orders",
+			        SWITCH(
+			            SelectedSeries,
+			            "Orders Pick", [FulfillmentOrdersCount (Orders)],
+			            "Orders Put", [PutAwayContainersOpenCount (Orders)],
+			            "Orders Cycle Count", [DistinctTaskGroupCount (Orders)],
+			            BLANK()  // For series not matching Orders
+			        ),
+			    "Lines",
+			        SWITCH(
+			            SelectedSeries,
+			            "Lines Pick", [FulfillmentOrderLinesCount (Lines)],
+			            "Lines Put", [PutAwayLineItemsCount (Lines)],
+			            "Lines Cycle Count", [CycleCountOpenTasks (Lines)],
+			            BLANK()
+			        ),
+			    // "Bins",
+			    //     SWITCH(
+			    //         SelectedSeries,
+			    //         "Bins_1", [Bins_Measure1],
+			    //         "Bins_2", [Bins_Measure2],
+			    //         "Bins_3", [Bins_Measure3],
+			    //         BLANK()
+			    //     ),
+			    "All",
+			        SWITCH(
+			            SelectedSeries,
+			            "Orders Pick", [FulfillmentOrdersCount (Orders)],
+			            "Orders Put", [PutAwayContainersOpenCount (Orders)],
+			            "Orders Cycle Count", [DistinctTaskGroupCount (Orders)],
+			            "Lines Pick", [FulfillmentOrderLinesCount (Lines)],
+			            "Lines Put", [PutAwayLineItemsCount (Lines)],
+			            "Lines Cycle Count", [CycleCountOpenTasks (Lines)],
+			            // "Bins_1", [Bins_Measure1],
+			            // "Bins_2", [Bins_Measure2],
+			            // "Bins_3", [Bins_Measure3],
+			            BLANK()
+			        )
+			)
+			
+			```
+		formatString: 0
+		lineageTag: f029014e-8fa8-4f79-bea1-6093d6722c7d
+
+	measure 'test OpenCycleCountTasks (Lines)' = ```
+			
+			VAR FilteredTasks =
+			    FILTER(
+			        InventoryTasks_CycleCount,
+			        LOOKUPVALUE(
+			            InventoryTasks[IsClosed],
+			            InventoryTasks[PrimaryKey], InventoryTasks_CycleCount[InventoryTaskPrimaryKey]
+			        ) = 0
+			    )
+			RETURN
+			    COUNTROWS(FilteredTasks)
+			
+			```
+		formatString: 0
+		lineageTag: 811c4b0d-9f9c-4abc-9aa3-8e0e16602560
+
+	measure 'DistinctTaskGroupCount (Orders)' = ```
+			
+			
+			VAR JoinedTable = CALCULATE( DISTINCTCOUNT('InventoryTasks (2)'[TaskGroupPrimaryKey]),
+			    FILTER(
+			        CROSSJOIN( InventoryTasks_CycleCount, 'InventoryTasks (2)'),
+			        InventoryTasks_CycleCount[InventoryTaskPrimaryKey] = 'InventoryTasks (2)'[PrimaryKey] &&
+			        'InventoryTasks (2)'[IsClosed] = FALSE() &&
+			        DATEVALUE( InventoryTasks_CycleCount[LastUpdatedDate] ) = DATEVALUE( 'InventoryTasks (2)'[LastUpdatedDate] )
+			    ))
+			RETURN
+			     JoinedTable  +0
+			
+			
+			
+			
+			//  CALCULATE(
+			//      DISTINCTCOUNT( InventoryTaskGroups[PrimaryKey] ),
+			//      FILTER(
+			//          'InventoryTasks (2)',
+			//          'InventoryTasks (2)'[IsClosed] = FALSE() 
+			//      ),
+			//      TREATAS(
+			//          VALUES( InventoryTasks_CycleCount[InventoryTaskPrimaryKey] ),
+			//         'InventoryTasks (2)'[PrimaryKey] 
+			        
+			//      ),
+			//     TREATAS(
+			//         VALUES( 'InventoryTasks (2)'[TaskGroupPrimaryKey] ),
+			//          InventoryTaskGroups[PrimaryKey] 
+			//      )
+			//  )
+			
+			
+			
+			
+			
+			
+			
+			```
+		formatString: 0
+		lineageTag: 9e5d8da0-30e6-4886-9966-9afe676c475c
+
+	measure 'CycleCountOpenTasks (Lines)' = ```
+			
+			// CALCULATE(
+			//     COUNTROWS(InventoryTasks_CycleCount),
+			//     'InventoryTasks (2)'[IsClosed] = FALSE()
+			
+			    
+			// )
+			
+			
+			
+			VAR JoinedTable =
+			    FILTER(
+			        CROSSJOIN( InventoryTasks_CycleCount, 'InventoryTasks (2)' ),
+			        InventoryTasks_CycleCount[InventoryTaskPrimaryKey] = 'InventoryTasks (2)'[PrimaryKey] &&
+			        'InventoryTasks (2)'[IsClosed] = FALSE() &&
+			        DATEVALUE( InventoryTasks_CycleCount[LastUpdatedDate] ) = DATEVALUE( 'InventoryTasks (2)'[LastUpdatedDate] )
+			    )
+			RETURN
+			    COUNTROWS( JoinedTable )+0
+			
+			
+			
+			```
+		formatString: 0
+		lineageTag: da5cd4de-8965-4f5e-8f33-2521be65cf43
+
+	measure Quantity = SUM(Inventory[Quantity]) +0
+		formatString: 0
+		lineageTag: daedd30c-b783-4d8a-b703-0be7cadaf5bf
+
+	measure Fragmentation =
+			
+			DIVIDE(
+			    SUM('DefragDetailByUomCompartmentSize_Table'[TotalUnrealizedCapacity]),
+			    SUM('DefragDetailByUomCompartmentSize_Table'[TotalUnrealizedCapacity]) + SUM('DefragDetailByUomCompartmentSize_Table'[Quantity]),
+			    0
+			)+0
+		formatString: 0.000
+		lineageTag: b3140ac1-046d-491d-9e15-e1f2ae46c095
+
+	measure 'Total Compartments' = SUM(DefragDetailByUomCompartmentSize_Table[TotalCompartments])+0
+		formatString: 0
+		lineageTag: de4c7269-d9a0-43fb-b8ce-03ca8015f021
+
+	measure Lines = SUM(Throughput[LinesCompleted])
+		formatString: 0
+		lineageTag: c88282d4-b0b8-434b-ab76-dd9d91e62349
+
+	partition 'A Measure' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Column1"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

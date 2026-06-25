@@ -1,0 +1,36 @@
+table Units_Picked
+	lineageTag: 35305d14-c315-4d71-9efb-6b3a2c25839b
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: fa74d08b-7c01-47e3-86ef-0e93d9ec9276
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Units Picked'
+		dataType: int64
+		formatString: 0
+		lineageTag: 62dfd2c8-7891-4587-94cb-e262a0cbd1d6
+		summarizeBy: sum
+		sourceColumn: Units Picked
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Units_Picked = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    dbo_Units_Picked = Source{[Schema="dbo",Item="Units_Picked"]}[Data]
+				in
+				    dbo_Units_Picked
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

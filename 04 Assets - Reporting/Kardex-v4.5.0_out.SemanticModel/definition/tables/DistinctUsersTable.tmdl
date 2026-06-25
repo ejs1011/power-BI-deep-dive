@@ -1,0 +1,33 @@
+table DistinctUsersTable
+	lineageTag: a46ff96a-9fcc-4378-af7a-1c2fbfd222b9
+
+	column Users
+		lineageTag: 47e46bb3-5010-471a-9c32-687f26c555a1
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Users]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DistinctUsersTable = calculated
+		mode: import
+		source = ```
+				
+				VAR Table1Users = SELECTCOLUMNS(AverageHandlingTimePerUser, "Users", AverageHandlingTimePerUser[Users])
+				VAR Table2Users = SELECTCOLUMNS(BinPresentationsCompletedPerUser, "Users", BinPresentationsCompletedPerUser[Users])
+				VAR Table3Users = SELECTCOLUMNS(BinsPerHourPerUser, "Users", BinsPerHourPerUser[Users])
+				VAR Table4Users = SELECTCOLUMNS(LinesCompletedPerUser, "Users", LinesCompletedPerUser[Users])
+				VAR Table5Users = SELECTCOLUMNS(LinesperHourPerUser, "Users", LinesperHourPerUser[Users])
+				VAR Table6Users = SELECTCOLUMNS(MachineWaitTimePerUser, "Users", MachineWaitTimePerUser[Users])
+				VAR Table7Users = SELECTCOLUMNS(OrdersCompletedPerUser, "Users", OrdersCompletedPerUser[Users])
+				VAR Table8Users = SELECTCOLUMNS(OrdersPerHourPerUser, "Users", OrdersPerHourPerUser[Users])
+				VAR Table9Users = SELECTCOLUMNS(TotalLoggedTimePerUser, "Users", TotalLoggedTimePerUser[Users])
+				VAR Table10Users = SELECTCOLUMNS(UnitsCompletedPerUser, "Users", UnitsCompletedPerUser[Users])
+				VAR Table11Users = SELECTCOLUMNS(UnitsPerHourPerUser, "Users", UnitsPerHourPerUser[Users])
+				
+				RETURN DISTINCT(UNION(Table1Users, Table2Users, Table3Users, Table4Users, Table5Users, Table6Users, Table7Users,Table8Users, Table9Users, Table10Users, Table11Users))
+				
+				```
+
+	annotation PBI_Id = d110475ff96b4d2393e596f182fcdce4
+

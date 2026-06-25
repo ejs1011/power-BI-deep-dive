@@ -1,0 +1,32 @@
+table KPI_Series
+	lineageTag: ce52c464-5889-40cf-b5f4-0c54c47cab4d
+
+	column Series
+		lineageTag: b04af880-2baf-41fe-ab54-e749004c9dbb
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Series]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition KPI_Series = calculated
+		mode: import
+		source = ```
+				
+				DATATABLE(
+				    "Series", STRING,
+				    {
+				        {"Orders Pick"},
+				        {"Orders Put"},
+				        {"Orders Cycle Count"},
+				        {"Lines Pick"},
+				        {"Lines Put"},
+				        {"Lines Cycle Count"}
+				
+				    }
+				)
+				
+				```
+
+	annotation PBI_Id = 9b2bfb2891b442178794b8cf6c65799b
+

@@ -1,0 +1,41 @@
+table BinPresentedHD
+	lineageTag: 25475830-5ab1-4913-9ab8-0b5206653dfe
+
+	column Date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: e9bef804-4ee6-41fd-a9bb-e2bd24d86f0d
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 01c7b646-20c1-44f2-803f-7d5899310b5e
+			defaultHierarchy: LocalDateTable_3000e240-bb89-408c-9117-4b610f36b5a7.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column BinPresented
+		dataType: int64
+		formatString: 0
+		lineageTag: 336e5367-4099-4627-9ffe-6a52ff183519
+		summarizeBy: sum
+		sourceColumn: BinPresented
+
+		annotation SummarizationSetBy = Automatic
+
+	partition BinPresentedHD = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    dbo_BinPresentedHD = Source{[Schema="dbo",Item="BinPresentedHD"]}[Data]
+				in
+				    dbo_BinPresentedHD
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
