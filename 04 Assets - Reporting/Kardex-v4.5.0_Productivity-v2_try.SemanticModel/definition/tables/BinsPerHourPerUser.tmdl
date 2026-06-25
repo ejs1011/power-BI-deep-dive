@@ -23,7 +23,7 @@ table BinsPerHourPerUser
 		mode: import
 		source =
 				let
-				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
 				    dbo_BinsPerHourPerUser = Source{[Schema="dbo",Item="BinsPerHourPerUser"]}[Data]
 				in
 				    dbo_BinsPerHourPerUser

@@ -156,7 +156,7 @@ table InventoryTaskGroups
 		mode: import
 		source =
 				let
-				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
 				    dbo_InventoryTaskGroups = Source{[Schema="dbo",Item="InventoryTaskGroups"]}[Data]
 				in
 				    dbo_InventoryTaskGroups

@@ -3,6 +3,7 @@ table ContainerTemplateCompartments
 
 	measure 'test container' = DISTINCT(ContainerTemplateCompartments[ContainerSide])
 		formatString: 0
+		isHidden
 		lineageTag: 11ab3d09-274c-4dc4-9b73-a9c4722cecee
 
 	measure 'test CountRows' = ```
@@ -10,6 +11,7 @@ table ContainerTemplateCompartments
 			
 			```
 		formatString: 0
+		isHidden
 		lineageTag: a48ed96a-d3bb-4065-adfa-a5e98c1a45bc
 
 	column PrimaryKey
@@ -96,7 +98,7 @@ table ContainerTemplateCompartments
 		mode: import
 		source =
 				let
-				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
 				    dbo_ContainerTemplateCompartments = Source{[Schema="dbo",Item="ContainerTemplateCompartments"]}[Data]
 				in
 				    dbo_ContainerTemplateCompartments

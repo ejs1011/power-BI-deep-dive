@@ -166,7 +166,7 @@ table Products
 		mode: import
 		source =
 				let
-				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
 				    dbo_Products = Source{[Schema="dbo",Item="Products"]}[Data]
 				in
 				    dbo_Products

@@ -200,7 +200,7 @@ table UnitsOfMeasure
 		mode: import
 		source =
 				let
-				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
 				    dbo_UnitsOfMeasure = Source{[Schema="dbo",Item="UnitsOfMeasure"]}[Data]
 				in
 				    dbo_UnitsOfMeasure

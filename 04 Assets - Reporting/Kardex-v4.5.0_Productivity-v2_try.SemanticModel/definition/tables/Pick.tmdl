@@ -190,7 +190,7 @@ table Pick
 		mode: import
 		source =
 				let
-				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
 				    dbo_Pick = Source{[Schema="dbo",Item="Pick"]}[Data],
 				    #"Added Custom" = Table.AddColumn(dbo_Pick, "Date", each DateTime.Date([PickCompleteDate])),
 				    #"Changed Type" = Table.TransformColumnTypes(#"Added Custom",{{"Date", type date}})

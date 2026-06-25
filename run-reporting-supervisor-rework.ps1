@@ -5,13 +5,18 @@ param(
     [switch]$Apply,
     [switch]$ValidateOnly,
     [switch]$CheckOnly,
-    [switch]$OpenPbip
+    [switch]$DiagnoseDailyKpi,
+    [switch]$DiagnoseDailyKpiSync,
+    [switch]$RepairDailyKpiSync,
+    [switch]$OpenPbip,
+    [string]$LogPath
 )
 
 $ErrorActionPreference = "Stop"
 
 $assetsRoot = Join-Path $PSScriptRoot "04 Assets - Reporting"
 $pbipPath = Join-Path $assetsRoot "Kardex-v4.5.0_Productivity-v2_try.pbip"
+$savedPbixPath = Join-Path $assetsRoot "Kardex-v4.5.0_Supervisor-Rework.pbix"
 $staticValidatorPath = Join-Path $PSScriptRoot "validate-reporting-pbip-static.ps1"
 
 $patchScripts = @(
@@ -23,8 +28,13 @@ $patchScripts = @(
 $validationScripts = @(
     "validate-reporting-productivity-powerbi-patch-v4.5.0.sql",
     "validate-reporting-supervisor-page-views-v4.5.0.sql",
-    "validate-reporting-all-pages-smoke-v4.5.0.sql"
+    "validate-reporting-all-pages-smoke-v4.5.0.sql",
+    "validate-reporting-visible-metrics-v4.5.0.sql"
 ) | ForEach-Object { Join-Path $assetsRoot $_ }
+
+$dailyKpiDiagnosticScript = Join-Path $assetsRoot "diagnose-reporting-daily-kpi-v4.5.0.sql"
+$dailyKpiSyncDiagnosticScript = Join-Path $assetsRoot "diagnose-reporting-daily-kpi-sync-v4.5.0.sql"
+$dailyKpiSyncRepairScript = Join-Path $assetsRoot "repair-reporting-daily-kpi-sync-v4.5.0.sql"
 
 $scripts = $patchScripts + $validationScripts
 
@@ -32,10 +42,60 @@ $expectedValidationGates = @{
     "validate-reporting-productivity-powerbi-patch-v4.5.0.sql" = "PowerBIPatchValidationGate"
     "validate-reporting-supervisor-page-views-v4.5.0.sql" = "SupervisorPageValidationGate"
     "validate-reporting-all-pages-smoke-v4.5.0.sql" = "AllPagesSmokeGate"
+    "validate-reporting-visible-metrics-v4.5.0.sql" = "VisibleMetricsValidationGate"
+    "repair-reporting-daily-kpi-sync-v4.5.0.sql" = "DailyKpiSyncRepairGate"
+}
+
+$script:RunLogPath = $null
+
+function Write-RunLine {
+    param([string]$Message = "")
+
+    Write-Host $Message
+    if ($script:RunLogPath) {
+        Add-Content -LiteralPath $script:RunLogPath -Value $Message
+    }
+}
+
+function Write-RunLines {
+    param([string[]]$Lines)
+
+    foreach ($line in $Lines) {
+        Write-RunLine $line
+    }
+}
+
+function Initialize-RunLog {
+    param([string]$Path)
+
+    if (-not $Path) {
+        return
+    }
+
+    $resolvedPath = if ([IO.Path]::IsPathRooted($Path)) {
+        $Path
+    } else {
+        Join-Path $PSScriptRoot $Path
+    }
+    $parentPath = Split-Path -Parent $resolvedPath
+    if ($parentPath -and -not (Test-Path -LiteralPath $parentPath)) {
+        New-Item -ItemType Directory -Path $parentPath | Out-Null
+    }
+
+    $script:RunLogPath = $resolvedPath
+    Set-Content -LiteralPath $script:RunLogPath -Value @(
+        "Kardex reporting supervisor rework run"
+        "Started: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss zzz')"
+        "Server: $Server"
+        "Database: $Database"
+        "Auth: $(if ($SqlUser) { "SQL login $SqlUser" } else { "Windows integrated" })"
+        ""
+    )
+    Write-RunLine "Logging run output to: $script:RunLogPath"
 }
 
 $sqlPasswordPlain = $null
-if ($SqlUser -and ($Apply -or $ValidateOnly -or $CheckOnly)) {
+if ($SqlUser -and ($Apply -or $ValidateOnly -or $CheckOnly -or $DiagnoseDailyKpi -or $DiagnoseDailyKpiSync -or $RepairDailyKpiSync)) {
     $securePassword = Read-Host "SQL password for $SqlUser" -AsSecureString
     $passwordPointer = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($securePassword)
     try {
@@ -70,6 +130,51 @@ function New-SqlCmdArgs {
     return $args
 }
 
+function Get-SqlGateFailureMessage {
+    param(
+        [string]$FileName,
+        [string]$ExpectedGate,
+        [string[]]$OutputLines
+    )
+
+    $diagnosticLines = New-Object System.Collections.Generic.List[string]
+    $gateLineIndex = -1
+    for ($i = 0; $i -lt $OutputLines.Count; $i++) {
+        if ($OutputLines[$i] -match [regex]::Escape($ExpectedGate)) {
+            $gateLineIndex = $i
+            break
+        }
+    }
+
+    if ($gateLineIndex -ge 0) {
+        $diagnosticLines.Add("Gate summary:")
+        $lastGateLine = [Math]::Min($OutputLines.Count - 1, $gateLineIndex + 3)
+        for ($i = $gateLineIndex; $i -le $lastGateLine; $i++) {
+            $diagnosticLines.Add($OutputLines[$i])
+        }
+    }
+
+    $failedRows = @($OutputLines | Where-Object { $_ -match '\bFAIL\b' } | Select-Object -First 8)
+    if ($failedRows.Count -gt 0) {
+        $diagnosticLines.Add("First FAIL row(s):")
+        foreach ($line in $failedRows) {
+            $diagnosticLines.Add($line)
+        }
+    }
+
+    if ($diagnosticLines.Count -eq 0) {
+        $diagnosticLines.Add("Last sqlcmd output lines:")
+        foreach ($line in ($OutputLines | Select-Object -Last 12)) {
+            $diagnosticLines.Add($line)
+        }
+    }
+
+    return @(
+        "Expected $ExpectedGate = PASS from $FileName."
+        ($diagnosticLines -join [Environment]::NewLine)
+    ) -join [Environment]::NewLine
+}
+
 function Invoke-SqlCmdChecked {
     param(
         [string]$InputFile,
@@ -84,7 +189,7 @@ function Invoke-SqlCmdChecked {
     } finally {
         $ErrorActionPreference = $previousErrorActionPreference
     }
-    $outputLines | ForEach-Object { Write-Host $_ }
+    Write-RunLines $outputLines
 
     if ($LASTEXITCODE -ne 0) {
         if ($InputFile) {
@@ -98,17 +203,26 @@ function Invoke-SqlCmdChecked {
         $expectedGate = $expectedValidationGates[$fileName]
         if ($expectedGate) {
             $outputText = $outputLines -join [Environment]::NewLine
-            $gatePassedPattern = "(?ms)^\s*$([regex]::Escape($expectedGate))\b.*?\r?\n\s*-+.*?\r?\n\s*PASS\b"
-            if ($outputText -notmatch $gatePassedPattern) {
-                throw "Expected $expectedGate = PASS from $fileName."
+            $escapedGate = [regex]::Escape($expectedGate)
+            $gatePassedSameLinePattern = "(?m)^\s*$escapedGate\s+PASS\b"
+            $gatePassedWrappedPattern = "(?ms)^\s*$escapedGate\b.*?\r?\n\s*-+.*?\r?\n\s*PASS\b"
+            if ($outputText -notmatch $gatePassedSameLinePattern -and $outputText -notmatch $gatePassedWrappedPattern) {
+                throw (Get-SqlGateFailureMessage -FileName $fileName -ExpectedGate $expectedGate -OutputLines $outputLines)
             }
         }
     }
 }
 
 function Invoke-StaticValidation {
-    Write-Host "Running local static PBIP validation..."
-    & powershell -NoProfile -ExecutionPolicy Bypass -File $staticValidatorPath
+    Write-RunLine "Running local static PBIP validation..."
+    $previousErrorActionPreference = $ErrorActionPreference
+    try {
+        $ErrorActionPreference = "Continue"
+        $outputLines = @(& powershell -NoProfile -ExecutionPolicy Bypass -File $staticValidatorPath 2>&1 | ForEach-Object { $_.ToString() })
+    } finally {
+        $ErrorActionPreference = $previousErrorActionPreference
+    }
+    Write-RunLines $outputLines
     if ($LASTEXITCODE -ne 0) {
         throw "Static PBIP validation failed."
     }
@@ -120,12 +234,35 @@ foreach ($script in $scripts) {
     }
 }
 
+if ($DiagnoseDailyKpi -and -not (Test-Path -LiteralPath $dailyKpiDiagnosticScript)) {
+    throw "Missing Daily KPI diagnostic script: $dailyKpiDiagnosticScript"
+}
+
+if ($DiagnoseDailyKpiSync -and -not (Test-Path -LiteralPath $dailyKpiSyncDiagnosticScript)) {
+    throw "Missing Daily KPI sync diagnostic script: $dailyKpiSyncDiagnosticScript"
+}
+
+if ($RepairDailyKpiSync -and -not (Test-Path -LiteralPath $dailyKpiSyncRepairScript)) {
+    throw "Missing Daily KPI sync repair script: $dailyKpiSyncRepairScript"
+}
+
 if (($Apply -or $ValidateOnly -or $OpenPbip) -and -not (Test-Path -LiteralPath $staticValidatorPath)) {
     throw "Missing static validator: $staticValidatorPath"
 }
 
-if ($CheckOnly) {
-    Write-Host "Checking SQL connection and reporting object readiness..."
+Initialize-RunLog -Path $LogPath
+
+if ($RepairDailyKpiSync) {
+    Write-RunLine "Running Daily KPI sync repair..."
+    Invoke-SqlCmdChecked -InputFile $dailyKpiSyncRepairScript
+} elseif ($DiagnoseDailyKpiSync) {
+    Write-RunLine "Running Daily KPI sync diagnostic query..."
+    Invoke-SqlCmdChecked -InputFile $dailyKpiSyncDiagnosticScript
+} elseif ($DiagnoseDailyKpi) {
+    Write-RunLine "Running Daily KPI diagnostic query..."
+    Invoke-SqlCmdChecked -InputFile $dailyKpiDiagnosticScript
+} elseif ($CheckOnly) {
+    Write-RunLine "Checking SQL connection and reporting object readiness..."
     Invoke-SqlCmdChecked -Query @"
 SET NOCOUNT ON;
 SELECT @@SERVERNAME AS ServerName, DB_NAME() AS CurrentDatabase, SUSER_SNAME() AS LoginName;
@@ -165,23 +302,30 @@ ORDER BY name;
 "@
 } elseif ($OpenPbip -and -not $Apply -and -not $ValidateOnly) {
     Invoke-StaticValidation
+    Write-RunLine ""
+    Write-RunLine "Opening PBIP without applying SQL patches."
+    Write-RunLine "If SQL patches have not been applied after the latest repo changes, refresh may fail or show stale metrics."
+    Write-RunLine "Use -Apply -OpenPbip to apply SQL patches, run SQL gates, and then open Power BI."
 } elseif (-not $Apply -and -not $ValidateOnly) {
-    Write-Host "Dry run only. Re-run with -Apply to execute against SQL Server."
-    Write-Host "Use -ValidateOnly to run the validation gates without reapplying SQL patches."
-    Write-Host ""
-    Write-Host "Server:   $Server"
-    Write-Host "Database: $Database"
+    Write-RunLine "Dry run only. Re-run with -Apply to execute against SQL Server."
+    Write-RunLine "Use -ValidateOnly to run the validation gates without reapplying SQL patches."
+    Write-RunLine "Use -DiagnoseDailyKpi to troubleshoot the Daily KPI source rows."
+    Write-RunLine "Use -DiagnoseDailyKpiSync to troubleshoot the Daily KPI snapshot sync pipeline."
+    Write-RunLine "Use -RepairDailyKpiSync to fix a stuck DynamicTableInsert snapshot sync."
+    Write-RunLine ""
+    Write-RunLine "Server:   $Server"
+    Write-RunLine "Database: $Database"
     if ($SqlUser) {
-        Write-Host "Auth:     SQL login $SqlUser"
+        Write-RunLine "Auth:     SQL login $SqlUser"
     } else {
-        Write-Host "Auth:     Windows integrated"
+        Write-RunLine "Auth:     Windows integrated"
     }
-    Write-Host ""
+    Write-RunLine ""
     foreach ($script in $scripts) {
         if ($SqlUser) {
-            Write-Host "sqlcmd -S $Server -d $Database -U $SqlUser -P <prompted> -b -i `"$script`""
+            Write-RunLine "sqlcmd -S $Server -d $Database -U $SqlUser -P <prompted> -b -i `"$script`""
         } else {
-            Write-Host "sqlcmd -S $Server -d $Database -E -b -i `"$script`""
+            Write-RunLine "sqlcmd -S $Server -d $Database -E -b -i `"$script`""
         }
     }
 } else {
@@ -194,16 +338,16 @@ ORDER BY name;
     $scriptsToRun = if ($ValidateOnly -and -not $Apply) { $validationScripts } else { $scripts }
 
     foreach ($script in $scriptsToRun) {
-        Write-Host ""
-        Write-Host "Running $([IO.Path]::GetFileName($script))..."
+        Write-RunLine ""
+        Write-RunLine "Running $([IO.Path]::GetFileName($script))..."
         Invoke-SqlCmdChecked -InputFile $script
     }
 
-    Write-Host ""
+    Write-RunLine ""
     if ($ValidateOnly -and -not $Apply) {
-        Write-Host "SQL validations completed. All expected validation gates showed PASS."
+        Write-RunLine "SQL validations completed. All expected validation gates showed PASS."
     } else {
-        Write-Host "SQL patch and validations completed. All expected validation gates showed PASS."
+        Write-RunLine "SQL patch and validations completed. All expected validation gates showed PASS."
     }
 }
 
@@ -218,4 +362,9 @@ if ($OpenPbip) {
     }
 
     Start-Process -FilePath $desktopPath -ArgumentList "`"$pbipPath`""
+    Write-RunLine ""
+    Write-RunLine "Opened replacement PBIP: $pbipPath"
+    Write-RunLine "Confirm SQL patch/validation has run after the latest repo changes before trusting refreshed values."
+    Write-RunLine "In Power BI Desktop, refresh the report and save as/over:"
+    Write-RunLine $savedPbixPath
 }

@@ -12,7 +12,7 @@ table 'B Measure'
 			    SELECTEDVALUE(_MeasureGroups[MeasureName]) = "Units Put Away", [Units Putaway],
 			    SELECTEDVALUE(_MeasureGroups[MeasureName]) = "SKUs Put Away", [Skus Putaway],
 			    SELECTEDVALUE(_MeasureGroups[MeasureName]) = "Bin Presentations Put Away", [Presentations Putaway],
-			    SELECTEDVALUE(_MeasureGroups[MeasureName]) = "Distinct Bins With Inventory Added", [Distinct bins inventory added],
+			    SELECTEDVALUE(_MeasureGroups[MeasureName]) = "Distinct Bins With Inventory", [Distinct bins inventory added],
 			    SELECTEDVALUE(_MeasureGroups[MeasureName]) = "Distinct Bin Compartments With Inventory", [Distinct bin compartments that had inventory],
 			    SELECTEDVALUE(_MeasureGroups[MeasureName]) = "Customer Orders Picked", [Customer Orders Picked],
 			    SELECTEDVALUE(_MeasureGroups[MeasureName]) = "Customer Order Lines", [Customer Order Lines],
@@ -196,7 +196,7 @@ table 'B Measure'
 
 	measure 'Total SKUs On Hand' =
 			
-			SUM(Total_SKUs_On_Hand[Totak SKUs On Hand])+0
+			SUM(Total_SKUs_On_Hand[Total SKUs On Hand])+0
 		formatString: 0
 		displayFolder: Daily KPI Summary Report
 		lineageTag: d28344be-c06c-45f9-8b57-c84d55015ee4
@@ -215,12 +215,35 @@ table 'B Measure'
 		displayFolder: Daily KPI Summary Report
 		lineageTag: 145664e9-6407-4c2f-86f4-c1c767ca114c
 
-	measure 'Total Logged Time per User' = ```
+	measure 'Productivity Pick Activity' = ```
 			
 			CALCULATE(
-			    SUM(ProductivityDailyUserPortWorkType_v2[TotalLoggedMinutes]),
+			    COALESCE(SUM(ProductivityDailyUserPortWorkType_v2[OrdersCompleted]), 0)
+			        + COALESCE(SUM(ProductivityDailyUserPortWorkType_v2[BinPresentationsCompleted]), 0)
+			        + COALESCE(SUM(ProductivityDailyUserPortWorkType_v2[LinesCompleted]), 0)
+			        + COALESCE(SUM(ProductivityDailyUserPortWorkType_v2[UnitsCompleted]), 0)
+			        + COALESCE(SUM(ProductivityDailyUserPortWorkType_v2[MachineWaitMinutes]), 0)
+			        + COALESCE(SUM(ProductivityDailyUserPortWorkType_v2[ActiveHandleMinutes]), 0)
+			        + COALESCE(SUM(ProductivityDailyUserPortWorkType_v2[TotalLoggedMinutes]), 0)
+			        + COALESCE(SUM(ProductivityDailyUserPortWorkType_v2[RateDenominatorHours]), 0),
 			    ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
-			) + 0
+			)
+			
+			```
+		formatString: 0.00
+		displayFolder: Productivity by User
+		isHidden
+
+	measure 'Total Logged Time per User' = ```
+			
+			VAR Activity = [Productivity Pick Activity]
+			VAR Result =
+			    CALCULATE(
+			        SUM(ProductivityDailyUserPortWorkType_v2[TotalLoggedMinutes]),
+			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			    )
+			RETURN
+			    IF(Activity > 0, Result)
 			
 			```
 		formatString: 0.00
@@ -229,14 +252,17 @@ table 'B Measure'
 
 	measure 'Average Handle Time/Presentation per User' = ```
 			
-			DIVIDE(
-			    CALCULATE(
-			        SUM(ProductivityDailyUserPortWorkType_v2[ActiveHandleMinutes]),
-			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
-			    ),
-			    [Bin Presentations Completed per User],
-			    0
-			)
+			VAR Activity = [Productivity Pick Activity]
+			VAR Result =
+			    DIVIDE(
+			        CALCULATE(
+			            SUM(ProductivityDailyUserPortWorkType_v2[ActiveHandleMinutes]),
+			            ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			        ),
+			        [Bin Presentations Completed per User]
+			    )
+			RETURN
+			    IF(Activity > 0, Result)
 			
 			```
 		formatString: 0.00
@@ -247,10 +273,14 @@ table 'B Measure'
 
 	measure 'Orders Completed per User' = ```
 			
-			CALCULATE(
-			    SUM(ProductivityDailyUserPortWorkType_v2[OrdersCompleted]),
-			    ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
-			) + 0
+			VAR Activity = [Productivity Pick Activity]
+			VAR Result =
+			    CALCULATE(
+			        SUM(ProductivityDailyUserPortWorkType_v2[OrdersCompleted]),
+			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			    )
+			RETURN
+			    IF(Activity > 0, Result)
 			
 			```
 		formatString: 0.00
@@ -259,10 +289,14 @@ table 'B Measure'
 
 	measure 'Bin Presentations Completed per User' = ```
 			
-			CALCULATE(
-			    SUM(ProductivityDailyUserPortWorkType_v2[BinPresentationsCompleted]),
-			    ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
-			) + 0
+			VAR Activity = [Productivity Pick Activity]
+			VAR Result =
+			    CALCULATE(
+			        SUM(ProductivityDailyUserPortWorkType_v2[BinPresentationsCompleted]),
+			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			    )
+			RETURN
+			    IF(Activity > 0, Result)
 			
 			```
 		formatString: 0.00
@@ -271,10 +305,14 @@ table 'B Measure'
 
 	measure 'Lines Completed per User' = ```
 			
-			CALCULATE(
-			    SUM(ProductivityDailyUserPortWorkType_v2[LinesCompleted]),
-			    ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
-			) + 0
+			VAR Activity = [Productivity Pick Activity]
+			VAR Result =
+			    CALCULATE(
+			        SUM(ProductivityDailyUserPortWorkType_v2[LinesCompleted]),
+			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			    )
+			RETURN
+			    IF(Activity > 0, Result)
 			
 			```
 		formatString: 0.00
@@ -283,10 +321,14 @@ table 'B Measure'
 
 	measure 'Units Completed per User' = ```
 			
-			CALCULATE(
-			    SUM(ProductivityDailyUserPortWorkType_v2[UnitsCompleted]),
-			    ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
-			) + 0
+			VAR Activity = [Productivity Pick Activity]
+			VAR Result =
+			    CALCULATE(
+			        SUM(ProductivityDailyUserPortWorkType_v2[UnitsCompleted]),
+			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			    )
+			RETURN
+			    IF(Activity > 0, Result)
 			
 			```
 		formatString: 0.00
@@ -295,14 +337,17 @@ table 'B Measure'
 
 	measure 'Orders/HR per User' = ```
 			
-			DIVIDE(
-			    [Orders Completed per User],
-			    CALCULATE(
-			        SUM(ProductivityDailyUserPortWorkType_v2[RateDenominatorHours]),
-			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
-			    ),
-			    0
-			)
+			VAR Activity = [Productivity Pick Activity]
+			VAR Result =
+			    DIVIDE(
+			        [Orders Completed per User],
+			        CALCULATE(
+			            SUM(ProductivityDailyUserPortWorkType_v2[RateDenominatorHours]),
+			            ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			        )
+			    )
+			RETURN
+			    IF(Activity > 0, Result)
 			
 			```
 		formatString: 0.00
@@ -311,14 +356,17 @@ table 'B Measure'
 
 	measure 'Bins/HR per User' = ```
 			
-			DIVIDE(
-			    [Bin Presentations Completed per User],
-			    CALCULATE(
-			        SUM(ProductivityDailyUserPortWorkType_v2[RateDenominatorHours]),
-			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
-			    ),
-			    0
-			)
+			VAR Activity = [Productivity Pick Activity]
+			VAR Result =
+			    DIVIDE(
+			        [Bin Presentations Completed per User],
+			        CALCULATE(
+			            SUM(ProductivityDailyUserPortWorkType_v2[RateDenominatorHours]),
+			            ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			        )
+			    )
+			RETURN
+			    IF(Activity > 0, Result)
 			
 			```
 		formatString: 0.00
@@ -327,14 +375,17 @@ table 'B Measure'
 
 	measure 'Units/HR per User' = ```
 			
-			DIVIDE(
-			    [Units Completed per User],
-			    CALCULATE(
-			        SUM(ProductivityDailyUserPortWorkType_v2[RateDenominatorHours]),
-			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
-			    ),
-			    0
-			)
+			VAR Activity = [Productivity Pick Activity]
+			VAR Result =
+			    DIVIDE(
+			        [Units Completed per User],
+			        CALCULATE(
+			            SUM(ProductivityDailyUserPortWorkType_v2[RateDenominatorHours]),
+			            ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			        )
+			    )
+			RETURN
+			    IF(Activity > 0, Result)
 			
 			```
 		formatString: 0.00
@@ -343,14 +394,17 @@ table 'B Measure'
 
 	measure 'Lines/HR per User' = ```
 			
-			DIVIDE(
-			    [Lines Completed per User],
-			    CALCULATE(
-			        SUM(ProductivityDailyUserPortWorkType_v2[RateDenominatorHours]),
-			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
-			    ),
-			    0
-			)
+			VAR Activity = [Productivity Pick Activity]
+			VAR Result =
+			    DIVIDE(
+			        [Lines Completed per User],
+			        CALCULATE(
+			            SUM(ProductivityDailyUserPortWorkType_v2[RateDenominatorHours]),
+			            ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			        )
+			    )
+			RETURN
+			    IF(Activity > 0, Result)
 			
 			```
 		formatString: 0.00
@@ -359,10 +413,14 @@ table 'B Measure'
 
 	measure 'Machine wait time per User' = ```
 			
-			CALCULATE(
-			    SUM(ProductivityDailyUserPortWorkType_v2[MachineWaitMinutes]),
-			    ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
-			) + 0
+			VAR Activity = [Productivity Pick Activity]
+			VAR Result =
+			    CALCULATE(
+			        SUM(ProductivityDailyUserPortWorkType_v2[MachineWaitMinutes]),
+			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			    )
+			RETURN
+			    IF(Activity > 0, Result)
 			
 			```
 		formatString: 0.00
@@ -373,10 +431,14 @@ table 'B Measure'
 
 	measure 'Total Logged Time per Port' = ```
 			
-			CALCULATE(
-			    SUM(ProductivityDailyUserPortWorkType_v2[TotalLoggedMinutes]),
-			    ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
-			) + 0
+			VAR Activity = [Productivity Pick Activity]
+			VAR Result =
+			    CALCULATE(
+			        SUM(ProductivityDailyUserPortWorkType_v2[TotalLoggedMinutes]),
+			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			    )
+			RETURN
+			    IF(Activity > 0, Result)
 			
 			```
 		formatString: 0.00
@@ -385,14 +447,17 @@ table 'B Measure'
 
 	measure 'Average Handle Time/Presentation per Port' = ```
 			
-			DIVIDE(
-			    CALCULATE(
-			        SUM(ProductivityDailyUserPortWorkType_v2[ActiveHandleMinutes]),
-			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
-			    ),
-			    [Bin Presentations Completed per Port],
-			    0
-			)
+			VAR Activity = [Productivity Pick Activity]
+			VAR Result =
+			    DIVIDE(
+			        CALCULATE(
+			            SUM(ProductivityDailyUserPortWorkType_v2[ActiveHandleMinutes]),
+			            ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			        ),
+			        [Bin Presentations Completed per Port]
+			    )
+			RETURN
+			    IF(Activity > 0, Result)
 			
 			```
 		formatString: 0.00
@@ -403,10 +468,14 @@ table 'B Measure'
 
 	measure 'Bin Presentations Completed per Port' = ```
 			
-			CALCULATE(
-			    SUM(ProductivityDailyUserPortWorkType_v2[BinPresentationsCompleted]),
-			    ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
-			) + 0
+			VAR Activity = [Productivity Pick Activity]
+			VAR Result =
+			    CALCULATE(
+			        SUM(ProductivityDailyUserPortWorkType_v2[BinPresentationsCompleted]),
+			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			    )
+			RETURN
+			    IF(Activity > 0, Result)
 			
 			```
 		formatString: 0.00
@@ -415,14 +484,17 @@ table 'B Measure'
 
 	measure 'Bins/HR per Port' = ```
 			
-			DIVIDE(
-			    [Bin Presentations Completed per Port],
-			    CALCULATE(
-			        SUM(ProductivityDailyUserPortWorkType_v2[RateDenominatorHours]),
-			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
-			    ),
-			    0
-			)
+			VAR Activity = [Productivity Pick Activity]
+			VAR Result =
+			    DIVIDE(
+			        [Bin Presentations Completed per Port],
+			        CALCULATE(
+			            SUM(ProductivityDailyUserPortWorkType_v2[RateDenominatorHours]),
+			            ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			        )
+			    )
+			RETURN
+			    IF(Activity > 0, Result)
 			
 			```
 		formatString: 0.00
@@ -431,10 +503,14 @@ table 'B Measure'
 
 	measure 'Lines Completed per Port' = ```
 			
-			CALCULATE(
-			    SUM(ProductivityDailyUserPortWorkType_v2[LinesCompleted]),
-			    ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
-			) + 0
+			VAR Activity = [Productivity Pick Activity]
+			VAR Result =
+			    CALCULATE(
+			        SUM(ProductivityDailyUserPortWorkType_v2[LinesCompleted]),
+			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			    )
+			RETURN
+			    IF(Activity > 0, Result)
 			
 			```
 		formatString: 0.00
@@ -443,14 +519,17 @@ table 'B Measure'
 
 	measure 'Lines/HR per Port' = ```
 			
-			DIVIDE(
-			    [Lines Completed per Port],
-			    CALCULATE(
-			        SUM(ProductivityDailyUserPortWorkType_v2[RateDenominatorHours]),
-			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
-			    ),
-			    0
-			)
+			VAR Activity = [Productivity Pick Activity]
+			VAR Result =
+			    DIVIDE(
+			        [Lines Completed per Port],
+			        CALCULATE(
+			            SUM(ProductivityDailyUserPortWorkType_v2[RateDenominatorHours]),
+			            ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			        )
+			    )
+			RETURN
+			    IF(Activity > 0, Result)
 			
 			```
 		formatString: 0.00
@@ -459,10 +538,14 @@ table 'B Measure'
 
 	measure 'Machine wait time per Port' = ```
 			
-			CALCULATE(
-			    SUM(ProductivityDailyUserPortWorkType_v2[MachineWaitMinutes]),
-			    ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
-			) + 0
+			VAR Activity = [Productivity Pick Activity]
+			VAR Result =
+			    CALCULATE(
+			        SUM(ProductivityDailyUserPortWorkType_v2[MachineWaitMinutes]),
+			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			    )
+			RETURN
+			    IF(Activity > 0, Result)
 			
 			```
 		formatString: 0.00
@@ -471,10 +554,14 @@ table 'B Measure'
 
 	measure 'Orders Completed per Port' = ```
 			
-			CALCULATE(
-			    SUM(ProductivityDailyUserPortWorkType_v2[OrdersCompleted]),
-			    ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
-			) + 0
+			VAR Activity = [Productivity Pick Activity]
+			VAR Result =
+			    CALCULATE(
+			        SUM(ProductivityDailyUserPortWorkType_v2[OrdersCompleted]),
+			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			    )
+			RETURN
+			    IF(Activity > 0, Result)
 			
 			```
 		formatString: 0.00
@@ -483,14 +570,17 @@ table 'B Measure'
 
 	measure 'Orders/HR per Port' = ```
 			
-			DIVIDE(
-			    [Orders Completed per Port],
-			    CALCULATE(
-			        SUM(ProductivityDailyUserPortWorkType_v2[RateDenominatorHours]),
-			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
-			    ),
-			    0
-			)
+			VAR Activity = [Productivity Pick Activity]
+			VAR Result =
+			    DIVIDE(
+			        [Orders Completed per Port],
+			        CALCULATE(
+			            SUM(ProductivityDailyUserPortWorkType_v2[RateDenominatorHours]),
+			            ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			        )
+			    )
+			RETURN
+			    IF(Activity > 0, Result)
 			
 			```
 		formatString: 0.00
@@ -499,10 +589,14 @@ table 'B Measure'
 
 	measure 'Units Completed per Port' = ```
 			
-			CALCULATE(
-			    SUM(ProductivityDailyUserPortWorkType_v2[UnitsCompleted]),
-			    ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
-			) + 0
+			VAR Activity = [Productivity Pick Activity]
+			VAR Result =
+			    CALCULATE(
+			        SUM(ProductivityDailyUserPortWorkType_v2[UnitsCompleted]),
+			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			    )
+			RETURN
+			    IF(Activity > 0, Result)
 			
 			```
 		formatString: 0.00
@@ -511,14 +605,17 @@ table 'B Measure'
 
 	measure 'Units/HR per Port' = ```
 			
-			DIVIDE(
-			    [Units Completed per Port],
-			    CALCULATE(
-			        SUM(ProductivityDailyUserPortWorkType_v2[RateDenominatorHours]),
-			        ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
-			    ),
-			    0
-			)
+			VAR Activity = [Productivity Pick Activity]
+			VAR Result =
+			    DIVIDE(
+			        [Units Completed per Port],
+			        CALCULATE(
+			            SUM(ProductivityDailyUserPortWorkType_v2[RateDenominatorHours]),
+			            ProductivityDailyUserPortWorkType_v2[WorkType] = "Pick"
+			        )
+			    )
+			RETURN
+			    IF(Activity > 0, Result)
 			
 			```
 		formatString: 0.00

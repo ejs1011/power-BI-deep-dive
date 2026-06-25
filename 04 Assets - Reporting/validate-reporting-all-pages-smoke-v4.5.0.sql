@@ -1,6 +1,15 @@
 USE [KFX_REPORTING];
 GO
 
+SET ANSI_NULLS ON;
+SET QUOTED_IDENTIFIER ON;
+SET ANSI_PADDING ON;
+SET ANSI_WARNINGS ON;
+SET ARITHABORT ON;
+SET CONCAT_NULL_YIELDS_NULL ON;
+SET NUMERIC_ROUNDABORT OFF;
+GO
+
 SET NOCOUNT ON;
 
 /*
@@ -20,6 +29,7 @@ DECLARE @HistoryStart date = DATEADD(day, -30, @Today);
 
 IF OBJECT_ID('tempdb..#PageSmoke') IS NOT NULL DROP TABLE #PageSmoke;
 IF OBJECT_ID('tempdb..#DailyKpiMetrics') IS NOT NULL DROP TABLE #DailyKpiMetrics;
+IF OBJECT_ID('tempdb..#ExpectedDailyKpiSources') IS NOT NULL DROP TABLE #ExpectedDailyKpiSources;
 IF OBJECT_ID('tempdb..#HistoricalMetrics') IS NOT NULL DROP TABLE #HistoricalMetrics;
 IF OBJECT_ID('tempdb..#OpenWorkSourceRows') IS NOT NULL DROP TABLE #OpenWorkSourceRows;
 
@@ -40,8 +50,28 @@ CREATE TABLE #DailyKpiMetrics (
     MetricValue decimal(19, 4) NULL
 );
 
+CREATE TABLE #ExpectedDailyKpiSources (
+    SourceName varchar(128) NOT NULL PRIMARY KEY
+);
+
+INSERT INTO #ExpectedDailyKpiSources (SourceName)
+VALUES
+    ('Total_SKUs_On_Hand'),
+    ('Total_Units_On_Hand'),
+    ('Total_Locations_Occupied'),
+    ('Orders_Putaway'),
+    ('Units_Putaway'),
+    ('Skus_Putaway'),
+    ('Presentations_Putaway'),
+    ('Distinct_bin_compartments_that_had_inventory'),
+    ('Distinct_bins_inventory_added'),
+    ('Customer_Orders_Picked'),
+    ('Customer_Order_Lines'),
+    ('Units_Picked'),
+    ('Distinct_Skus_Picked');
+
 INSERT INTO #DailyKpiMetrics (SourceName, [Date], MetricValue)
-SELECT 'Total_SKUs_On_Hand', CAST([Date] AS date), TRY_CONVERT(decimal(19, 4), [Totak SKUs On Hand]) FROM dbo.Total_SKUs_On_Hand
+SELECT 'Total_SKUs_On_Hand', CAST([Date] AS date), TRY_CONVERT(decimal(19, 4), [Total SKUs On Hand]) FROM dbo.Total_SKUs_On_Hand
 UNION ALL SELECT 'Total_Units_On_Hand', CAST([Date] AS date), TRY_CONVERT(decimal(19, 4), [Total Units On Hand]) FROM dbo.Total_Units_On_Hand
 UNION ALL SELECT 'Total_Locations_Occupied', CAST([Date] AS date), TRY_CONVERT(decimal(19, 4), [Total Locations Occupied]) FROM dbo.Total_Locations_Occupied
 UNION ALL SELECT 'Orders_Putaway', CAST([Date] AS date), TRY_CONVERT(decimal(19, 4), [Orders Putaway]) FROM dbo.Orders_Putaway
@@ -64,6 +94,23 @@ WITH Summary AS (
         COALESCE(SUM(CASE WHEN MetricValue IS NULL THEN 1 ELSE 0 END), 0) AS NullValues,
         COUNT(DISTINCT SourceName) AS SourceCount
     FROM #DailyKpiMetrics
+),
+Missing AS (
+    SELECT
+        COALESCE(
+            STUFF((
+                SELECT ', ' + e.SourceName
+                FROM #ExpectedDailyKpiSources e
+                WHERE NOT EXISTS (
+                    SELECT 1
+                    FROM #DailyKpiMetrics m
+                    WHERE m.SourceName = e.SourceName
+                )
+                ORDER BY e.SourceName
+                FOR XML PATH(''), TYPE
+            ).value('.', 'varchar(max)'), 1, 2, ''),
+            ''
+        ) AS MissingSources
 )
 INSERT INTO #PageSmoke
 SELECT
@@ -78,19 +125,46 @@ SELECT
         WHEN SourceCount < 13 THEN 'WARN'
         ELSE 'PASS'
     END,
-    CONCAT('Expected 13 KPI sources; found ', SourceCount, '. Recent window starts ', CONVERT(varchar(10), @RecentStart, 120), '.')
-FROM Summary;
+    CONCAT(
+        'Expected 13 KPI sources; found ', SourceCount,
+        CASE WHEN MissingSources <> '' THEN CONCAT('; missing sources: ', MissingSources) ELSE '' END,
+        '. Recent window starts ', CONVERT(varchar(10), @RecentStart, 120),
+        '.'
+    )
+FROM Summary
+CROSS JOIN Missing;
 
-WITH Summary AS (
+WITH PickRows AS (
+    SELECT
+        EventDate,
+        Users,
+        Ports,
+        CAST(
+            COALESCE(OrdersCompleted, 0)
+            + COALESCE(BinPresentationsCompleted, 0)
+            + COALESCE(LinesCompleted, 0)
+            + COALESCE(UnitsCompleted, 0)
+            + COALESCE(MachineWaitMinutes, 0)
+            + COALESCE(ActiveHandleMinutes, 0)
+            + COALESCE(TotalLoggedMinutes, 0)
+            + COALESCE(RateDenominatorHours, 0)
+            AS decimal(19, 4)
+        ) AS ProductivityActivityBasis
+    FROM dbo.v_ProductivityDailyUserPortWorkType_v2
+    WHERE WorkType = 'Pick'
+),
+Summary AS (
     SELECT
         COUNT_BIG(*) AS Rows,
+        COUNT_BIG(CASE WHEN ProductivityActivityBasis > 0 THEN 1 END) AS ActivityRows,
+        COUNT_BIG(CASE WHEN EventDate >= @RecentStart AND ProductivityActivityBasis > 0 THEN 1 END) AS RecentActivityRows,
         MIN(CAST(EventDate AS date)) AS MinDate,
         MAX(CAST(EventDate AS date)) AS MaxDate,
         COALESCE(SUM(CASE WHEN EventDate IS NULL OR NULLIF(Users, '') IS NULL OR NULLIF(Ports, '') IS NULL THEN 1 ELSE 0 END), 0) AS BadRows,
         COALESCE(SUM(CASE WHEN Users <> 'Unattributed' THEN 1 ELSE 0 END), 0) AS RowsWithUser,
-        COALESCE(SUM(CASE WHEN Ports <> 'Unattributed' THEN 1 ELSE 0 END), 0) AS RowsWithPort
-    FROM dbo.v_ProductivityDailyUserPortWorkType_v2
-    WHERE WorkType = 'Pick'
+        COALESCE(SUM(CASE WHEN Ports <> 'Unattributed' THEN 1 ELSE 0 END), 0) AS RowsWithPort,
+        COALESCE(SUM(CASE WHEN ProductivityActivityBasis <= 0 THEN 1 ELSE 0 END), 0) AS ZeroActivityRows
+    FROM PickRows
 )
 INSERT INTO #PageSmoke
 SELECT
@@ -99,12 +173,20 @@ SELECT
     Rows,
     MinDate,
     MaxDate,
-    BadRows,
+    BadRows + CASE WHEN RecentActivityRows = 0 THEN 1 ELSE 0 END,
     CASE
         WHEN Rows = 0 OR BadRows > 0 OR MaxDate < @RecentStart THEN 'FAIL'
+        WHEN RecentActivityRows = 0 THEN 'WARN'
         ELSE 'PASS'
     END,
-    CONCAT('Rows with named user: ', RowsWithUser, '; rows with named port: ', RowsWithPort, '.')
+    CONCAT(
+        'Rows with named user: ', RowsWithUser,
+        '; rows with named port: ', RowsWithPort,
+        '; activity rows: ', ActivityRows,
+        '; recent activity rows: ', RecentActivityRows,
+        '; zero-activity rows hidden by PBIX measures: ', ZeroActivityRows,
+        '.'
+    )
 FROM Summary;
 
 WITH Summary AS (
@@ -112,7 +194,16 @@ WITH Summary AS (
         COUNT_BIG(*) AS Rows,
         MIN([Date]) AS MinDate,
         MAX([Date]) AS MaxDate,
-        COALESCE(SUM(CASE WHEN [Date] IS NULL OR NULLIF([Hour], '') IS NULL OR NULLIF(Ports, '') IS NULL OR NULLIF(OrderCategory, '') IS NULL THEN 1 ELSE 0 END), 0) AS BadRows
+        COALESCE(SUM(CASE
+            WHEN [Date] IS NULL
+              OR NULLIF([Hour], '') IS NULL
+              OR NULLIF(Ports, '') IS NULL
+              OR NULLIF(OrderCategory, '') IS NULL
+              OR Ports = 'No Data'
+              OR OrderCategory IN ('NO VALUE', 'Unknown')
+                THEN 1
+            ELSE 0
+        END), 0) AS BadRows
     FROM dbo.Throughput
 )
 INSERT INTO #PageSmoke
@@ -168,12 +259,59 @@ SELECT
     CONCAT('Expected 4 historical sources; found ', SourceCount, '. History window starts ', CONVERT(varchar(10), @HistoryStart, 120), '.')
 FROM Summary;
 
-WITH Summary AS (
+WITH ExpectedInventoryMetrics AS (
+    SELECT MetricName
+    FROM (VALUES
+        ('Total Bin(s) w/ Inventory'),
+        ('Total Bin(s) w/ No Inventory'),
+        ('Total Bin(s)'),
+        ('% of Bin(s) w/ Inventory'),
+        ('% of Bin(s) w/ No Inventory'),
+        ('% of Total Bin(s)'),
+        ('Total Locations Occupied'),
+        ('Total Locations Empty'),
+        ('Total Locations'),
+        ('% Locations Occupied'),
+        ('% Locations Empty'),
+        ('Distinct SKUs Stocked'),
+        ('Units Stocked'),
+        ('% Units Stocked'),
+        ('Avg Units Stocked Per Location'),
+        ('Avg Units Stocked per Bin(s)'),
+        ('Avg Units Stocked per SKU'),
+        ('Avg Locations Stocked per SKU')
+    ) v(MetricName)
+),
+LabelMetricCounts AS (
     SELECT
-        COUNT_BIG(*) AS Rows,
-        COUNT(DISTINCT MetricName) AS MetricCount,
-        COALESCE(SUM(CASE WHEN NULLIF(CompartmentLabel, '') IS NULL OR NULLIF(MetricName, '') IS NULL OR NULLIF(MetricValue, '') IS NULL THEN 1 ELSE 0 END), 0) AS BadRows
+        CompartmentLabel,
+        MetricName,
+        COUNT_BIG(*) AS [RowCount]
     FROM dbo.InventoryAndLocationSummary
+    GROUP BY
+        CompartmentLabel,
+        MetricName
+),
+Summary AS (
+    SELECT
+        (SELECT COUNT_BIG(*) FROM dbo.InventoryAndLocationSummary) AS Rows,
+        (SELECT COUNT(DISTINCT MetricName) FROM dbo.InventoryAndLocationSummary) AS MetricCount,
+        (SELECT COUNT(DISTINCT CompartmentLabel) FROM dbo.InventoryAndLocationSummary) AS LabelCount,
+        (SELECT COALESCE(SUM(CASE WHEN NULLIF(CompartmentLabel, '') IS NULL OR NULLIF(MetricName, '') IS NULL OR NULLIF(MetricValue, '') IS NULL THEN 1 ELSE 0 END), 0) FROM dbo.InventoryAndLocationSummary) AS BadRows,
+        COALESCE(SUM(CASE WHEN counts.[RowCount] IS NULL THEN 1 ELSE 0 END), 0) AS MissingMetricInstances,
+        COALESCE(SUM(CASE WHEN counts.[RowCount] > 1 THEN counts.[RowCount] - 1 ELSE 0 END), 0) AS DuplicateMetricRows,
+        (
+            SELECT COUNT_BIG(*)
+            FROM dbo.InventoryAndLocationSummary report
+            LEFT JOIN ExpectedInventoryMetrics expected
+                ON expected.MetricName = report.MetricName
+            WHERE expected.MetricName IS NULL
+        ) AS UnexpectedMetricRows
+    FROM (SELECT DISTINCT CompartmentLabel FROM dbo.InventoryAndLocationSummary) labels
+    CROSS JOIN ExpectedInventoryMetrics expected
+    LEFT JOIN LabelMetricCounts counts
+        ON counts.CompartmentLabel = labels.CompartmentLabel
+       AND counts.MetricName = expected.MetricName
 )
 INSERT INTO #PageSmoke
 SELECT
@@ -182,18 +320,70 @@ SELECT
     Rows,
     NULL,
     NULL,
-    BadRows + CASE WHEN MetricCount < 5 THEN 1 ELSE 0 END,
+    BadRows + MissingMetricInstances + DuplicateMetricRows + UnexpectedMetricRows + CASE WHEN MetricCount <> 18 THEN 1 ELSE 0 END,
     CASE
-        WHEN Rows = 0 OR BadRows > 0 OR MetricCount < 5 THEN 'FAIL'
+        WHEN Rows = 0
+          OR BadRows > 0
+          OR MetricCount <> 18
+          OR MissingMetricInstances > 0
+          OR DuplicateMetricRows > 0
+          OR UnexpectedMetricRows > 0 THEN 'FAIL'
         ELSE 'PASS'
     END,
-    CONCAT('Distinct metric names: ', MetricCount, '.')
+    CONCAT('Labels: ', LabelCount, '; distinct metric names: ', MetricCount, '; missing metric instances: ', MissingMetricInstances, '; duplicate metric rows: ', DuplicateMetricRows, '; unexpected metric rows: ', UnexpectedMetricRows, '.')
 FROM Summary;
 
-WITH Summary AS (
+DECLARE @ConsolidationSourceRows bigint = NULL;
+DECLARE @ConsolidationSourceQuantity decimal(19, 4) = NULL;
+DECLARE @ConsolidationSourceSummary TABLE (
+    [Rows] bigint NULL,
+    QuantityValue decimal(19, 4) NULL
+);
+
+IF OBJECT_ID(N'KFX_AUTOSTORE.dbo.DefragDetailByUomCompartmentSizeView', N'V') IS NOT NULL
+BEGIN
+    INSERT INTO @ConsolidationSourceSummary ([Rows], QuantityValue)
+    EXEC sys.sp_executesql N'
+        SELECT
+            COUNT_BIG(*) AS [Rows],
+            SUM(COALESCE(TRY_CONVERT(decimal(19, 4), Quantity), 0)) AS QuantityValue
+        FROM KFX_AUTOSTORE.dbo.DefragDetailByUomCompartmentSizeView;';
+
     SELECT
-        COUNT_BIG(*) AS Rows,
-        COALESCE(SUM(CASE WHEN NULLIF(Sku, '') IS NULL OR NULLIF(CompartmentSizeName, '') IS NULL OR Quantity IS NULL OR TotalCompartments IS NULL THEN 1 ELSE 0 END), 0) AS BadRows,
+        @ConsolidationSourceRows = [Rows],
+        @ConsolidationSourceQuantity = QuantityValue
+    FROM @ConsolidationSourceSummary;
+END;
+
+;WITH Summary AS (
+    SELECT
+        COUNT_BIG(*) AS ReportRows,
+        COALESCE(SUM(CASE
+            WHEN NULLIF(Sku, '') IS NULL
+              OR NULLIF(CompartmentSizeName, '') IS NULL
+              OR Quantity IS NULL THEN 1 ELSE 0
+        END), 0) AS MissingDisplayRows,
+        COALESCE(SUM(CASE
+            WHEN TotalCompartments IS NULL
+              OR TotalUnrealizedCapacity IS NULL THEN 1 ELSE 0
+        END), 0) AS MissingOptionalMetricRows,
+        COALESCE(SUM(CASE
+            WHEN TRY_CONVERT(decimal(19, 4), Quantity) < 0
+              OR TRY_CONVERT(decimal(19, 4), TotalCompartments) < 0
+              OR TRY_CONVERT(decimal(19, 4), TotalUnrealizedCapacity) < 0 THEN 1 ELSE 0
+        END), 0) AS NegativeValueRows,
+        COALESCE(SUM(CASE
+            WHEN Quantity IS NOT NULL
+              AND TotalUnrealizedCapacity IS NOT NULL
+              AND TRY_CONVERT(decimal(19, 4), TotalUnrealizedCapacity) + TRY_CONVERT(decimal(19, 4), Quantity) <= 0 THEN 1 ELSE 0
+        END), 0) AS BadFragmentationDenominatorRows,
+        COALESCE(SUM(CASE
+            WHEN Quantity IS NOT NULL
+              AND TotalUnrealizedCapacity IS NOT NULL
+              AND NULLIF(TRY_CONVERT(decimal(19, 4), TotalUnrealizedCapacity) + TRY_CONVERT(decimal(19, 4), Quantity), 0) IS NOT NULL
+              AND TRY_CONVERT(decimal(19, 4), TotalUnrealizedCapacity)
+                    / NULLIF(TRY_CONVERT(decimal(19, 4), TotalUnrealizedCapacity) + TRY_CONVERT(decimal(19, 4), Quantity), 0) NOT BETWEEN 0 AND 1 THEN 1 ELSE 0
+        END), 0) AS BadFragmentationRows,
         COUNT(DISTINCT Sku) AS DistinctSkus,
         COUNT(DISTINCT CompartmentSizeName) AS DistinctCompartmentSizes
     FROM dbo.DefragDetailByUomCompartmentSize_Table
@@ -201,17 +391,36 @@ WITH Summary AS (
 INSERT INTO #PageSmoke
 SELECT
     'Consolidation Report',
-    'Consolidation detail has complete rows',
-    Rows,
+    'Consolidation detail has displayable rows',
+    ReportRows,
     NULL,
     NULL,
-    BadRows,
+    MissingDisplayRows + NegativeValueRows + BadFragmentationDenominatorRows + BadFragmentationRows
+        + CASE WHEN @ConsolidationSourceRows > 0 AND ReportRows = 0 THEN 1 ELSE 0 END,
     CASE
-        WHEN BadRows > 0 THEN 'FAIL'
-        WHEN Rows = 0 THEN 'WARN'
+        WHEN MissingDisplayRows > 0
+          OR NegativeValueRows > 0
+          OR BadFragmentationDenominatorRows > 0
+          OR BadFragmentationRows > 0 THEN 'FAIL'
+        WHEN @ConsolidationSourceRows > 0 AND ReportRows = 0 THEN 'FAIL'
+        WHEN @ConsolidationSourceRows IS NULL THEN 'WARN'
+        WHEN ReportRows = 0 THEN 'WARN'
+        WHEN MissingOptionalMetricRows > 0 THEN 'WARN'
         ELSE 'PASS'
     END,
-    CONCAT('Distinct SKUs: ', DistinctSkus, '; compartment sizes: ', DistinctCompartmentSizes, '. Zero rows can mean no current consolidation candidates.')
+    CONCAT(
+        'Source rows: ', COALESCE(CONVERT(varchar(30), @ConsolidationSourceRows), 'unavailable'),
+        '; report rows: ', ReportRows,
+        '; source quantity: ', COALESCE(CONVERT(varchar(30), @ConsolidationSourceQuantity), 'unavailable'),
+        '; distinct SKUs: ', DistinctSkus,
+        '; compartment sizes: ', DistinctCompartmentSizes,
+        '; missing display rows: ', MissingDisplayRows,
+        '; missing optional metric rows: ', MissingOptionalMetricRows,
+        '; negative value rows: ', NegativeValueRows,
+        '; bad fragmentation denominators: ', BadFragmentationDenominatorRows,
+        '; bad fragmentation rows: ', BadFragmentationRows,
+        '. Zero rows can mean no current consolidation candidates only when source rows are also zero.'
+    )
 FROM Summary;
 
 CREATE TABLE #OpenWorkSourceRows (
@@ -255,14 +464,15 @@ FROM Summary;
 
 WITH Counts AS (
     SELECT
-        (SELECT COUNT_BIG(*) FROM dbo.FulfillmentOrders WHERE LOWER(Status) IN ('allocated', 'allocating', 'active', 'batched', 'new', 'released', 'shorted')) AS OpenPickOrders,
+        (SELECT COUNT_BIG(*) FROM dbo.FulfillmentOrders WHERE LOWER(Status) IN ('allocated', 'allocating', 'active', 'batched', 'new', 'released', 'importing', 'failed allocation', 'falied allocation', 'shorted')) AS OpenPickOrders,
         (SELECT COUNT_BIG(*) FROM dbo.FulfillmentOrderLines WHERE LOWER(Status) IN ('active', 'allocated', 'allocating', 'new', 'pending')) AS OpenPickLines,
         (SELECT COUNT_BIG(*) FROM dbo.PutAwayContainers WHERE IsClosed = 0) AS OpenPutOrders,
         (SELECT COUNT_BIG(*)
          FROM dbo.PutAwayContainerLineItems li
          INNER JOIN dbo.PutAwayContainers c
              ON c.PrimaryKey = li.PutAwayContainerPrimaryKey
-         WHERE c.IsClosed = 0) AS OpenPutLines,
+         WHERE c.IsClosed = 0
+           AND COALESCE(li.ActualQuantity, 0) + COALESCE(li.MissingQuantity, 0) < COALESCE(li.Quantity, 0)) AS OpenPutLines,
         (SELECT COUNT_BIG(DISTINCT t.TaskGroupPrimaryKey)
          FROM dbo.InventoryTasks_CycleCount cc
          INNER JOIN dbo.InventoryTasks t

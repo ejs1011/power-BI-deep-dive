@@ -609,6 +609,16 @@ relationship 2a72e58c-4778-47cd-a19e-98e8fcede004
 	fromColumn: UnitsOfMeasure.CreatedDate
 	toColumn: LocalDateTable_d622567a-423d-43fc-9cb9-acb0a0d3e913.Date
 
+relationship e739a94d-9c7f-4c96-809e-59e8e4391781
+	joinOnDateBehavior: datePartOnly
+	fromColumn: UnitsOfMeasure.LastUpdatedDateInventory
+	toColumn: LocalDateTable_de61ab24-1869-4380-ad47-6a4a9cdfd643.Date
+
+relationship b096ef9c-5baa-4dbd-8f43-2706483d94b5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: UnitsOfMeasure.LastUpdatedDate
+	toColumn: LocalDateTable_34055458-690d-4c58-afd3-5bd3d3f051b7.Date
+
 relationship 6192b8ab-8840-4926-a29f-c98e991d1a44
 	joinOnDateBehavior: datePartOnly
 	fromColumn: ProductivityDailyUserPortWorkType_v2.EventDate
@@ -621,14 +631,4 @@ relationship a4225824-e2ea-4715-81e3-771f0167f31b
 relationship e14dfa3a-5834-471a-8400-4dfa56516973
 	fromColumn: ProductivityDailyUserPortWorkType_v2.Ports
 	toColumn: '// DistinctPortsTable'.Ports
-
-relationship e739a94d-9c7f-4c96-809e-59e8e4391781
-	joinOnDateBehavior: datePartOnly
-	fromColumn: UnitsOfMeasure.LastUpdatedDateInventory
-	toColumn: LocalDateTable_de61ab24-1869-4380-ad47-6a4a9cdfd643.Date
-
-relationship b096ef9c-5baa-4dbd-8f43-2706483d94b5
-	joinOnDateBehavior: datePartOnly
-	fromColumn: UnitsOfMeasure.LastUpdatedDate
-	toColumn: LocalDateTable_34055458-690d-4c58-afd3-5bd3d3f051b7.Date
 

@@ -61715,7 +61715,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Total Logged Time": {
+			          "Total Logged (min)": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -61871,7 +61871,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Average Handle Time/Presentation": {
+			          "Avg Handle (min/pres)": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -61997,7 +61997,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Orders Completed": {
+			          "Orders Completed (orders)": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -62123,7 +62123,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Bin Presentations Completed": {
+			          "Bin Presentations Completed (bins)": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -62249,7 +62249,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Lines Completed": {
+			          "Lines Completed (lines)": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -62275,7 +62275,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Units Completed": {
+			          "Units Completed (units)": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -62319,7 +62319,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Orders/HR": {
+			          "Orders/hr": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -62363,7 +62363,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Bins/HR": {
+			          "Bins/hr": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -62433,7 +62433,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Units/HR": {
+			          "Units/hr": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -62477,7 +62477,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Lines/HR": {
+			          "Lines/hr": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -62609,7 +62609,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Machine wait time": {
+			          "Machine Wait (min)": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -62705,7 +62705,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Total Logged Time": {
+			          "Total Logged (min)": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -62861,7 +62861,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Average Handle Time/Presentation": {
+			          "Avg Handle (min/pres)": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -62987,7 +62987,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Bin Presentations Completed": {
+			          "Bin Presentations Completed (bins)": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -63031,7 +63031,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Bins/HR": {
+			          "Bins/hr": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -63157,7 +63157,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Lines Completed": {
+			          "Lines Completed (lines)": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -63201,7 +63201,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Lines/HR": {
+			          "Lines/hr": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -63333,7 +63333,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Machine wait time": {
+			          "Machine Wait (min)": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -63459,7 +63459,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Orders Completed": {
+			          "Orders Completed (orders)": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -63503,7 +63503,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Orders/HR": {
+			          "Orders/hr": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -63529,7 +63529,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Units Completed": {
+			          "Units Completed (units)": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -63599,7 +63599,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Units/HR": {
+			          "Units/hr": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -76532,17 +76532,17 @@ cultureInfo en-US
 			      ],
 			      "SemanticType": "Time"
 			    },
-			    "total_SK_us_on_hand.totak_SKU_on_hand": {
+			    "total_SK_us_on_hand.total_SKUs_on_hand": {
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "Total_SKUs_On_Hand",
-			          "ConceptualProperty": "Totak SKUs On Hand"
+			          "ConceptualProperty": "Total SKUs On Hand"
 			        }
 			      },
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "totak SKU on hand": {
+			          "total SKUs on hand": {
 			            "State": "Generated"
 			          }
 			        }
@@ -86973,6 +86973,16 @@ cultureInfo en-US
 			            },
 			            "Weight": 0.491
 			          }
+			        },
+			        {
+			          "Compartment Size": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -88167,6 +88177,48 @@ cultureInfo en-US
 			              "Agent": "Thesaurus"
 			            },
 			            "Weight": 0.491
+			          }
+			        }
+			      ]
+			    },
+			    "a_measure.total_compartments": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "A Measure",
+			          "ConceptualProperty": "Total Compartments"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Total Compartments (count)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "a_measure.fragmentation": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "A Measure",
+			          "ConceptualProperty": "Fragmentation"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Fragmentation (%)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -103091,7 +103143,7 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "total_SK_us_on_hand_has_totak_SKU_on_hand": {
+			    "total_SK_us_on_hand_has_total_SKUs_on_hand": {
 			      "Binding": {
 			        "ConceptualEntity": "Total_SKUs_On_Hand"
 			      },
@@ -103102,9 +103154,9 @@ cultureInfo en-US
 			            "Entity": "total_SK_us_on_hand"
 			          }
 			        },
-			        "total_SK_us_on_hand.totak_SKU_on_hand": {
+			        "total_SK_us_on_hand.total_SKUs_on_hand": {
 			          "Target": {
-			            "Entity": "total_SK_us_on_hand.totak_SKU_on_hand"
+			            "Entity": "total_SK_us_on_hand.total_SKUs_on_hand"
 			          }
 			        }
 			      },
@@ -103115,12 +103167,12 @@ cultureInfo en-US
 			              "Role": "total_SK_us_on_hand"
 			            },
 			            "Object": {
-			              "Role": "total_SK_us_on_hand.totak_SKU_on_hand"
+			              "Role": "total_SK_us_on_hand.total_SKUs_on_hand"
 			            }
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "total_SK_us_on_hand_have_totak_SKU_on_hand"
+			          "ID": "total_SK_us_on_hand_have_total_SKUs_on_hand"
 			        }
 			      ]
 			    },

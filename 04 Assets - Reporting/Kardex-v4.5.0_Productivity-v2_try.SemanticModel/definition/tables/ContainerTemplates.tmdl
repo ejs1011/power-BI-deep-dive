@@ -229,7 +229,7 @@ table ContainerTemplates
 		mode: import
 		source =
 				let
-				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
 				    dbo_ContainerTemplates = Source{[Schema="dbo",Item="ContainerTemplates"]}[Data]
 				in
 				    dbo_ContainerTemplates

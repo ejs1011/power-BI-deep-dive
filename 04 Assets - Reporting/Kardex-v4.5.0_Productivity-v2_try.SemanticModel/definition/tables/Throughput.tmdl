@@ -97,7 +97,7 @@ table Throughput
 		mode: import
 		source =
 				let
-				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
 				    dbo_Throughput = Source{[Schema="dbo",Item="Throughput"]}[Data],
 				    #"Duplicated Column" = Table.DuplicateColumn(dbo_Throughput, "Hour", "Hour - Copy"),
 				    #"Renamed Columns" = Table.RenameColumns(#"Duplicated Column",{{"Hour - Copy", "InterimHour"}}),

@@ -73,7 +73,7 @@ table InventoryTasks_PutAway
 		mode: import
 		source =
 				let
-				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
 				    dbo_InventoryTasks_PutAway = Source{[Schema="dbo",Item="InventoryTasks_PutAway"]}[Data]
 				in
 				    dbo_InventoryTasks_PutAway

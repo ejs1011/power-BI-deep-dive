@@ -203,7 +203,7 @@ table PutAway
 		mode: import
 		source =
 				let
-				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
 				    dbo_PutAway = Source{[Schema="dbo",Item="PutAway"]}[Data],
 				    #"Added Custom" = Table.AddColumn(dbo_PutAway, "Date", each DateTime.Date([LastUpdatedDate])),
 				    #"Changed Type" = Table.TransformColumnTypes(#"Added Custom",{{"Date", type date}})

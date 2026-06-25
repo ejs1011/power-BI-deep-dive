@@ -22,7 +22,7 @@ table OrdersCompletedPerUser
 		mode: import
 		source =
 				let
-				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
 				    dbo_OrdersCompletedPerUser = Source{[Schema="dbo",Item="OrdersCompletedPerUser"]}[Data]
 				in
 				    dbo_OrdersCompletedPerUser

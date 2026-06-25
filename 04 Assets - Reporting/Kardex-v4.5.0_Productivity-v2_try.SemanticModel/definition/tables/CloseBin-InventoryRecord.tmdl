@@ -129,7 +129,7 @@ table CloseBin-InventoryRecord
 		mode: import
 		source =
 				let
-				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
 				    #"dbo_CloseBin-InventoryRecord" = Source{[Schema="dbo",Item="CloseBin-InventoryRecord"]}[Data],
 				    #"Inserted Text Before Delimiter" = Table.AddColumn(#"dbo_CloseBin-InventoryRecord", "Text Before Delimiter", each Text.BeforeDelimiter(Text.From([TimeStamp], "en-IN"), " "), type text),
 				    #"Renamed Columns" = Table.RenameColumns(#"Inserted Text Before Delimiter",{{"Text Before Delimiter", "Date"}}),

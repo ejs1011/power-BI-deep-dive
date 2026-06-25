@@ -23,7 +23,7 @@ table AverageHandlingTimePerUser
 		mode: import
 		source =
 				let
-				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
 				    dbo_AverageHandlingTimePerUser = Source{[Schema="dbo",Item="AverageHandlingTimePerUser"]}[Data]
 				in
 				    dbo_AverageHandlingTimePerUser

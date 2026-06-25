@@ -23,7 +23,7 @@ table OrdersPerHourPerUser
 		mode: import
 		source =
 				let
-				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
 				    dbo_OrdersPerHourPerUser = Source{[Schema="dbo",Item="OrdersPerHourPerUser"]}[Data]
 				in
 				    dbo_OrdersPerHourPerUser

@@ -25,7 +25,7 @@ table Total_Units_On_Hand
 		mode: import
 		source =
 				let
-				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
 				    dbo_Total_Units_On_Hand = Source{[Schema="dbo",Item="Total_Units_On_Hand"]}[Data]
 				in
 				    dbo_Total_Units_On_Hand

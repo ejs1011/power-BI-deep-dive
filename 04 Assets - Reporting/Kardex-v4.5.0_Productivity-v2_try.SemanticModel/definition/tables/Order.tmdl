@@ -224,7 +224,7 @@ table Order
 		mode: import
 		source =
 				let
-				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
 				    dbo_Order = Source{[Schema="dbo",Item="Order"]}[Data],
 				    #"Added Custom" = Table.AddColumn(dbo_Order, "Date", each DateTime.Date([CompletedDate])),
 				    #"Changed Type" = Table.TransformColumnTypes(#"Added Custom",{{"Date", type date}}),

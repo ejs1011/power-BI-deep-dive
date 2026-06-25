@@ -30,7 +30,7 @@ table BinPresentedHD
 		mode: import
 		source =
 				let
-				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
 				    dbo_BinPresentedHD = Source{[Schema="dbo",Item="BinPresentedHD"]}[Data]
 				in
 				    dbo_BinPresentedHD

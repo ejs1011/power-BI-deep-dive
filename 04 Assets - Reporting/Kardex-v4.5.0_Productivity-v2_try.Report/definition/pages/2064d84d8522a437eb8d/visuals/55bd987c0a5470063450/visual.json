@@ -299,7 +299,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Pick Bin Presentations - Trailing 30 Days'"
+                  "Value": "'Bin Presentations Completed - Trailing 30 Days'"
                 }
               }
             },

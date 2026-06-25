@@ -25,7 +25,7 @@ table Total_Locations_Occupied
 		mode: import
 		source =
 				let
-				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
 				    dbo_Total_Locations_Occupied = Source{[Schema="dbo",Item="Total_Locations_Occupied"]}[Data]
 				in
 				    dbo_Total_Locations_Occupied

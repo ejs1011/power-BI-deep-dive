@@ -1,6 +1,15 @@
 USE [KFX_REPORTING];
 GO
 
+SET ANSI_NULLS ON;
+SET QUOTED_IDENTIFIER ON;
+SET ANSI_PADDING ON;
+SET ANSI_WARNINGS ON;
+SET ARITHABORT ON;
+SET CONCAT_NULL_YIELDS_NULL ON;
+SET NUMERIC_ROUNDABORT OFF;
+GO
+
 SET NOCOUNT ON;
 
 /*
@@ -193,7 +202,7 @@ FROM (
     FULL OUTER JOIN #ThroughputActual a ON a.[Date] = e.[Date]
     UNION ALL
     SELECT
-        'Throughput has no null report fields',
+        'Throughput has no blank or raw placeholder report fields',
         CAST(COUNT_BIG(*) AS decimal(19, 3)),
         COUNT_BIG(*)
     FROM dbo.Throughput
@@ -201,6 +210,8 @@ FROM (
        OR NULLIF([Hour], '') IS NULL
        OR NULLIF(Ports, '') IS NULL
        OR NULLIF(OrderCategory, '') IS NULL
+       OR Ports = 'No Data'
+       OR OrderCategory IN ('NO VALUE', 'Unknown')
 ) Checks;
 
 SELECT
@@ -218,6 +229,24 @@ FROM #ScoredChecks
 ORDER BY
     CASE WHEN Status = 'FAIL' THEN 0 ELSE 1 END,
     CheckName;
+
+SELECT TOP (50)
+    'Throughput placeholder rows' AS DiagnosticName,
+    [Date],
+    [Hour],
+    Ports,
+    OrderCategory,
+    OrdersCompleted,
+    LinesCompleted,
+    BinPresentationsCompleted
+FROM dbo.Throughput
+WHERE [Date] IS NULL
+   OR NULLIF([Hour], '') IS NULL
+   OR NULLIF(Ports, '') IS NULL
+   OR NULLIF(OrderCategory, '') IS NULL
+   OR Ports = 'No Data'
+   OR OrderCategory IN ('NO VALUE', 'Unknown')
+ORDER BY [Date], [Hour], Ports, OrderCategory;
 
 SELECT
     'Expected productivity daily grain' AS SourceName,

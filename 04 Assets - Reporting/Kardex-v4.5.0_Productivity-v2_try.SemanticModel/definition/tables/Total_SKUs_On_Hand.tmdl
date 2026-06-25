@@ -12,12 +12,12 @@ table Total_SKUs_On_Hand
 
 		annotation UnderlyingDateTimeDataType = Date
 
-	column 'Totak SKUs On Hand'
+	column 'Total SKUs On Hand'
 		dataType: int64
 		formatString: 0
 		lineageTag: c9d2ca95-e335-4195-a6f0-0a08baf2478a
 		summarizeBy: sum
-		sourceColumn: Totak SKUs On Hand
+		sourceColumn: Total SKUs On Hand
 
 		annotation SummarizationSetBy = Automatic
 
@@ -25,7 +25,7 @@ table Total_SKUs_On_Hand
 		mode: import
 		source =
 				let
-				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
 				    dbo_Total_SKUs_On_Hand = Source{[Schema="dbo",Item="Total_SKUs_On_Hand"]}[Data]
 				in
 				    dbo_Total_SKUs_On_Hand

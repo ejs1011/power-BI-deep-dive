@@ -1108,6 +1108,7 @@ table 'A Measure'
 			) + 0
 			```
 		formatString: 0
+		isHidden
 		lineageTag: bf644783-a340-4785-8d20-2f0faed4c2a7
 
 	measure 'test Customer Orders Picked' = ```
@@ -1122,6 +1123,7 @@ table 'A Measure'
 			        )+0
 			```
 		formatString: 0
+		isHidden
 		lineageTag: 577def71-cfc2-4b5b-acb6-14cf9e02acf9
 
 	measure 'test Customer Order Lines' = ```
@@ -1140,6 +1142,7 @@ table 'A Measure'
 			
 			```
 		formatString: 0
+		isHidden
 		lineageTag: b7610eec-f5c8-473c-a44c-ad2767c0b20e
 
 	measure 'FulfillmentOrderLinesCount (Lines)' = ```
@@ -1159,6 +1162,7 @@ table 'A Measure'
 			
 			CALCULATE(
 			    COUNTROWS(PutAwayContainerLineItems),
+			    PutAwayContainers[IsClosed] = FALSE(),
 			    FILTER(
 			        PutAwayContainerLineItems,
 			        PutAwayContainerLineItems[ActualQuantity] + PutAwayContainerLineItems[MissingQuantity] < PutAwayContainerLineItems[Quantity]
@@ -1173,7 +1177,7 @@ table 'A Measure'
 			
 			CALCULATE(
 			    COUNTROWS(FulfillmentOrders),
-			    FulfillmentOrders[status] IN {
+			    FulfillmentOrders[Status] IN {
 			        "allocated", 
 			        "allocating", 
 			        "active", 
@@ -1181,7 +1185,9 @@ table 'A Measure'
 			        "new", 
 			        "released", 
 			        "importing", 
-			        "falied allocation"
+			        "failed allocation",
+			        "falied allocation",
+			        "shorted"
 			    }
 			)+0
 			
@@ -1264,18 +1270,17 @@ table 'A Measure'
 			
 			```
 		formatString: 0
+		isHidden
 		lineageTag: 811c4b0d-9f9c-4abc-9aa3-8e0e16602560
 
 	measure 'DistinctTaskGroupCount (Orders)' = ```
 			
 			
-			VAR JoinedTable = CALCULATE( DISTINCTCOUNT('InventoryTasks (2)'[TaskGroupPrimaryKey]),
-			    FILTER(
-			        CROSSJOIN( InventoryTasks_CycleCount, 'InventoryTasks (2)'),
-			        InventoryTasks_CycleCount[InventoryTaskPrimaryKey] = 'InventoryTasks (2)'[PrimaryKey] &&
-			        'InventoryTasks (2)'[IsClosed] = FALSE() &&
-			        DATEVALUE( InventoryTasks_CycleCount[LastUpdatedDate] ) = DATEVALUE( 'InventoryTasks (2)'[LastUpdatedDate] )
-			    ))
+			VAR JoinedTable =
+			    CALCULATE(
+			        DISTINCTCOUNT('InventoryTasks (2)'[TaskGroupPrimaryKey]),
+			        'InventoryTasks (2)'[IsClosed] = FALSE()
+			    )
 			RETURN
 			     JoinedTable  +0
 			
@@ -1320,15 +1325,10 @@ table 'A Measure'
 			
 			
 			
-			VAR JoinedTable =
-			    FILTER(
-			        CROSSJOIN( InventoryTasks_CycleCount, 'InventoryTasks (2)' ),
-			        InventoryTasks_CycleCount[InventoryTaskPrimaryKey] = 'InventoryTasks (2)'[PrimaryKey] &&
-			        'InventoryTasks (2)'[IsClosed] = FALSE() &&
-			        DATEVALUE( InventoryTasks_CycleCount[LastUpdatedDate] ) = DATEVALUE( 'InventoryTasks (2)'[LastUpdatedDate] )
-			    )
-			RETURN
-			    COUNTROWS( JoinedTable )+0
+			CALCULATE(
+			    COUNTROWS(InventoryTasks_CycleCount),
+			    'InventoryTasks (2)'[IsClosed] = FALSE()
+			)+0
 			
 			
 			
@@ -1342,15 +1342,20 @@ table 'A Measure'
 
 	measure Fragmentation =
 			
-			DIVIDE(
-			    SUM('DefragDetailByUomCompartmentSize_Table'[TotalUnrealizedCapacity]),
-			    SUM('DefragDetailByUomCompartmentSize_Table'[TotalUnrealizedCapacity]) + SUM('DefragDetailByUomCompartmentSize_Table'[Quantity]),
-			    0
-			)+0
-		formatString: 0.000
+			VAR UnrealizedCapacity =
+			    SUM('DefragDetailByUomCompartmentSize_Table'[TotalUnrealizedCapacity])
+			VAR Quantity =
+			    SUM('DefragDetailByUomCompartmentSize_Table'[Quantity])
+			RETURN
+			    IF(
+			        ISBLANK(UnrealizedCapacity),
+			        BLANK(),
+			        DIVIDE(UnrealizedCapacity, UnrealizedCapacity + Quantity)
+			    )
+		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: b3140ac1-046d-491d-9e15-e1f2ae46c095
 
-	measure 'Total Compartments' = SUM(DefragDetailByUomCompartmentSize_Table[TotalCompartments])+0
+	measure 'Total Compartments' = SUM(DefragDetailByUomCompartmentSize_Table[TotalCompartments])
 		formatString: 0
 		lineageTag: de4c7269-d9a0-43fb-b8ce-03ca8015f021
 

@@ -22,7 +22,7 @@ table LinesCompletedPerUser
 		mode: import
 		source =
 				let
-				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
 				    dbo_LinesCompletedPerUser = Source{[Schema="dbo",Item="LinesCompletedPerUser"]}[Data]
 				in
 				    dbo_LinesCompletedPerUser

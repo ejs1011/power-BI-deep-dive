@@ -155,7 +155,6 @@ ref table UnitsCompletedPerPort
 ref table UnitsCompletedPerUser
 ref table UnitsPerHourPerPort
 ref table UnitsPerHourPerUser
-ref table ProductivityDailyUserPortWorkType_v2
 ref table DefragDetailByUomCompartmentSize_Table
 ref table LocalDateTable_dbe631d6-0ace-45b5-917c-0f9d6341f820
 ref table UnitOfMeasureConversions
@@ -164,6 +163,7 @@ ref table UnitsOfMeasure
 ref table LocalDateTable_d622567a-423d-43fc-9cb9-acb0a0d3e913
 ref table LocalDateTable_de61ab24-1869-4380-ad47-6a4a9cdfd643
 ref table LocalDateTable_34055458-690d-4c58-afd3-5bd3d3f051b7
+ref table ProductivityDailyUserPortWorkType_v2
 
 ref cultureInfo en-US
 

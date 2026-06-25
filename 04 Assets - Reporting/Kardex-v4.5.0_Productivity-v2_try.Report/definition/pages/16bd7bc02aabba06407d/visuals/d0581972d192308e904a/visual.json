@@ -358,7 +358,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Metrics Per Hour by Category'"
+                  "Value": "'Hourly Throughput by Order Category'"
                 }
               }
             }

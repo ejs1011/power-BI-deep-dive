@@ -22,7 +22,7 @@ table BinPresentationsCompletedPerPort
 		mode: import
 		source =
 				let
-				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
 				    dbo_BinPresentationsCompletedPerPort = Source{[Schema="dbo",Item="BinPresentationsCompletedPerPort"]}[Data]
 				in
 				    dbo_BinPresentationsCompletedPerPort

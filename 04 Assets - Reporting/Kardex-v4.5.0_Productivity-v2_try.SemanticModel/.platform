@@ -1,11 +1,11 @@
 {
-    "$schema":  "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
-    "metadata":  {
-                     "type":  "SemanticModel",
-                     "displayName":  "Kardex Productivity v2 Try SemanticModel"
-                 },
-    "config":  {
-                   "version":  "2.0",
-                   "logicalId":  "e8c2db48-9d14-4b24-b8f1-76ae286b5d4d"
-               }
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Kardex Productivity v2 Try SemanticModel"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "e8c2db48-9d14-4b24-b8f1-76ae286b5d4d"
+  }
 }

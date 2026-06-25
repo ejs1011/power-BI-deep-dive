@@ -54,7 +54,7 @@ table _MeasureGroups
 				        {"Inbound", "Units Put Away", 5, 2},
 				        {"Inbound", "SKUs Put Away", 6, 2},
 				        {"Inbound", "Bin Presentations Put Away", 7, 2},
-				        {"Inbound", "Distinct Bins With Inventory Added", 8, 2},
+				        {"Inbound", "Distinct Bins With Inventory", 8, 2},
 				        {"Inbound", "Distinct Bin Compartments With Inventory", 9, 2},
 				        {"Picking", "Customer Orders Picked", 10, 3},
 				        {"Picking", "Customer Order Lines", 11, 3},

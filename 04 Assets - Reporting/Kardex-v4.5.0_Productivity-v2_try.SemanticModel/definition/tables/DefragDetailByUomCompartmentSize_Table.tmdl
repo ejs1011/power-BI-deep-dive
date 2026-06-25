@@ -123,7 +123,7 @@ table DefragDetailByUomCompartmentSize_Table
 		mode: import
 		source =
 				let
-				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
 				    dbo_DefragDetailByUomCompartmentSize_Table = Source{[Schema="dbo",Item="DefragDetailByUomCompartmentSize_Table"]}[Data]
 				in
 				    dbo_DefragDetailByUomCompartmentSize_Table

@@ -201,7 +201,7 @@
             "logAxisScale": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },
@@ -940,7 +940,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Outstanding Lines Over Time'"
+                  "Value": "'Open Work Over Time'"
                 }
               }
             },

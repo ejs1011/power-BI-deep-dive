@@ -25,7 +25,7 @@ table Distinct_bin_compartments_that_had_inventory
 		mode: import
 		source =
 				let
-				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
 				    dbo_Distinct_bin_compartments_that_had_inventory = Source{[Schema="dbo",Item="Distinct_bin_compartments_that_had_inventory"]}[Data]
 				in
 				    dbo_Distinct_bin_compartments_that_had_inventory

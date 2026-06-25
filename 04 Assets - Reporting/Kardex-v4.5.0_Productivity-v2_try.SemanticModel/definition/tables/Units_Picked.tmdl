@@ -25,7 +25,7 @@ table Units_Picked
 		mode: import
 		source =
 				let
-				    Source = Sql.Database("vm-as-dbsql0011", "KFX_REPORTING"),
+				    Source = Sql.Database("10.0.26.70", "KFX_REPORTING"),
 				    dbo_Units_Picked = Source{[Schema="dbo",Item="Units_Picked"]}[Data]
 				in
 				    dbo_Units_Picked

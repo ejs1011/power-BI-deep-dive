@@ -31,6 +31,21 @@
             },
             {
               "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DefragDetailByUomCompartmentSize_Table"
+                    }
+                  },
+                  "Property": "CompartmentSizeName"
+                }
+              },
+              "queryRef": "DefragDetailByUomCompartmentSize_Table.CompartmentSizeName",
+              "nativeQueryRef": "CompartmentSizeName",
+              "displayName": "Compartment Size"
+            },
+            {
+              "field": {
                 "Aggregation": {
                   "Expression": {
                     "Column": {
@@ -47,7 +62,7 @@
               },
               "queryRef": "Sum(DefragDetailByUomCompartmentSize_Table.Quantity)",
               "nativeQueryRef": "Quantity",
-              "displayName": "Quantity"
+              "displayName": "Quantity (units)"
             },
             {
               "field": {
@@ -61,7 +76,8 @@
                 }
               },
               "queryRef": "A Measure.Total Compartments",
-              "nativeQueryRef": "Total Compartments"
+              "nativeQueryRef": "Total Compartments",
+              "displayName": "Total Compartments (count)"
             },
             {
               "field": {
@@ -75,7 +91,8 @@
                 }
               },
               "queryRef": "A Measure.Fragmentation",
-              "nativeQueryRef": "Fragmentation"
+              "nativeQueryRef": "Fragmentation",
+              "displayName": "Fragmentation (%)"
             }
           ]
         }
@@ -243,7 +260,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "525.2861655017498D"
+                  "Value": "420D"
                 }
               }
             }
@@ -257,7 +274,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "514.4675343639826D"
+                  "Value": "420D"
                 }
               }
             }
@@ -271,7 +288,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "526.1979357804687D"
+                  "Value": "420D"
                 }
               }
             }
@@ -285,13 +302,27 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "712.830325157739D"
+                  "Value": "550D"
                 }
               }
             }
           },
           "selector": {
             "metadata": "DefragDetailByUomCompartmentSize_Table.Sku"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "430D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "DefragDetailByUomCompartmentSize_Table.CompartmentSizeName"
           }
         }
       ]
@@ -310,7 +341,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Consolidation Report\t\t\t\t\t'"
+                  "Value": "'Consolidation Report'"
                 }
               }
             },
