@@ -15,8 +15,8 @@ param(
 $ErrorActionPreference = "Stop"
 
 $assetsRoot = Join-Path $PSScriptRoot "04 Assets - Reporting"
-$pbipPath = Join-Path $assetsRoot "Kardex-v4.5.0_Productivity-v2_try.pbip"
-$savedPbixPath = Join-Path $assetsRoot "Kardex-v4.5.0_Supervisor-Rework.pbix"
+$pbipPath = Join-Path $assetsRoot "Kardex PowerBI 2.0 Beta.pbip"
+$savedPbixPath = Join-Path $assetsRoot "Kardex PowerBI 2.0 Beta.pbix"
 $staticValidatorPath = Join-Path $PSScriptRoot "validate-reporting-pbip-static.ps1"
 
 $patchScripts = @(

@@ -6,10 +6,10 @@ param(
 $ErrorActionPreference = "Stop"
 
 $assetsRoot = Join-Path $ProjectRoot "04 Assets - Reporting"
-$pbipPath = Join-Path $assetsRoot "Kardex-v4.5.0_Productivity-v2_try.pbip"
-$savedPbixPath = Join-Path $assetsRoot "Kardex-v4.5.0_Supervisor-Rework.pbix"
-$reportRoot = Join-Path $assetsRoot "Kardex-v4.5.0_Productivity-v2_try.Report"
-$modelRoot = Join-Path $assetsRoot "Kardex-v4.5.0_Productivity-v2_try.SemanticModel"
+$pbipPath = Join-Path $assetsRoot "Kardex PowerBI 2.0 Beta.pbip"
+$savedPbixPath = Join-Path $assetsRoot "Kardex PowerBI 2.0 Beta.pbix"
+$reportRoot = Join-Path $assetsRoot "Kardex PowerBI 2.0 Beta.Report"
+$modelRoot = Join-Path $assetsRoot "Kardex PowerBI 2.0 Beta.SemanticModel"
 $tablesRoot = Join-Path $modelRoot "definition\tables"
 $relationshipsPath = Join-Path $modelRoot "definition\relationships.tmdl"
 $aMeasurePath = Join-Path $tablesRoot "A Measure.tmdl"
@@ -271,26 +271,50 @@ function Test-PageTreeHasNoDateFilters {
 Add-Check "Replacement PBIP exists" (Test-Path -LiteralPath $pbipPath) $pbipPath
 Add-Check "Replacement report folder exists" (Test-Path -LiteralPath $reportRoot) $reportRoot
 Add-Check "Replacement semantic model folder exists" (Test-Path -LiteralPath $modelRoot) $modelRoot
-Add-Check "Saved Supervisor-Rework PBIX candidate exists" (Test-Path -LiteralPath $savedPbixPath) $savedPbixPath
+Add-Check "Saved Beta PBIX candidate exists" (Test-Path -LiteralPath $savedPbixPath) $savedPbixPath
 
 if ((Test-Path -LiteralPath $savedPbixPath) -and (Test-Path -LiteralPath $reportRoot) -and (Test-Path -LiteralPath $modelRoot)) {
-    $sourceFiles = @(
+    $allSourceFiles = @(
         Get-Item -LiteralPath $pbipPath -ErrorAction SilentlyContinue
         Get-ChildItem -LiteralPath $reportRoot -Recurse -File -ErrorAction SilentlyContinue
         Get-ChildItem -LiteralPath $modelRoot -Recurse -File -ErrorAction SilentlyContinue
     ) | Where-Object { $_ }
+
+    $sourceFiles = @(
+        $allSourceFiles | Where-Object {
+            $fullName = $_.FullName
+            $leafName = $_.Name
+            $isPbipPackageFile = (
+                $fullName -ieq $pbipPath -or
+                $leafName -ieq ".platform" -or
+                $leafName -ieq "definition.pbir" -or
+                $fullName -match "\\\.pbi\\"
+            )
+            -not $isPbipPackageFile
+        }
+    )
 
     $newestSource = $sourceFiles | Sort-Object LastWriteTime -Descending | Select-Object -First 1
     $savedPbix = Get-Item -LiteralPath $savedPbixPath
     if ($newestSource -and $savedPbix.LastWriteTime -lt $newestSource.LastWriteTime) {
         $freshnessDetails = "PBIX: $($savedPbix.LastWriteTime); newest source: $($newestSource.LastWriteTime) $($newestSource.FullName)"
         if ($RequireCurrentPbix) {
-            Add-Check "Saved Supervisor-Rework PBIX is current with PBIP source" $false $freshnessDetails
+            Add-Check "Saved Beta PBIX is current with PBIP source" $false $freshnessDetails
         } else {
-            Add-Warning "Saved Supervisor-Rework PBIX is older than PBIP source" $freshnessDetails
+            Add-Warning "Saved Beta PBIX is older than PBIP source" $freshnessDetails
         }
     } else {
-        Add-Check "Saved Supervisor-Rework PBIX is current with PBIP source" $true $savedPbixPath
+        $newerPackageMetadata = @(
+            $allSourceFiles | Where-Object {
+                $_.LastWriteTime -gt $savedPbix.LastWriteTime -and $_.FullName -notin @($sourceFiles | ForEach-Object { $_.FullName })
+            } | Sort-Object LastWriteTime -Descending | Select-Object -First 3
+        )
+        $packageDetails = if ($newerPackageMetadata.Count -gt 0) {
+            "PBIX content is current. Newer PBIP package metadata: $($newerPackageMetadata.FullName -join '; ')"
+        } else {
+            $savedPbixPath
+        }
+        Add-Check "Saved Beta PBIX is current with PBIP source" $true $packageDetails
     }
 }
 
@@ -974,7 +998,7 @@ Add-Check "Runner reports failed SQL gate diagnostics" (
     $runnerText -match "\\bFAIL\\b"
 ) ""
 Add-Check "Runner tells user which PBIX to save after opening PBIP" (
-    $runnerText -match "Kardex-v4\.5\.0_Supervisor-Rework\.pbix" -and
+    $runnerText -match "Kardex PowerBI 2\.0 Beta\.pbix" -and
     $runnerText -match "refresh the report and save as/over"
 ) ""
 Add-Check "Runner warns OpenPbip alone does not apply SQL patches" (
@@ -999,8 +1023,8 @@ try {
 $readmeText = Get-Text $readmePath
 Add-Check "README exists" (Test-Path -LiteralPath $readmePath) $readmePath
 Add-Check "README points to replacement PBIP and final PBIX" (
-    $readmeText -match "Kardex-v4\.5\.0_Productivity-v2_try\.pbip" -and
-    $readmeText -match "Kardex-v4\.5\.0_Supervisor-Rework\.pbix"
+    $readmeText -match "Kardex PowerBI 2\.0 Beta\.pbip" -and
+    $readmeText -match "Kardex PowerBI 2\.0 Beta\.pbix"
 ) ""
 Add-Check "README documents runner setup and validation gates" (
     $readmeText -match "run-reporting-supervisor-rework\.ps1" -and

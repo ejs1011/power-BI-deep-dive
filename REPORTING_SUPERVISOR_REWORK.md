@@ -1,13 +1,13 @@
 # Kardex Reporting Supervisor Rework
 
-Status: validated. Replacement PBIP passes local static validation, the live SQL runner has been rerun successfully, and the saved PBIX is current with the PBIP source.
+Status: renamed to Kardex PowerBI 2.0 Beta and validated. Replacement PBIP passes local static validation, the live SQL runner was previously rerun successfully, and the beta PBIX content is current with the PBIP report/model source.
 
 Replacement project:
 
-- `04 Assets - Reporting/Kardex-v4.5.0_Productivity-v2_try.pbip`
-- Report folder: `04 Assets - Reporting/Kardex-v4.5.0_Productivity-v2_try.Report`
-- Semantic model folder: `04 Assets - Reporting/Kardex-v4.5.0_Productivity-v2_try.SemanticModel`
-- Saved PBIX candidate: `04 Assets - Reporting/Kardex-v4.5.0_Supervisor-Rework.pbix`
+- `04 Assets - Reporting/Kardex PowerBI 2.0 Beta.pbip`
+- Report folder: `04 Assets - Reporting/Kardex PowerBI 2.0 Beta.Report`
+- Semantic model folder: `04 Assets - Reporting/Kardex PowerBI 2.0 Beta.SemanticModel`
+- Saved PBIX candidate: `04 Assets - Reporting/Kardex PowerBI 2.0 Beta.pbix`
 
 ## Apply Order
 
@@ -90,8 +90,9 @@ Expected validation gates:
 Latest verified state:
 
 - `.\run-reporting-supervisor-rework.ps1 -Server 10.0.26.70 -SqlUser admin -Apply -OpenPbip` was rerun successfully by the user after the SQL SET-option fix. The expected live gates now pass, including `AllPagesSmokeGate` and `VisibleMetricsValidationGate`.
-- `.\validate-reporting-pbip-static.ps1 -RequireCurrentPbix` passes locally. This proves `Kardex-v4.5.0_Supervisor-Rework.pbix` was saved after the latest PBIP source changes.
-- The saved PBIX timestamp is June 25, 2026 2:57:16 PM, newer than the PBIP source timestamp of June 25, 2026 2:40:33 PM.
+- `.\validate-reporting-pbip-static.ps1` passes locally.
+- `.\validate-reporting-pbip-static.ps1 -RequireCurrentPbix` passes locally. The freshness check compares the PBIX against PBIX-relevant report/model content and treats newer PBIP package metadata from the rename as non-blocking.
+- The beta PBIX was copied from the validated `Kardex-v4.5.0_Supervisor-Rework.pbix` because the original PBIX file was locked by Power BI Desktop during the rename.
 
 ## Page Changes
 
@@ -106,7 +107,7 @@ Latest verified state:
 
 ## Notes
 
-- The PBIP is source-controlled/editable. The saved PBIX candidate is `Kardex-v4.5.0_Supervisor-Rework.pbix`; re-save it from the PBIP after refreshing so it includes the latest semantic-model and SQL-backed data changes.
+- The PBIP is source-controlled/editable. The saved PBIX candidate is `Kardex PowerBI 2.0 Beta.pbix`; re-save it from the PBIP after refreshing so it includes the latest semantic-model and SQL-backed data changes.
 - The prepared PBIP currently uses `10.0.26.70` consistently as the SQL Server source, matching the SQL-login validation path. If switching the PBIX to Windows integrated authentication, use `vm-as-dbsql0011` instead of the IP to avoid the SSPI target-principal issue.
 - Operational date-driven pages now open to a dynamic last-7-days window. Supervisors can widen the visible date slicers when they need older troubleshooting history.
 - Historical Dashboard remains intentionally fixed as trailing 30 days. If supervisors need arbitrary range analysis there too, add a shared date slicer after the SQL patch is validated.

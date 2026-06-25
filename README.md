@@ -4,8 +4,8 @@ This repo contains the Kardex reporting database scripts, a repaired Power BI pr
 
 Use the replacement PBIP, not the original PBIX:
 
-- Power BI project: `04 Assets - Reporting/Kardex-v4.5.0_Productivity-v2_try.pbip`
-- Final PBIX to save/use: `04 Assets - Reporting/Kardex-v4.5.0_Supervisor-Rework.pbix`
+- Power BI project: `04 Assets - Reporting/Kardex PowerBI 2.0 Beta.pbip`
+- Final PBIX to save/use: `04 Assets - Reporting/Kardex PowerBI 2.0 Beta.pbix`
 - SQL database: `KFX_REPORTING`
 - Current tested SQL server source: `10.0.26.70`
 
@@ -43,7 +43,7 @@ In Power BI Desktop:
 
 1. Refresh the report.
 2. Inspect all 7 tabs.
-3. Save as, or overwrite, `04 Assets - Reporting\Kardex-v4.5.0_Supervisor-Rework.pbix`.
+3. Save as, or overwrite, `04 Assets - Reporting\Kardex PowerBI 2.0 Beta.pbix`.
 
 After saving the PBIX, prove it is current with the PBIP source:
 
@@ -109,7 +109,7 @@ In Power BI Desktop, use **File > Options and settings > Data source settings** 
 - SQL login: keep server `10.0.26.70` and enter the SQL username/password.
 - Windows integrated authentication: switch the server to `vm-as-dbsql0011` to avoid the IP-address SSPI issue.
 
-Do not open and edit the original `Kardex-v4.5.0.pbix`; use `Kardex-v4.5.0_Productivity-v2_try.pbip` and save the final result as `Kardex-v4.5.0_Supervisor-Rework.pbix`.
+Do not open and edit the original `Kardex-v4.5.0.pbix`; use `Kardex PowerBI 2.0 Beta.pbip` and save the final result as `Kardex PowerBI 2.0 Beta.pbix`.
 
 ## Validation Commands
 
@@ -229,9 +229,9 @@ Before treating the dashboard as ready:
 
 1. SQL apply/validation gates pass.
 2. `.\validate-reporting-pbip-static.ps1` passes locally.
-3. Open `Kardex-v4.5.0_Productivity-v2_try.pbip`.
+3. Open `Kardex PowerBI 2.0 Beta.pbip`.
 4. Refresh in Power BI Desktop.
-5. Save over `Kardex-v4.5.0_Supervisor-Rework.pbix`.
+5. Save over `Kardex PowerBI 2.0 Beta.pbix`.
 6. Run `.\validate-reporting-pbip-static.ps1 -RequireCurrentPbix`.
 7. Review all 7 tabs as a warehouse supervisor:
    - Daily KPI Summary Report

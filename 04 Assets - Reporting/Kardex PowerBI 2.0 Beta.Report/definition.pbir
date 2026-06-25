@@ -3,7 +3,7 @@
   "version": "4.0",
   "datasetReference": {
     "byPath": {
-      "path": "../Kardex-v4.5.0_Productivity-v2_try.SemanticModel"
+      "path": "../Kardex PowerBI 2.0 Beta.SemanticModel"
     }
   }
 }
